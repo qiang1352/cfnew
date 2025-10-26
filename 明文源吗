@@ -1221,9 +1221,9 @@ async function handleSubscriptionPage(request, user = null) {
     <style>
 		:root {
             --bg-color: #1a1a2e;
-            --card-bg: #22223b;
+            --card-bg: #2c2c54;
             --text-color: #e0e0f0;
-            --accent-color: #ff5722; /* 橙色作为强调色 */
+            --accent-color: #00bcd4; /* 橙色作为强调色 */
             --border-color: #4a4e69;
             --hover-color: #ff7043;
             --shadow-color: rgba(0, 0, 0, 0.4);
@@ -1357,11 +1357,6 @@ async function handleSubscriptionPage(request, user = null) {
                 <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='))">V2RAY</button>
             </div>
             <div class="subscription-url" id="clientSubscriptionUrl">点击按钮获取订阅</div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">[ 快速获取 ]</h2>
-            <button class="generate-btn" onclick="getBase64Subscription()">获取订阅链接</button>
-            <div class="subscription-url" id="base64SubscriptionUrl"></div>
         </div>
         <div class="card">
             <h2 class="card-title">[ 系统状态 ]</h2>
