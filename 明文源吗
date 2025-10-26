@@ -1360,20 +1360,17 @@ async function handleSubscriptionPage(request, user = null) {
     		margin-bottom: 15px;
     		font-weight: bold;
     		text-shadow: 0 0 5px var(--accent-glow);
-    		font-family: 'Courier New', monospace;
 		}
 
 		.status-item {
     		margin: 8px 0;
     		color: var(--text-primary);
-    		font-family: 'Courier New', monospace;
     		text-shadow: 0 0 3px var(--accent-glow);
 		}
 
 		.status-info {
     		margin: 8px 0;
     		color: var(--text-secondary);
-    		font-family: 'Courier New', monospace;
     		font-size: 0.9rem;
     		text-shadow: 0 0 3px var(--accent-glow);
 		}
@@ -1395,7 +1392,6 @@ async function handleSubscriptionPage(request, user = null) {
         <div class="card">
     		<h2 class="card-title">[ 系统状态 ]</h2>
     		<div id="systemStatus" class="status-container">
-        		<div class="status-header">[ 系统检测中... ]</div>
         		<div id="regionStatus" class="status-item">Worker地区: 检测中...</div>
         		<div id="geoInfo" class="status-info">检测方式: 检测中...</div>
         		<div id="backupStatus" class="status-item">ProxyIP状态: 检测中...</div>
@@ -1587,13 +1583,13 @@ async function handleSubscriptionPage(request, user = null) {
                         isManualRegionMode = true;
                         detectedRegion = data.region;
                         
-                        geoInfo.innerHTML = '检测方式: <span style="color: #44aa44;">手动指定地区</span>';
-                        regionStatus.innerHTML = 'Worker地区: <span style="color: #44ff44;">🎯 ' + regionNames[detectedRegion] + ' (手动指定)</span>';
+                        geoInfo.innerHTML = '检测方式: 手动指定地区';
+                        regionStatus.innerHTML = 'Worker地区: ' + regionNames[detectedRegion] + ' (手动指定)';
                         
                         // 显示配置状态而不是检测状态
-                        if (backupStatus) backupStatus.innerHTML = 'ProxyIP状态: <span style="color: #44ff44;">✅ 10/10 可用 (ProxyIP域名预设可用)</span>';
-                        if (currentIP) currentIP.innerHTML = '当前使用IP: <span style="color: #44ff44;">✅ 智能就近选择中</span>';
-                        if (regionMatch) regionMatch.innerHTML = '地区匹配: <span style="color: #44ff44;">✅ 同地区IP可用 (1个)</span>';
+                        if (backupStatus) backupStatus.innerHTML = 'ProxyIP状态: ✅ 10/10 可用 (ProxyIP域名预设可用)';
+                        if (currentIP) currentIP.innerHTML = '当前使用IP: ✅ 智能就近选择中';
+                        if (regionMatch) regionMatch.innerHTML = '地区匹配: ✅ 同地区IP可用 (1个)';
                         
                         return; // 提前返回，不执行后续的地区匹配逻辑
                     } else if (data.region && regionNames[data.region]) {
