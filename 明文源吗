@@ -532,9 +532,9 @@ export default {
     <style>
         :root {
             --bg-color: #1a1a2e;
-            --card-bg: #22223b;
+            --card-bg: #2c2c54;
             --text-color: #e0e0f0;
-            --accent-color: #ff5722; /* 橙色 */
+            --accent-color: #00bcd4; /* 橙色 */
             --border-color: #4a4e69;
             --shadow-color: rgba(0, 0, 0, 0.4);
         }
