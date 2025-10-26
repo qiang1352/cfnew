@@ -1347,10 +1347,6 @@ async function handleSubscriptionPage(request, user = null) {
 	</style>
 </head>
 <body>
-	<div class="matrix-bg"></div>
-    <div class="matrix-rain"></div>
-    <div class="matrix-code-rain" id="matrixCodeRain"></div>
-	<div class="matrix-text">代理订阅中心 v1.1</div>
     <div class="container">
         <div class="header">
             <h1 class="title">代理订阅中心</h1>
@@ -1538,6 +1534,10 @@ async function handleSubscriptionPage(request, user = null) {
         
         function createMatrixRain() {
             const matrixContainer = document.getElementById('matrixCodeRain');
+			if (!matrixContainer) {
+        		console.log('Matrix container not found, skipping animation');
+        		return; // 直接返回，不执行后面的矩阵雨代码
+    		}
             const matrixChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
             const columns = Math.floor(window.innerWidth / 18);
             
