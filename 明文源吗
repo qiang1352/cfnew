@@ -1350,6 +1350,7 @@ async function handleSubscriptionPage(request, user = null) {
 	<div class="matrix-bg"></div>
     <div class="matrix-rain"></div>
     <div class="matrix-code-rain" id="matrixCodeRain"></div>
+	<div class="matrix-text">代理订阅中心 v1.1</div>
     <div class="container">
         <div class="header">
             <h1 class="title">代理订阅中心</h1>
