@@ -1344,6 +1344,39 @@ async function handleSubscriptionPage(request, user = null) {
             color: var(--hover-color);
             text-decoration: underline;
         }
+		.status-container {
+    		margin: 20px 0;
+    		padding: 20px;
+    		background: var(--card-bg);
+    		border: 1px solid var(--border-color);
+    		border-radius: 8px;
+    		box-shadow: var(--card-shadow);
+    		position: relative;
+    		overflow: hidden;
+		}
+
+		.status-header {
+    		color: var(--accent-color);
+    		margin-bottom: 15px;
+    		font-weight: bold;
+    		text-shadow: 0 0 5px var(--accent-glow);
+    		font-family: 'Courier New', monospace;
+		}
+
+		.status-item {
+    		margin: 8px 0;
+    		color: var(--text-primary);
+    		font-family: 'Courier New', monospace;
+    		text-shadow: 0 0 3px var(--accent-glow);
+		}
+
+		.status-info {
+    		margin: 8px 0;
+    		color: var(--text-secondary);
+    		font-family: 'Courier New', monospace;
+    		font-size: 0.9rem;
+    		text-shadow: 0 0 3px var(--accent-glow);
+		}
 	</style>
 </head>
 <body>
@@ -1360,17 +1393,17 @@ async function handleSubscriptionPage(request, user = null) {
             <div class="subscription-url" id="clientSubscriptionUrl"></div>
         </div>
         <div class="card">
-            <h2 class="card-title">[ 系统状态 ]</h2>
-            <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: rgba(0, 20, 0, 0.8); border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1); position: relative; overflow: hidden;">
-                <div style="color: #00ff00; margin-bottom: 15px; font-weight: bold; text-shadow: 0 0 5px #00ff00;">[ 系统检测中... ]</div>
-                <div id="regionStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">Worker地区: 检测中...</div>
-                <div id="geoInfo" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">检测方式: 检测中...</div>
-                <div id="backupStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">ProxyIP状态: 检测中...</div>
-                <div id="currentIP" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">当前使用IP: 检测中...</div>
-                <div id="regionMatch" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">地区匹配: 检测中...</div>
-                <div id="selectionLogic" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
-            </div>
-        </div>
+    		<h2 class="card-title">[ 系统状态 ]</h2>
+    		<div id="systemStatus" class="status-container">
+        		<div class="status-header">[ 系统检测中... ]</div>
+        		<div id="regionStatus" class="status-item">Worker地区: 检测中...</div>
+        		<div id="geoInfo" class="status-info">检测方式: 检测中...</div>
+        		<div id="backupStatus" class="status-item">ProxyIP状态: 检测中...</div>
+        		<div id="currentIP" class="status-item">当前使用IP: 检测中...</div>
+        		<div id="regionMatch" class="status-item">地区匹配: 检测中...</div>
+        		<div id="selectionLogic" class="status-info">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
+    		</div>
+		</div>
         <div class="card" id="configCard" style="display: none;">
             <h2 class="card-title">[ 配置管理 ]</h2>
             <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: rgba(0, 20, 0, 0.8); border: 1px solid #00ff00; color: #00ff00;">
