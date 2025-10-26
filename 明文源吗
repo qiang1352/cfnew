@@ -626,7 +626,7 @@ export default {
 </head>
 <body>
     <div class="container">
-        <h1>🎉 Worker 部署成功</h1>
+        <h1>Worker 部署成功</h1>
         <p>请输入您的 UUID 访问订阅中心：</p>
         
 		<div class="input-group">
