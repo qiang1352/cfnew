@@ -523,6 +523,7 @@ export default {
 				
 				
 				if (url.pathname === '/') {
+					const urlOrigin = url.origin;
 					const successHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -567,15 +568,39 @@ export default {
             margin-bottom: 20px;
             line-height: 1.6;
         }
-        .code-block {
-            background-color: #000000;
-            color: #00ff00;
-            padding: 10px;
-            border-radius: 6px;
-            word-break: break-all;
-            font-family: monospace;
-            margin: 15px 0;
-            border: 1px solid var(--accent-color);
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .uuid-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .uuid-input:focus {
+            border-color: var(--accent-color);
+        }
+        .submit-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-transform: uppercase;
+        }
+        .submit-btn:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-1px);
         }
         a {
             color: var(--accent-color);
@@ -590,16 +615,54 @@ export default {
     <div class="container">
         <h1>🎉 Worker 部署成功</h1>
         <p>代理服务已在全球 Cloudflare 网络上激活。</p>
-        <p>请使用您的 UUID 访问订阅中心：</p>
+        <p>请输入您的 UUID 访问订阅中心：</p>
         
-        <div class="code-block">
-            ${url.origin}/${authToken}
+<div class="input-group">
+            <input type="text" id="uuidInput" class="uuid-input" placeholder="请输入您的 VLESS UUID" required>
+            <button class="submit-btn" onclick="redirectToSubscription()">获取订阅</button>
         </div>
 
-        <p>将上述链接复制到浏览器中，即可进入订阅配置页面。</p>
-
+        <p class="tip-message" style="font-size: 0.9em; color: rgba(255, 255, 255, 0.7);">
+            提示：UUID 格式通常为 32 个十六进制字符，包含 4 个连字符。
+        </p>
+        
         <p><a href="https://github.com/byJoey/cfnew" target="_blank">查看项目文档</a></p>
     </div>
+
+    <script>
+        const urlOrigin = '${urlOrigin}';
+
+        function isValidUUID(uuid) {
+            // 简单的 UUID v4 格式校验
+            return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(uuid);
+        }
+
+        function redirectToSubscription() {
+            const uuidInput = document.getElementById('uuidInput').value.trim();
+            
+            if (uuidInput === '') {
+                alert('请输入您的 UUID！');
+                return;
+            }
+
+            if (!isValidUUID(uuidInput)) {
+                // 如果格式不完全正确，给出警告，但依然允许用户继续
+                if (!confirm('您输入的 UUID 格式可能不正确，确定要继续吗？')) {
+                    return;
+                }
+            }
+
+            // 跳转到 /<UUID> 路径，由 Worker 的 handleSubscriptionPage 处理
+            window.location.href = urlOrigin + '/' + uuidInput;
+        }
+        
+        // 支持回车键触发跳转
+        document.getElementById('uuidInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                redirectToSubscription();
+            }
+        });
+    </script>
 </body>
 </html>`;
 					return new Response(successHtml, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
