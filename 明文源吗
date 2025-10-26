@@ -570,28 +570,30 @@ export default {
             line-height: 1.6;
         }
         .input-group {
-            display: flex;
             margin-bottom: 20px;
         }
         .uuid-input {
-            flex-grow: 1;
+            width: 100%; /* 保证输入框宽度为 100% */
             padding: 12px;
             border: 1px solid var(--border-color);
-            border-right: none;
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px; /* 全圆角 */
             background-color: rgba(255, 255, 255, 0.05);
             color: var(--text-color);
             font-size: 1rem;
             outline: none;
             transition: border-color 0.3s;
+            margin-bottom: 15px; /* 在输入框下方添加间距 */
+            box-sizing: border-box;
         }
         .uuid-input:focus {
             border-color: var(--accent-color);
         }
         .submit-btn {
+            width: 100%; /* 保证按钮宽度为 100% */
+            display: block;
             padding: 12px 20px;
             border: none;
-            border-radius: 0 8px 8px 0;
+            border-radius: 8px; /* 全圆角 */
             background-color: var(--accent-color);
             color: #ffffff;
             font-size: 1rem;
