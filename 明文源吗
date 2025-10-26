@@ -529,7 +529,7 @@ export default {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>部署成功 - Workers 代理</title>
+    <title>部署成功</title>
     <style>
         :root {
             --bg-color: #1a1a2e;
@@ -614,7 +614,7 @@ export default {
 <body>
     <div class="container">
         <h1>🎉 Worker 部署成功</h1>
-        <p>代理服务已在全球 Cloudflare 网络上激活。</p>
+        <p>服务已在全球 Cloudflare 网络上激活</p>
         <p>请输入您的 UUID 访问订阅中心：</p>
         
 <div class="input-group">
