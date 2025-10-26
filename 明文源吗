@@ -1319,12 +1319,12 @@ async function handleSubscriptionPage(request, user = null) {
 
         /* 订阅 URL 显示区域 */
         .subscription-url {
-            background: #000000;
+            background: var(--bg-color);
             border: 1px solid var(--accent-color); 
             padding: 15px;
             word-break: break-all; 
             font-family: monospace;
-            color: #00ff00; /* 绿色文本模拟终端输出 */
+            color: #5d9cec;
             margin-top: 20px; 
             display: none;
             border-radius: 6px;
@@ -1355,14 +1355,9 @@ async function handleSubscriptionPage(request, user = null) {
         <div class="card">
             <h2 class="card-title">[ 选择客户端 ]</h2>
             <div class="client-grid">
-                <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='))">V2RAY</button>
+                <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='))">复制订阅链接</button>
             </div>
             <div class="subscription-url" id="clientSubscriptionUrl"></div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">[ 快速获取 ]</h2>
-            <button class="generate-btn" onclick="getBase64Subscription()">获取订阅链接</button>
-            <div class="subscription-url" id="base64SubscriptionUrl"></div>
         </div>
         <div class="card">
             <h2 class="card-title">[ 系统状态 ]</h2>
@@ -1510,26 +1505,6 @@ async function handleSubscriptionPage(request, user = null) {
                     alert(displayName + " 订阅链接已复制");
                 });
             }
-        }
-        function getBase64Subscription() {
-            var currentUrl = window.location.href;
-            var subscriptionUrl = currentUrl + "/sub";
-            
-            fetch(subscriptionUrl)
-                .then(function(response) {
-                    return response.text();
-                })
-                .then(function(base64Content) {
-                    document.getElementById("base64SubscriptionUrl").textContent = base64Content;
-                    document.getElementById("base64SubscriptionUrl").style.display = "block";
-                    navigator.clipboard.writeText(base64Content).then(function() {
-                        alert("Base64订阅内容已复制");
-                    });
-                })
-                .catch(function(error) {
-                    console.error("获取订阅失败:", error);
-                    alert("获取订阅失败，请重试");
-                });
         }
         
         function createMatrixRain() {
