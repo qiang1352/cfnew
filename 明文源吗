@@ -1347,6 +1347,9 @@ async function handleSubscriptionPage(request, user = null) {
 	</style>
 </head>
 <body>
+	<div class="matrix-bg"></div>
+    <div class="matrix-rain"></div>
+    <div class="matrix-code-rain" id="matrixCodeRain"></div>
     <div class="container">
         <div class="header">
             <h1 class="title">代理订阅中心</h1>
