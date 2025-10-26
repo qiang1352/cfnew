@@ -403,10 +403,9 @@ export default {
 			// 优先使用KV配置，然后使用环境变量，如果都没有则使用默认URL
 			preferredIPsURL = getConfigValue('yxURL', env.yxURL || env.YXURL) || 'https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt';
 			
-			// 如果yxURL不是默认值，清空内置优选IP和域名
+			// 如果yxURL不是默认值，清空域名但保留backupIPs作为后备选项
 			const defaultURL = 'https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt';
 			if (preferredIPsURL !== defaultURL) {
-				backupIPs = [];
 				directDomains.length = 0;
 				customPreferredIPs = [];
 				customPreferredDomains = [];
@@ -524,14 +523,14 @@ export default {
 				
 				if (url.pathname === '/') {
 					const urlOrigin = url.origin;
-					const successHtml = `<!DOCTYPE html>
+					const terminalHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>部署成功</title>
+    <title>终端</title>
     <style>
-        :root {
+		:root {
             --bg-color: #1a1a2e;
             --card-bg: #2c2c54;
             --text-color: #e0e0f0;
@@ -541,6 +540,7 @@ export default {
             --shadow-color: rgba(0, 0, 0, 0.4);
 			--code-color: #66ccff; /* 新增：浅蓝色代码块颜色 */
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
@@ -622,14 +622,14 @@ export default {
             margin: 15px 0;
             border: 1px solid var(--accent-color);
         }
-    </style>
+	</style>
 </head>
 <body>
     <div class="container">
-        <h1>部署成功</h1>
-        <p>请输入您的 UUID 访问</p>
+        <h1>🎉 Worker 部署成功</h1>
+        <p>请输入您的 UUID 访问订阅中心：</p>
         
-<div class="input-group">
+		<div class="input-group">
             <input type="text" id="uuidInput" class="uuid-input" placeholder="" required>
             <button class="submit-btn" onclick="redirectToSubscription()">获取订阅</button>
         </div>
@@ -671,7 +671,7 @@ export default {
     </script>
 </body>
 </html>`;
-					return new Response(successHtml, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+					return new Response(terminalHtml, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 				}
 				if (url.pathname.length > 1 && url.pathname !== '/' && !url.pathname.includes('/sub')) {
 					const user = url.pathname.replace(/\/$/, '').substring(1);
@@ -1224,134 +1224,219 @@ async function handleSubscriptionPage(request, user = null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>订阅中心</title>
     <style>
-		:root {
-            --bg-color: #1a1a2e;
-            --card-bg: #22223b;
-            --text-color: #e0e0f0;
-            --accent-color: #4a90e2; /* 科技蓝 */
-            --border-color: #4a4e69;
-            --hover-color: #5d9cec; /* 浅一点的蓝色 */
-            --shadow-color: rgba(0, 0, 0, 0.4);
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; 
-            padding-top: 50px;
+            font-family: "Courier New", monospace;
+            background: #000; color: #00ff00; min-height: 100vh;
+            overflow-x: hidden; position: relative;
         }
-
-        .container { 
-            width: 100%;
-            max-width: 700px;
-            padding: 20px; 
-            margin-bottom: 50px;
+        .matrix-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
+            z-index: -1;
+            animation: bg-pulse 8s ease-in-out infinite;
         }
-
-        .header { 
-            text-align: center;
-            margin-bottom: 40px; 
+        @keyframes bg-pulse {
+            0%, 100% { background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%); }
+            50% { background: linear-gradient(45deg, #000 0%, #002200 50%, #000 100%); }
         }
-
+        .matrix-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
+            animation: matrix-fall 20s linear infinite;
+            z-index: -1;
+        }
+        @keyframes matrix-fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        .matrix-code-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+            overflow: hidden;
+        }
+        .matrix-column {
+            position: absolute; top: -100%; left: 0;
+            color: #00ff00; font-family: "Courier New", monospace;
+            font-size: 14px; line-height: 1.2;
+            animation: matrix-drop 15s linear infinite;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        @keyframes matrix-drop {
+            0% { top: -100%; opacity: 1; }
+            10% { opacity: 1; }
+            90% { opacity: 0.3; }
+            100% { top: 100vh; opacity: 0; }
+        }
+        .matrix-column:nth-child(odd) {
+            animation-duration: 12s;
+            animation-delay: -2s;
+        }
+        .matrix-column:nth-child(even) {
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+        .matrix-column:nth-child(3n) {
+            animation-duration: 20s;
+            animation-delay: -8s;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+        .header { text-align: center; margin-bottom: 40px; }
         .title {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--accent-color);
+            font-size: 3.5rem; font-weight: bold;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
             margin-bottom: 10px;
-            letter-spacing: 1px;
+            animation: matrix-glow 1.5s ease-in-out infinite alternate, matrix-pulse 3s ease-in-out infinite;
+            position: relative;
+            background: linear-gradient(45deg, #00ff00, #00aa00, #00ff00);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        .subtitle { 
-            color: var(--text-color);
-            opacity: 0.8;
-            font-size: 1rem;
+        @keyframes matrix-glow {
+            from { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; }
+            to { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00; }
         }
-
+        @keyframes matrix-pulse {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .subtitle { color: #00aa00; margin-bottom: 30px; font-size: 1.2rem; }
         .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px; 
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px var(--shadow-color);
-            border: 1px solid var(--border-color);
+            background: rgba(0, 20, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 0; padding: 30px; margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1);
+            position: relative;
+            backdrop-filter: blur(10px);
+            animation: card-glow 4s ease-in-out infinite;
         }
-
+        @keyframes card-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 0, 0.7), inset 0 0 30px rgba(0, 255, 0, 0.2); }
+        }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent 49%, #00ff00 50%, transparent 51%);
+            opacity: 0.2; pointer-events: none;
+            animation: scan-line 3s linear infinite;
+        }
+        @keyframes scan-line {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
         .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 8px;
-            text-transform: uppercase;
+            font-size: 1.8rem; margin-bottom: 20px;
+            color: #00ff00; text-shadow: 0 0 5px #00ff00;
         }
-
-        /* 按钮网格布局 */
         .client-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px; 
-            margin: 20px 0;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px; margin: 20px 0;
         }
-
-        .client-btn, .generate-btn {
-            background: rgba(255, 255, 255, 0.08); 
-            border: 1px solid var(--border-color);
-            padding: 12px 15px; 
-            color: var(--text-color);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center; 
-            border-radius: 8px;
-            text-transform: uppercase;
+        .client-btn {
+            background: rgba(0, 20, 0, 0.8);
+            border: 2px solid #00ff00;
+            padding: 15px 20px; color: #00ff00;
+            font-family: "Courier New", monospace; font-weight: bold;
+            cursor: pointer; transition: all 0.4s ease;
+            text-align: center; position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 5px #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
-        
-        .client-btn:hover, .generate-btn:hover {
-            background: var(--accent-color);
-            color: #ffffff;
-            border-color: var(--hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.5); /* 蓝色阴影 */
+        .client-btn::before {
+            content: ""; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,0,0.4), transparent);
+            transition: left 0.6s ease;
         }
-
-        /* 订阅 URL 显示区域 */
+        .client-btn::after {
+            content: ""; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(0,255,0,0.1) 50%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .client-btn:hover::before { left: 100%; }
+        .client-btn:hover::after { opacity: 1; }
+        .client-btn:hover {
+            background: rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 25px #00ff00, 0 0 35px rgba(0, 255, 0, 0.5);
+            transform: translateY(-3px) scale(1.05);
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+        }
+        .generate-btn {
+            background: rgba(0, 255, 0, 0.15);
+            border: 2px solid #00ff00; padding: 15px 30px;
+            color: #00ff00; font-family: "Courier New", monospace;
+            font-weight: bold; cursor: pointer;
+            transition: all 0.4s ease; margin-right: 15px;
+            text-shadow: 0 0 8px #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .generate-btn::before {
+            content: ""; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,0,0.5), transparent);
+            transition: left 0.8s ease;
+        }
+        .generate-btn:hover::before { left: 100%; }
+        .generate-btn:hover {
+            background: rgba(0, 255, 0, 0.4);
+            box-shadow: 0 0 30px #00ff00, 0 0 40px rgba(0, 255, 0, 0.6);
+            transform: translateY(-4px) scale(1.08);
+            text-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00;
+        }
         .subscription-url {
-            background: #000000;
-            border: 1px solid var(--accent-color); 
-            padding: 15px;
-            word-break: break-all; 
-            font-family: monospace;
-            color: #00ff00; /* 绿色文本模拟终端输出 */
-            margin-top: 20px; 
-            display: none;
-            border-radius: 6px;
-            box-shadow: inset 0 0 8px rgba(74, 144, 226, 0.3); /* 蓝色阴影 */
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00; padding: 15px;
+            word-break: break-all; font-family: "Courier New", monospace;
+            color: #00ff00; margin-top: 20px; display: none;
+            box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.3);
+            border-radius: 5px;
+            animation: url-glow 2s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
         }
-
-        /* 链接样式 */
-        .link-group a {
-            color: var(--accent-color);
-            text-decoration: none;
-            margin: 0 15px; 
-            font-size: 1rem; 
-            transition: color 0.3s ease;
+        @keyframes url-glow {
+            from { box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.3); }
+            to { box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.6), 0 0 30px rgba(0, 255, 0, 0.5); }
         }
-
-        .link-group a:hover {
-            color: var(--hover-color);
-            text-decoration: underline;
+        .subscription-url::before {
+            content: ""; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,0,0.1), transparent);
+            animation: url-scan 3s linear infinite;
+        }
+        @keyframes url-scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        .matrix-text {
+            position: fixed; top: 20px; right: 20px;
+            color: #00ff00; font-family: "Courier New", monospace;
+            font-size: 0.8rem; opacity: 0.6;
+            animation: matrix-flicker 3s infinite;
+        }
+        @keyframes matrix-flicker {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <div class="matrix-bg"></div>
+    <div class="matrix-rain"></div>
+    <div class="matrix-code-rain" id="matrixCodeRain"></div>
+    <div class="matrix-text">代理订阅中心 v1.1</div>
     <div class="container">
         <div class="header">
-            <h1 class="title">订阅中心</h1>
-            <p class="subtitle">智能优选 • 一键生成</p>
+            <h1 class="title">代理订阅中心</h1>
+            <p class="subtitle">多客户端支持 • 智能优选 • 一键生成</p>
         </div>
         <div class="card">
             <h2 class="card-title">[ 选择客户端 ]</h2>
@@ -1362,7 +1447,12 @@ async function handleSubscriptionPage(request, user = null) {
                 <button class="client-btn" onclick="generateClientLink(atob('bG9vbg=='))">LOON</button>
                 <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='))">V2RAY</button>
             </div>
-            <div class="subscription-url" id="clientSubscriptionUrl">点击按钮获取订阅</div>
+            <div class="subscription-url" id="clientSubscriptionUrl"></div>
+        </div>
+        <div class="card">
+            <h2 class="card-title">[ 快速获取 ]</h2>
+            <button class="generate-btn" onclick="getBase64Subscription()">获取订阅链接</button>
+            <div class="subscription-url" id="base64SubscriptionUrl"></div>
         </div>
         <div class="card">
             <h2 class="card-title">[ 系统状态 ]</h2>
@@ -1500,7 +1590,7 @@ async function handleSubscriptionPage(request, user = null) {
                 });
             } else {
                 var encodedUrl = encodeURIComponent(subscriptionUrl);
-                var apiUrl = "https://s.jhb.edu.kg/sub?target=" + clientType + "&url=" + encodedUrl + "&insert=false";
+                var apiUrl = "https://url.v1.mk/sub?target=" + clientType + "&url=" + encodedUrl + "&insert=false";
                 document.getElementById("clientSubscriptionUrl").textContent = apiUrl;
                 document.getElementById("clientSubscriptionUrl").style.display = "block";
                 navigator.clipboard.writeText(apiUrl).then(function() {
@@ -2143,7 +2233,6 @@ async function handleConfigAPI(request) {
             const newPreferredIPsURL = getConfigValue('yxURL', '') || 'https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt';
             const defaultURL = 'https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt';
             if (newPreferredIPsURL !== defaultURL) {
-                backupIPs = [];
                 directDomains.length = 0;
                 customPreferredIPs = [];
                 customPreferredDomains = [];
