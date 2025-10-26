@@ -626,8 +626,8 @@ export default {
 </head>
 <body>
     <div class="container">
-        <h1>🎉 Worker 部署成功</h1>
-        <p>请输入您的 UUID 访问订阅中心：</p>
+        <h1>部署成功</h1>
+        <p>请输入您的 UUID 访问</p>
         
 <div class="input-group">
             <input type="text" id="uuidInput" class="uuid-input" placeholder="" required>
@@ -1350,8 +1350,8 @@ async function handleSubscriptionPage(request, user = null) {
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="title">代理订阅中心</h1>
-            <p class="subtitle">多客户端支持 • 智能优选 • 一键生成</p>
+            <h1 class="title">订阅中心</h1>
+            <p class="subtitle">智能优选 • 一键生成</p>
         </div>
         <div class="card">
             <h2 class="card-title">[ 选择客户端 ]</h2>
