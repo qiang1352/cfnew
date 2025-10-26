@@ -1347,22 +1347,14 @@ async function handleSubscriptionPage(request, user = null) {
 	</style>
 </head>
 <body>
-    <div class="matrix-bg"></div>
-    <div class="matrix-rain"></div>
-    <div class="matrix-code-rain" id="matrixCodeRain"></div>
-    <div class="matrix-text">代理订阅中心 v1.1</div>
     <div class="container">
         <div class="header">
             <h1 class="title">代理订阅中心</h1>
-            <p class="subtitle">多客户端支持 • 智能优选 • 一键生成</p>
+            <p class="subtitle">智能优选 • 一键生成</p>
         </div>
         <div class="card">
             <h2 class="card-title">[ 选择客户端 ]</h2>
             <div class="client-grid">
-                <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='))">CLASH</button>
-                <button class="client-btn" onclick="generateClientLink(atob('c3VyZ2U='))">SURGE</button>
-                <button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='))">SING-BOX</button>
-                <button class="client-btn" onclick="generateClientLink(atob('bG9vbg=='))">LOON</button>
                 <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='))">V2RAY</button>
             </div>
             <div class="subscription-url" id="clientSubscriptionUrl"></div>
