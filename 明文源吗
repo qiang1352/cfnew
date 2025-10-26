@@ -535,8 +535,9 @@ export default {
             --bg-color: #1a1a2e;
             --card-bg: #2c2c54;
             --text-color: #e0e0f0;
-            --accent-color: #00bcd4; /* 橙色 */
+            --accent-color: #4a90e2; /* 橙色 */
             --border-color: #4a4e69;
+			--hover-color: #5d9cec; /* 浅一点的蓝色 */
             --shadow-color: rgba(0, 0, 0, 0.4);
         }
         body {
@@ -1223,9 +1224,9 @@ async function handleSubscriptionPage(request, user = null) {
             --bg-color: #1a1a2e;
             --card-bg: #2c2c54;
             --text-color: #e0e0f0;
-            --accent-color: #00bcd4; /* 橙色作为强调色 */
+            --accent-color: #4a90e2; /* 橙色 */
             --border-color: #4a4e69;
-            --hover-color: #ff7043;
+			--hover-color: #5d9cec; /* 浅一点的蓝色 */
             --shadow-color: rgba(0, 0, 0, 0.4);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
