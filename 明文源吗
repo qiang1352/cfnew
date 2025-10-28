@@ -1226,7 +1226,7 @@ async function handleSubscriptionPage(request, user = null) {
     <style>
 		:root {
             --bg-color: #1a1a2e;
-            --card-bg: #22223b;
+            --card-bg: #2c2c54;
             --text-color: #e0e0f0;
             --accent-color: #4a90e2; /* 科技蓝 */
             --border-color: #4a4e69;
