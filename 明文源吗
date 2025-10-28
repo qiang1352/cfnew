@@ -1297,24 +1297,22 @@ async function handleSubscriptionPage(request, user = null) {
         }
 
         .client-btn, .generate-btn {
-            background: rgba(255, 255, 255, 0.08); 
-            border: 1px solid var(--border-color);
-            padding: 12px 15px; 
-            color: var(--text-color);
-            font-weight: 500;
+            width: 100%; /* 保证按钮宽度为 100% */
+            display: block;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px; /* 全圆角 */
+            background-color: var(--accent-color);
+            color: #ffffff;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center; 
-            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
             text-transform: uppercase;
         }
         
         .client-btn:hover, .generate-btn:hover {
-            background: var(--accent-color);
-            color: #ffffff;
-            border-color: var(--hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.5); /* 蓝色阴影 */
+            background-color: var(--hover-color);
+            transform: translateY(-1px);
         }
 
         /* 订阅 URL 显示区域 */
@@ -1346,13 +1344,10 @@ async function handleSubscriptionPage(request, user = null) {
         }
 		
 		.modern-status-container {
-    margin: 20px 0;
-    padding: 24px;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
+    		margin: 20px 0;
+    		padding: 24px;
+    		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+		}
 
 .status-grid {
     display: flex;
@@ -1418,23 +1413,13 @@ async function handleSubscriptionPage(request, user = null) {
             <p class="subtitle">智能优选 • 一键生成</p>
         </div>
         <div class="card">
-            <h2 class="card-title">[ 选择客户端 ]</h2>
+            <h2 class="card-title">[ 复制订阅链接 ]</h2>
             <div class="client-grid">
                 <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='))">复制订阅链接</button>
             </div>
             <div class="subscription-url" id="clientSubscriptionUrl"></div>
         </div>
-        <div class="card">
-    		<h2 class="card-title">[ 系统状态 ]</h2>
-    		<div id="systemStatus" class="status-container">
-        		<div id="regionStatus" class="status-item">Worker地区: 检测中...</div>
-        		<div id="geoInfo" class="status-info">检测方式: 检测中...</div>
-        		<div id="backupStatus" class="status-item">ProxyIP状态: 检测中...</div>
-        		<div id="currentIP" class="status-item">当前使用IP: 检测中...</div>
-        		<div id="regionMatch" class="status-item">地区匹配: 检测中...</div>
-        		<div id="selectionLogic" class="status-info">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
-    		</div>
-		</div>
+
 
 		<div class="card">
     		<h2 class="card-title">[ 系统状态 ]</h2>
