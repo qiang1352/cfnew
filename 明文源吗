@@ -1276,7 +1276,6 @@ async function handleSubscriptionPage(request, user = null) {
             padding: 30px; 
             margin-bottom: 30px;
             box-shadow: 0 10px 30px var(--shadow-color);
-            border: 1px solid var(--border-color);
         }
 
         .card-title {
