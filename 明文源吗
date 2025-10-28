@@ -1447,13 +1447,6 @@ async function handleSubscriptionPage(request, user = null) {
     		</div>
 		</div>
         
-        <div class="card">
-            <h2 class="card-title">[ 相关链接 ]</h2>
-            <div style="text-align: center; margin: 20px 0;">
-                <a href="https://github.com/byJoey/cfnew" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">GitHub 项目</a>
-                <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">YouTube @joeyblog</a>
-            </div>
-        </div>
     </div>
     <script>
         function generateClientLink(clientType) {
@@ -1464,7 +1457,7 @@ async function handleSubscriptionPage(request, user = null) {
                 document.getElementById("clientSubscriptionUrl").textContent = subscriptionUrl;
                 document.getElementById("clientSubscriptionUrl").style.display = "block";
                 navigator.clipboard.writeText(subscriptionUrl).then(function() {
-                    alert("V2Ray 订阅链接已复制");
+                    alert("订阅链接已复制");
                 });
             } else {
                 var encodedUrl = encodeURIComponent(subscriptionUrl);
