@@ -1371,7 +1371,7 @@ async function handleSubscriptionPage(request, user = null) {
 }
 
 .status-label {
-    color: #888;
+    color: var(--accent-color);
     font-size: 14px;
     font-weight: 500;
 }
@@ -1421,23 +1421,23 @@ async function handleSubscriptionPage(request, user = null) {
         		<div class="status-grid">
             		<div class="status-item">
                 		<span class="status-label">Worker地区</span>
-                		<span id="regionStatus" class="status-value">🇸🇬 新加坡 (手动指定)</span>
+                		<span id="regionStatus" class="status-value status-success">🇸🇬 新加坡 (手动指定)</span>
             		</div>
             		<div class="status-item">
                 		<span class="status-label">检测方式</span>
-                		<span id="geoInfo" class="status-info">手动指定地区</span>
+                		<span id="geoInfo" class="status-value status-success">手动指定地区</span>
             		</div>
             		<div class="status-item">
                 		<span class="status-label">ProxyIP状态</span>
-                		<span id="backupStatus" class="status-value status-success">✅ 10/10 可用 (ProxyIP域名预设可用)</span>
+                		<span id="backupStatus" class="status-value status-success">10/10 可用 (ProxyIP域名预设可用)</span>
             		</div>
             		<div class="status-item">
                 		<span class="status-label">当前使用IP</span>
-                		<span id="currentIP" class="status-value status-success">✅ 智能就近选择中</span>
+                		<span id="currentIP" class="status-value status-success">智能就近选择中</span>
             		</div>
             		<div class="status-item">
                 		<span class="status-label">地区匹配</span>
-                		<span id="regionMatch" class="status-value status-success">✅ 同地区IP可用 (1个)</span>
+                		<span id="regionMatch" class="status-value status-success">同地区IP可用 (1个)</span>
             		</div>
             		<div class="status-item full-width">
                 		<span class="status-label">选择逻辑</span>
