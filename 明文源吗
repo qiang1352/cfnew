@@ -1344,36 +1344,71 @@ async function handleSubscriptionPage(request, user = null) {
             color: var(--hover-color);
             text-decoration: underline;
         }
-		.status-container {
-    		margin: 20px 0;
-    		padding: 20px;
-    		background: var(--card-bg);
-    		border: 1px solid var(--border-color);
-    		border-radius: 8px;
-    		box-shadow: var(--card-shadow);
-    		position: relative;
-    		overflow: hidden;
-		}
+		
+		.modern-status-container {
+    margin: 20px 0;
+    padding: 24px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
 
-		.status-header {
-    		color: var(--accent-color);
-    		margin-bottom: 15px;
-    		font-weight: bold;
-    		text-shadow: 0 0 5px var(--accent-glow);
-		}
+.status-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
-		.status-item {
-    		margin: 8px 0;
-    		color: var(--text-primary);
-    		text-shadow: 0 0 3px var(--accent-glow);
-		}
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #2a2a2a;
+}
 
-		.status-info {
-    		margin: 8px 0;
-    		color: var(--text-secondary);
-    		font-size: 0.9rem;
-    		text-shadow: 0 0 3px var(--accent-glow);
-		}
+.status-item:last-child {
+    border-bottom: none;
+}
+
+.status-item.full-width {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.status-label {
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.status-value {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+}
+
+.status-info {
+    color: #aaa;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.status-success {
+    color: #10b981;
+}
+
+.status-warning {
+    color: #f59e0b;
+}
+
+.status-error {
+    color: #ef4444;
+}
 	</style>
 </head>
 <body>
@@ -1398,6 +1433,38 @@ async function handleSubscriptionPage(request, user = null) {
         		<div id="currentIP" class="status-item">当前使用IP: 检测中...</div>
         		<div id="regionMatch" class="status-item">地区匹配: 检测中...</div>
         		<div id="selectionLogic" class="status-info">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
+    		</div>
+		</div>
+
+		<div class="card">
+    		<h2 class="card-title">[ 系统状态 ]</h2>
+    		<div id="systemStatus" class="modern-status-container">
+        		<div class="status-grid">
+            		<div class="status-item">
+                		<span class="status-label">Worker地区</span>
+                		<span id="regionStatus" class="status-value">🇸🇬 新加坡 (手动指定)</span>
+            		</div>
+            		<div class="status-item">
+                		<span class="status-label">检测方式</span>
+                		<span id="geoInfo" class="status-info">手动指定地区</span>
+            		</div>
+            		<div class="status-item">
+                		<span class="status-label">ProxyIP状态</span>
+                		<span id="backupStatus" class="status-value status-success">✅ 10/10 可用 (ProxyIP域名预设可用)</span>
+            		</div>
+            		<div class="status-item">
+                		<span class="status-label">当前使用IP</span>
+                		<span id="currentIP" class="status-value status-success">✅ 智能就近选择中</span>
+            		</div>
+            		<div class="status-item">
+                		<span class="status-label">地区匹配</span>
+                		<span id="regionMatch" class="status-value status-success">✅ 同地区IP可用 (1个)</span>
+            		</div>
+            		<div class="status-item full-width">
+                		<span class="status-label">选择逻辑</span>
+                		<span id="selectionLogic" class="status-info">同地区 → 邻近地区 → 其他地区</span>
+            		</div>
+        		</div>
     		</div>
 		</div>
         
