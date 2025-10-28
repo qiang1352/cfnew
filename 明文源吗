@@ -1523,13 +1523,13 @@ async function handleSubscriptionPage(request, user = null) {
                         isManualRegionMode = true;
                         detectedRegion = data.region;
                         
-                        geoInfo.innerHTML = '检测方式: 手动指定地区';
-                        regionStatus.innerHTML = 'Worker地区: ' + regionNames[detectedRegion] + ' (手动指定)';
+                        geoInfo.innerHTML = '手动指定地区';
+                        regionStatus.innerHTML = regionNames[detectedRegion];
                         
                         // 显示配置状态而不是检测状态
-                        if (backupStatus) backupStatus.innerHTML = 'ProxyIP状态: ✅ 10/10 可用 (ProxyIP域名预设可用)';
-                        if (currentIP) currentIP.innerHTML = '当前使用IP: ✅ 智能就近选择中';
-                        if (regionMatch) regionMatch.innerHTML = '地区匹配: ✅ 同地区IP可用 (1个)';
+                        if (backupStatus) backupStatus.innerHTML = '10/10 可用 (ProxyIP域名预设可用)';
+                        if (currentIP) currentIP.innerHTML = '智能就近选择中';
+                        if (regionMatch) regionMatch.innerHTML = '同地区IP可用 (1个)';
                         
                         return; // 提前返回，不执行后续的地区匹配逻辑
                     } else if (data.region && regionNames[data.region]) {
