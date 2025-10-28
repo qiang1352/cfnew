@@ -1439,9 +1439,9 @@ async function handleSubscriptionPage(request, user = null) {
                 		<span class="status-label">地区匹配</span>
                 		<span id="regionMatch" class="status-value status-success">同地区IP可用 (1个)</span>
             		</div>
-            		<div class="status-item full-width">
+            		<div class="status-item">
                 		<span class="status-label">选择逻辑</span>
-                		<span id="selectionLogic" class="status-info">同地区 → 邻近地区 → 其他地区</span>
+                		<span id="selectionLogic" class="status-value status-success">同地区 → 邻近地区 → 其他地区</span>
             		</div>
         		</div>
     		</div>
