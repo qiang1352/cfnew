@@ -615,140 +615,142 @@ export default {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>终端</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: "Courier New", monospace;
-            background: #000; color: #00ff00; min-height: 100vh;
-            overflow-x: hidden; position: relative;
-            display: flex; justify-content: center; align-items: center;
+            /* 修改点 1：移除 Courier New 字体，改为现代系统字体栈 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            /* 修改点 2：背景色从纯黑 #000 变为柔和的深色 #1e1e2e */
+            background: #1e1e2e;
+            /* 修改点 3：文字颜色从亮绿 #00ff00 变为柔和白色 #d9e0ee */
+            color: #d9e0ee;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
         }
-        .matrix-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
-            z-index: -1;
-            animation: bg-pulse 8s ease-in-out infinite;
-        }
-        @keyframes bg-pulse {
-            0%, 100% { background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%); }
-            50% { background: linear-gradient(45deg, #000 0%, #002200 50%, #000 100%); }
-        }
-        .matrix-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
-            animation: matrix-fall 20s linear infinite;
-            z-index: -1;
-        }
-        @keyframes matrix-fall {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100vh); }
-        }
-        .matrix-code-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1;
-            overflow: hidden;
-        }
-        .matrix-column {
-            position: absolute; top: -100%; left: 0;
-            color: #00ff00; font-family: "Courier New", monospace;
-            font-size: 14px; line-height: 1.2;
-            animation: matrix-drop 15s linear infinite;
-            text-shadow: 0 0 5px #00ff00;
-        }
-        @keyframes matrix-drop {
-            0% { top: -100%; opacity: 1; }
-            10% { opacity: 1; }
-            90% { opacity: 0.3; }
-            100% { top: 100vh; opacity: 0; }
-        }
-        .matrix-column:nth-child(odd) {
-            animation-duration: 12s;
-            animation-delay: -2s;
-        }
-        .matrix-column:nth-child(even) {
-            animation-duration: 18s;
-            animation-delay: -5s;
-        }
-        .matrix-column:nth-child(3n) {
-            animation-duration: 20s;
-            animation-delay: -8s;
+        /* 修改点 4：彻底隐藏所有 Matrix/雨滴/闪烁效果相关的元素 */
+        .matrix-bg, .matrix-rain, .matrix-code-rain, .matrix-text,
+        @keyframes bg-pulse, @keyframes matrix-fall, @keyframes matrix-drop, @keyframes matrix-flicker {
+            display: none !important;
         }
         .terminal {
-            width: 90%; max-width: 800px; height: 500px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00ff00;
-            border-radius: 8px;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1);
+            width: 90%;
+            max-width: 700px;
+            min-height: 400px;
+            height: auto;
+            /* 修改点 5：卡片背景色从透明黑 rgba(0,0,0,0.9) 变为柔和深色 #282a36 */
+            background: #282a36;
+            border: none;
+            /* 修改点 6：圆角从 8px 增加到 12px */
+            border-radius: 12px;
+            /* 修改点 7：移除亮绿色的边框和强烈的发光阴影，改为现代微弱的深度阴影 */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            position: relative; z-index: 1;
+            position: relative;
+            z-index: 1;
             overflow: hidden;
+            transition: box-shadow 0.3s;
         }
         .terminal-header {
-            background: rgba(0, 20, 0, 0.8);
-            padding: 10px 15px;
-            border-bottom: 1px solid #00ff00;
-            display: flex; align-items: center;
+            /* 修改点 8：头部背景色调整 */
+            background: #343746;
+            padding: 12px 20px;
+            /* 修改点 9：头部底部边框改为微弱的白光分隔线 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
         }
         .terminal-buttons {
-            display: flex; gap: 8px;
+            display: flex;
+            gap: 8px;
         }
         .terminal-button {
-            width: 12px; height: 12px; border-radius: 50%;
-            background: #ff5f57; border: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            border: none;
         }
+        .terminal-button:nth-child(1) { background: #ff5f57; }
         .terminal-button:nth-child(2) { background: #ffbd2e; }
         .terminal-button:nth-child(3) { background: #28ca42; }
         .terminal-title {
-            margin-left: 15px; color: #00ff00;
-            font-size: 14px; font-weight: bold;
+            margin-left: 15px;
+            color: #d9e0ee;
+            font-size: 14px;
+            font-weight: 500;
         }
         .terminal-body {
-            padding: 20px; height: calc(100% - 50px);
-            overflow-y: auto; font-size: 14px;
-            line-height: 1.4;
+            padding: 20px;
+            height: auto;
+            min-height: 340px;
+            overflow-y: auto;
+            /* 修改点 10：字体大小和行高调整，提供更好的阅读体验 */
+            font-size: 15px;
+            line-height: 1.6;
+            color: #d9e0ee;
         }
         .terminal-line {
-            margin-bottom: 8px; display: flex; align-items: center;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
         }
         .terminal-prompt {
-            color: #00ff00; margin-right: 10px;
-            font-weight: bold;
+            /* 修改点 11：Prompt 颜色从亮绿改为柔和的蓝色 #89b4fa */
+            color: #89b4fa;
+            margin-right: 10px;
+            font-weight: 600;
+            white-space: nowrap;
         }
         .terminal-input {
-            background: transparent; border: none; outline: none;
-            color: #00ff00; font-family: "Courier New", monospace;
-            font-size: 14px; flex: 1;
-            caret-color: #00ff00;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #d9e0ee;
+            /* 继承 body 的现代字体 */
+            font-family: inherit;
+            font-size: 15px;
+            flex: 1;
+            /* 修改点 12：光标颜色改为柔和蓝色 */
+            caret-color: #89b4fa;
+            min-width: 50px;
         }
         .terminal-input::placeholder {
-            color: #00aa00; opacity: 0.7;
+            color: #a9a9b2;
+            opacity: 0.5;
         }
+        /* 修改点 13：移除闪烁光标（.terminal-cursor 元素在 HTML Body 中被移除，这里是对应的 CSS 清理） */
         .terminal-cursor {
-            display: inline-block; width: 8px; height: 16px;
-            background: #00ff00; animation: blink 1s infinite;
-            margin-left: 2px;
+            display: none !important;
         }
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+        @keyframes blink { /* 移除闪烁光标的动画 */
+            0%, 100% { opacity: 1; }
         }
         .terminal-output {
-            color: #00aa00; margin: 5px 0;
+            /* 修改点 14：普通输出颜色调整为柔和的浅紫色 #cad3f5 */
+            color: #cad3f5;
+            margin: 5px 0;
         }
         .terminal-error {
-            color: #ff4444; margin: 5px 0;
+            /* 修改点 15：错误信息颜色调整为柔和的红色 #f38ba8 */
+            color: #f38ba8;
+            margin: 5px 0;
+            font-weight: 500;
         }
         .terminal-success {
-            color: #44ff44; margin: 5px 0;
-        }
-        .matrix-text {
-            position: fixed; top: 20px; right: 20px;
-            color: #00ff00; font-family: "Courier New", monospace;
-            font-size: 0.8rem; opacity: 0.6;
-            animation: matrix-flicker 3s infinite;
-        }
-        @keyframes matrix-flicker {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+            /* 修改点 16：成功信息颜色调整为柔和的绿色 #a6e3a1 */
+            color: #a6e3a1;
+            margin: 5px 0;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -788,45 +790,6 @@ export default {
     </div>
     <script>
         function createMatrixRain() {
-            const matrixContainer = document.getElementById('matrixCodeRain');
-            const matrixChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-            const columns = Math.floor(window.innerWidth / 18);
-            
-            for (let i = 0; i < columns; i++) {
-                const column = document.createElement('div');
-                column.className = 'matrix-column';
-                column.style.left = (i * 18) + 'px';
-                column.style.animationDelay = Math.random() * 15 + 's';
-                column.style.animationDuration = (Math.random() * 15 + 8) + 's';
-                column.style.fontSize = (Math.random() * 4 + 12) + 'px';
-                column.style.opacity = Math.random() * 0.8 + 0.2;
-                
-                let text = '';
-                const charCount = Math.floor(Math.random() * 30 + 20);
-                for (let j = 0; j < charCount; j++) {
-                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                    const brightness = Math.random() > 0.1 ? '#00ff00' : '#00aa00';
-                    text += '<span style="color: ' + brightness + ';">' + char + '</span><br>';
-                }
-                column.innerHTML = text;
-                matrixContainer.appendChild(column);
-            }
-            
-            setInterval(function() {
-                const columns = matrixContainer.querySelectorAll('.matrix-column');
-                columns.forEach(function(column) {
-                    if (Math.random() > 0.95) {
-                        const chars = column.querySelectorAll('span');
-                        if (chars.length > 0) {
-                            const randomChar = chars[Math.floor(Math.random() * chars.length)];
-                            randomChar.style.color = '#ffffff';
-                            setTimeout(function() {
-                                randomChar.style.color = '#00ff00';
-                            }, 200);
-                        }
-                    }
-                });
-            }, 100);
         }
         
         function isValidUUID(uuid) {
