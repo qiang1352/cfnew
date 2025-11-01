@@ -726,32 +726,20 @@ export default {
 	</style>
 </head>
 <body>
-    <div class="matrix-text">终端</div>
-    <div class="terminal">
-        <div class="terminal-header">
-            <div class="terminal-buttons">
-                <div class="terminal-button"></div>
-                <div class="terminal-button"></div>
-                <div class="terminal-button"></div>
-            </div>
-            <div class="terminal-title">终端</div>
-        </div>
+    <div class="container">
+		<h1>Worker 部署成功</h1>
         <div class="terminal-body" id="terminalBody">
             <div class="terminal-line">
-                <span class="terminal-prompt">root:~$</span>
                 <span class="terminal-output">恭喜你来到这</span>
             </div>
             <div class="terminal-line">
-                <span class="terminal-prompt">root:~$</span>
-                <span class="terminal-output">${cp && cp.trim() ? '请输入你D变量的值' : '请输入你U变量的值'}</span>
+                <p>${cp && cp.trim() ? '请输入你D变量的值' : '请输入你U变量的值'}</p>
             </div>
             <div class="terminal-line">
-                <span class="terminal-prompt">root:~$</span>
-                <span class="terminal-output">命令: connect [${cp && cp.trim() ? 'PATH' : 'UUID'}]</span>
+                <p>命令: connect [${cp && cp.trim() ? 'PATH' : 'UUID'}]</p>
             </div>
             <div class="terminal-line">
-                <span class="terminal-prompt">root:~$</span>
-                <input type="text" class="terminal-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且回车...' : '输入U变量的内容并且回车...'}" autofocus>
+                <input type="text" class="uuid-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且回车...' : '输入U变量的内容并且回车...'}" autofocus>
                 <span class="terminal-cursor"></span>
             </div>
         </div>
