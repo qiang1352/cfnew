@@ -723,6 +723,10 @@ export default {
                 <input type="text" class="uuid-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且回车...' : '输入U变量的内容并且回车...'}" autofocus>
                 <span class="terminal-cursor"></span>
             </div>
+			<div class="input-group">
+            	<input type="text" class="uuid-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且点击按钮...' : '输入U变量的内容并且点击按钮...'}" autofocus>
+            	<button class="submit-btn" id="submitBtn">获取订阅</button>
+        </div>
         </div>
     </div>
     <script>
@@ -790,12 +794,19 @@ export default {
         document.addEventListener('DOMContentLoaded', function() {
             
             const input = document.getElementById('uuidInput');
+			const submitBtn = document.getElementById('submitBtn');
             input.focus();
-            input.addEventListener('keypress', function(e) {
+            /* input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     handleUUIDInput();
                 }
             });
+			*/
+
+    // *** 新增：为按钮添加点击事件监听，实现跳转功能 ***
+    if (submitBtn) {
+        submitBtn.addEventListener('click', handleUUIDInput);
+    }
         });
     </script>
 </body>
