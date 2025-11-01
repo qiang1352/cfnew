@@ -624,56 +624,6 @@ export default {
             overflow-x: hidden; position: relative;
             display: flex; justify-content: center; align-items: center;
         }
-        .matrix-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #000 0%, #4a90e2 50%, #000 100%);
-            z-index: -1;
-            animation: bg-pulse 8s ease-in-out infinite;
-        }
-        @keyframes bg-pulse {
-            0%, 100% { background: linear-gradient(45deg, #000 0%, #4a90e2 50%, #000 100%); }
-            50% { background: linear-gradient(45deg, #000 0%, #002200 50%, #000 100%); }
-        }
-        .matrix-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
-            animation: matrix-fall 20s linear infinite;
-            z-index: -1;
-        }
-        @keyframes matrix-fall {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100vh); }
-        }
-        .matrix-code-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1;
-            overflow: hidden;
-        }
-        .matrix-column {
-            position: absolute; top: -100%; left: 0;
-            color: #00ff00; font-family: "Courier New", monospace;
-            font-size: 14px; line-height: 1.2;
-            animation: matrix-drop 15s linear infinite;
-            text-shadow: 0 0 5px #00ff00;
-        }
-        @keyframes matrix-drop {
-            0% { top: -100%; opacity: 1; }
-            10% { opacity: 1; }
-            90% { opacity: 0.3; }
-            100% { top: 100vh; opacity: 0; }
-        }
-        .matrix-column:nth-child(odd) {
-            animation-duration: 12s;
-            animation-delay: -2s;
-        }
-        .matrix-column:nth-child(even) {
-            animation-duration: 18s;
-            animation-delay: -5s;
-        }
-        .matrix-column:nth-child(3n) {
-            animation-duration: 20s;
-            animation-delay: -8s;
-        }
         .terminal {
             width: 90%; max-width: 800px; height: 500px;
             background: rgba(0, 0, 0, 0.9);
@@ -729,10 +679,6 @@ export default {
             background: #00ff00; animation: blink 1s infinite;
             margin-left: 2px;
         }
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
         .terminal-output {
             color: #00aa00; margin: 5px 0;
         }
@@ -747,10 +693,6 @@ export default {
             color: #00ff00; font-family: "Courier New", monospace;
             font-size: 0.8rem; opacity: 0.6;
             animation: matrix-flicker 3s infinite;
-        }
-        @keyframes matrix-flicker {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
         }
     </style>
 </head>
@@ -854,7 +796,6 @@ export default {
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            createMatrixRain();
             
             const input = document.getElementById('uuidInput');
             input.focus();
@@ -1572,56 +1513,6 @@ async function handleSubscriptionPage(request, user = null) {
             background: #1a1a2e; color: #4a90e2; min-height: 100vh;
             overflow-x: hidden; position: relative;
         }
-        .matrix-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
-            z-index: -1;
-            animation: bg-pulse 8s ease-in-out infinite;
-        }
-        @keyframes bg-pulse {
-            0%, 100% { background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%); }
-            50% { background: linear-gradient(45deg, #000 0%, #002200 50%, #000 100%); }
-        }
-        .matrix-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
-            animation: matrix-fall 20s linear infinite;
-            z-index: -1;
-        }
-        @keyframes matrix-fall {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100vh); }
-        }
-        .matrix-code-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1;
-            overflow: hidden;
-        }
-        .matrix-column {
-            position: absolute; top: -100%; left: 0;
-            color: #4a90e2; font-family: "Courier New", monospace;
-            font-size: 14px; line-height: 1.2;
-            animation: matrix-drop 15s linear infinite;
-            text-shadow: 0 0 5px #4a90e2;
-        }
-        @keyframes matrix-drop {
-            0% { top: -100%; opacity: 1; }
-            10% { opacity: 1; }
-            90% { opacity: 0.3; }
-            100% { top: 100vh; opacity: 0; }
-        }
-        .matrix-column:nth-child(odd) {
-            animation-duration: 12s;
-            animation-delay: -2s;
-        }
-        .matrix-column:nth-child(even) {
-            animation-duration: 18s;
-            animation-delay: -5s;
-        }
-        .matrix-column:nth-child(3n) {
-            animation-duration: 20s;
-            animation-delay: -8s;
-        }
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 40px; }
         .title {
@@ -1636,14 +1527,6 @@ async function handleSubscriptionPage(request, user = null) {
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        @keyframes matrix-glow {
-            from { text-shadow: 0 0 10px #4a90e2, 0 0 20px #4a90e2, 0 0 30px #4a90e2, 0 0 40px #4a90e2; }
-            to { text-shadow: 0 0 20px #4a90e2, 0 0 30px #4a90e2, 0 0 40px #4a90e2, 0 0 50px #4a90e2; }
-        }
-        @keyframes matrix-pulse {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
         .subtitle { color: #00aa00; margin-bottom: 30px; font-size: 1.2rem; }
         .card {
             background: rgba(0, 20, 0, 0.9);
@@ -1654,10 +1537,6 @@ async function handleSubscriptionPage(request, user = null) {
             backdrop-filter: blur(10px);
             animation: card-glow 4s ease-in-out infinite;
         }
-        @keyframes card-glow {
-            0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1); }
-            50% { box-shadow: 0 0 40px rgba(0, 255, 0, 0.7), inset 0 0 30px rgba(0, 255, 0, 0.2); }
-        }
         .card::before {
             content: ""; position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -1665,13 +1544,8 @@ async function handleSubscriptionPage(request, user = null) {
             opacity: 0.2; pointer-events: none;
             animation: scan-line 3s linear infinite;
         }
-        @keyframes scan-line {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
         .card-title {
             font-size: 1.8rem; margin-bottom: 20px;
-            color: #00ff00; text-shadow: 0 0 5px #00ff00;
         }
         .client-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1744,29 +1618,17 @@ async function handleSubscriptionPage(request, user = null) {
             position: relative;
             overflow: hidden;
         }
-        @keyframes url-glow {
-            from { box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.3); }
-            to { box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.6), 0 0 30px rgba(0, 255, 0, 0.5); }
-        }
         .atob('c3Vic2NyaXB0aW9u')-url::before {
             content: ""; position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0,255,0,0.1), transparent);
             animation: url-scan 3s linear infinite;
         }
-        @keyframes url-scan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
         .matrix-text {
             position: fixed; top: 20px; right: 20px;
             color: #4a90e2; font-family: "Courier New", monospace;
             font-size: 0.8rem; opacity: 0.6;
             animation: matrix-flicker 3s infinite;
-        }
-        @keyframes matrix-flicker {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
         }
     </style>
 </head>
