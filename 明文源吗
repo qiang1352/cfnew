@@ -610,153 +610,298 @@ export default {
 				}
 				
 				if (url.pathname === '/') {
-					const urlOrigin = url.origin;
 					const terminalHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worker部署</title>
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+    <title>终端</title>
     <style>
-		:root {
-            --bg-color: #1a1a2e;
-            --card-bg: #2c2c54;
-            --text-color: #e0e0f0;
-            --accent-color: #4a90e2; /* 橙色 */
-            --border-color: #4a4e69;
-			--hover-color: #5d9cec; /* 浅一点的蓝色 */
-            --shadow-color: rgba(0, 0, 0, 0.4);
-			--code-color: #66ccff; /* 新增：浅蓝色代码块颜色 */
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            text-align: center;
+            font-family: "Courier New", monospace;
+            background: #000; color: #00ff00; min-height: 100vh;
+            overflow-x: hidden; position: relative;
+            display: flex; justify-content: center; align-items: center;
         }
-        .container {
-            width: 100%;
-            max-width: 500px;
-            padding: 40px;
-            border-radius: 12px;
-            background-color: var(--card-bg);
-            box-shadow: 0 10px 30px var(--shadow-color);
+        .matrix-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
+            z-index: -1;
+            animation: bg-pulse 8s ease-in-out infinite;
         }
-        h1 {
-            color: var(--accent-color);
-            font-size: 2.2rem;
-            margin-bottom: 15px;
+        @keyframes bg-pulse {
+            0%, 100% { background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%); }
+            50% { background: linear-gradient(45deg, #000 0%, #002200 50%, #000 100%); }
         }
-        p {
-            margin-bottom: 20px;
-            line-height: 1.6;
+        .matrix-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
+            animation: matrix-fall 20s linear infinite;
+            z-index: -1;
         }
-        .input-group {
-            margin-bottom: 20px;
+        @keyframes matrix-fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
         }
-        .uuid-input {
-            width: 100%; /* 保证输入框宽度为 100% */
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px; /* 全圆角 */
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-color);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-            margin-bottom: 15px; /* 在输入框下方添加间距 */
-            box-sizing: border-box;
+        .matrix-code-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+            overflow: hidden;
         }
-        .uuid-input:focus {
-            border-color: var(--accent-color);
+        .matrix-column {
+            position: absolute; top: -100%; left: 0;
+            color: #00ff00; font-family: "Courier New", monospace;
+            font-size: 14px; line-height: 1.2;
+            animation: matrix-drop 15s linear infinite;
+            text-shadow: 0 0 5px #00ff00;
         }
-        .submit-btn {
-            width: 100%; /* 保证按钮宽度为 100% */
-            display: block;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px; /* 全圆角 */
-            background-color: var(--accent-color);
-            color: #ffffff;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            text-transform: uppercase;
+        @keyframes matrix-drop {
+            0% { top: -100%; opacity: 1; }
+            10% { opacity: 1; }
+            90% { opacity: 0.3; }
+            100% { top: 100vh; opacity: 0; }
         }
-        .submit-btn:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-1px);
+        .matrix-column:nth-child(odd) {
+            animation-duration: 12s;
+            animation-delay: -2s;
         }
-        a {
-            color: var(--accent-color);
-            text-decoration: none;
+        .matrix-column:nth-child(even) {
+            animation-duration: 18s;
+            animation-delay: -5s;
         }
-        a:hover {
-            text-decoration: underline;
+        .matrix-column:nth-child(3n) {
+            animation-duration: 20s;
+            animation-delay: -8s;
         }
-		.code-block {
-            background-color: #000000;
-            color: var(--code-color); /* 统一使用浅蓝色变量 */
-            padding: 10px;
-            border-radius: 6px;
-            word-break: break-all;
-            font-family: monospace;
-            margin: 15px 0;
-            border: 1px solid var(--accent-color);
+        .terminal {
+            width: 90%; max-width: 800px; height: 500px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative; z-index: 1;
+            overflow: hidden;
         }
-	</style>
+        .terminal-header {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 10px 15px;
+            border-bottom: 1px solid #00ff00;
+            display: flex; align-items: center;
+        }
+        .terminal-buttons {
+            display: flex; gap: 8px;
+        }
+        .terminal-button {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #ff5f57; border: none;
+        }
+        .terminal-button:nth-child(2) { background: #ffbd2e; }
+        .terminal-button:nth-child(3) { background: #28ca42; }
+        .terminal-title {
+            margin-left: 15px; color: #00ff00;
+            font-size: 14px; font-weight: bold;
+        }
+        .terminal-body {
+            padding: 20px; height: calc(100% - 50px);
+            overflow-y: auto; font-size: 14px;
+            line-height: 1.4;
+        }
+        .terminal-line {
+            margin-bottom: 8px; display: flex; align-items: center;
+        }
+        .terminal-prompt {
+            color: #00ff00; margin-right: 10px;
+            font-weight: bold;
+        }
+        .terminal-input {
+            background: transparent; border: none; outline: none;
+            color: #00ff00; font-family: "Courier New", monospace;
+            font-size: 14px; flex: 1;
+            caret-color: #00ff00;
+        }
+        .terminal-input::placeholder {
+            color: #00aa00; opacity: 0.7;
+        }
+        .terminal-cursor {
+            display: inline-block; width: 8px; height: 16px;
+            background: #00ff00; animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .terminal-output {
+            color: #00aa00; margin: 5px 0;
+        }
+        .terminal-error {
+            color: #ff4444; margin: 5px 0;
+        }
+        .terminal-success {
+            color: #44ff44; margin: 5px 0;
+        }
+        .matrix-text {
+            position: fixed; top: 20px; right: 20px;
+            color: #00ff00; font-family: "Courier New", monospace;
+            font-size: 0.8rem; opacity: 0.6;
+            animation: matrix-flicker 3s infinite;
+        }
+        @keyframes matrix-flicker {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-		<h1>Worker 部署成功</h1>
+    <div class="matrix-bg"></div>
+    <div class="matrix-rain"></div>
+    <div class="matrix-code-rain" id="matrixCodeRain"></div>
+    <div class="matrix-text">终端</div>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="terminal-button"></div>
+                <div class="terminal-button"></div>
+                <div class="terminal-button"></div>
+            </div>
+            <div class="terminal-title">终端</div>
+        </div>
         <div class="terminal-body" id="terminalBody">
             <div class="terminal-line">
-                <p>${cp && cp.trim() ? '请输入你D变量的值' : '请输入你U变量的值'}</p>
+                <span class="terminal-prompt">root:~$</span>
+                <span class="terminal-output">恭喜你来到这</span>
             </div>
-			<div class="input-group">
-            	<input type="text" class="uuid-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且点击按钮...' : '输入U变量的内容并且点击按钮...'}" autofocus>
-            	<button class="submit-btn" onclick="redirectToSubscription()">获取订阅</button>
-        </div>
+            <div class="terminal-line">
+                <span class="terminal-prompt">root:~$</span>
+                <span class="terminal-output">${cp && cp.trim() ? '请输入你D变量的值' : '请输入你U变量的值'}</span>
+            </div>
+            <div class="terminal-line">
+                <span class="terminal-prompt">root:~$</span>
+                <span class="terminal-output">命令: connect [${cp && cp.trim() ? 'PATH' : 'UUID'}]</span>
+            </div>
+            <div class="terminal-line">
+                <span class="terminal-prompt">root:~$</span>
+                <input type="text" class="terminal-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且回车...' : '输入U变量的内容并且回车...'}" autofocus>
+                <span class="terminal-cursor"></span>
+            </div>
         </div>
     </div>
     <script>
-		const urlOrigin = '${urlOrigin}';
-        function isValidUUID(uuid) {
-            // 简单的 UUID v4 格式校验
-            return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(uuid);
-        }
-
-		function redirectToSubscription() {
-            const uuidInput = document.getElementById('uuidInput').value.trim();
+        function createMatrixRain() {
+            const matrixContainer = document.getElementById('matrixCodeRain');
+            const matrixChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            const columns = Math.floor(window.innerWidth / 18);
             
-            if (uuidInput === '') {
-                alert('请输入您的 UUID！');
-                return;
-            }
-
-            if (!isValidUUID(uuidInput)) {
-                // 如果格式不完全正确，给出警告，但依然允许用户继续
-                if (!confirm('您输入的 UUID 格式可能不正确，确定要继续吗？')) {
-                    return;
+            for (let i = 0; i < columns; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = (i * 18) + 'px';
+                column.style.animationDelay = Math.random() * 15 + 's';
+                column.style.animationDuration = (Math.random() * 15 + 8) + 's';
+                column.style.fontSize = (Math.random() * 4 + 12) + 'px';
+                column.style.opacity = Math.random() * 0.8 + 0.2;
+                
+                let text = '';
+                const charCount = Math.floor(Math.random() * 30 + 20);
+                for (let j = 0; j < charCount; j++) {
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    const brightness = Math.random() > 0.1 ? '#00ff00' : '#00aa00';
+                    text += '<span style="color: ' + brightness + ';">' + char + '</span><br>';
                 }
+                column.innerHTML = text;
+                matrixContainer.appendChild(column);
             }
-
-            // 跳转到 /<UUID> 路径，由 Worker 的 handleSubscriptionPage 处理
-            window.location.href = urlOrigin + '/' + uuidInput;
+            
+            setInterval(function() {
+                const columns = matrixContainer.querySelectorAll('.matrix-column');
+                columns.forEach(function(column) {
+                    if (Math.random() > 0.95) {
+                        const chars = column.querySelectorAll('span');
+                        if (chars.length > 0) {
+                            const randomChar = chars[Math.floor(Math.random() * chars.length)];
+                            randomChar.style.color = '#ffffff';
+                            setTimeout(function() {
+                                randomChar.style.color = '#00ff00';
+                            }, 200);
+                        }
+                    }
+                });
+            }, 100);
         }
-		
         
-        document.getElementById('uuidInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                redirectToSubscription();
+        function isValidUUID(uuid) {
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+            return uuidRegex.test(uuid);
+        }
+        
+        function addTerminalLine(content, type = 'output') {
+            const terminalBody = document.getElementById('terminalBody');
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+            
+            const prompt = document.createElement('span');
+            prompt.className = 'terminal-prompt';
+            prompt.textContent = 'root:~$';
+            
+            const output = document.createElement('span');
+            output.className = 'terminal-' + type;
+            output.textContent = content;
+            
+            line.appendChild(prompt);
+            line.appendChild(output);
+            terminalBody.appendChild(line);
+            
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+        
+        function handleUUIDInput() {
+            const input = document.getElementById('uuidInput');
+            const inputValue = input.value.trim();
+            const cp = '${ cp }';
+            
+            if (inputValue) {
+                addTerminalLine(atob('Y29ubmVjdCA=') + inputValue, 'output');
+                
+                if (cp) {
+                    const cleanInput = inputValue.startsWith('/') ? inputValue : '/' + inputValue;
+                    addTerminalLine('正在连接...', 'output');
+                    setTimeout(() => {
+                        addTerminalLine('连接成功！返回结果...', 'success');
+                        setTimeout(() => {
+                            window.location.href = cleanInput;
+                        }, 1000);
+                    }, 500);
+                } else {
+                    if (isValidUUID(inputValue)) {
+                    addTerminalLine('正在入侵...', 'output');
+                    setTimeout(() => {
+                        addTerminalLine('连接成功！返回结果...', 'success');
+                        setTimeout(() => {
+                                window.location.href = '/' + inputValue;
+                        }, 1000);
+                    }, 500);
+                } else {
+                    addTerminalLine('错误: 无效的UUID格式', 'error');
+                    addTerminalLine('请重新输入有效的UUID', 'output');
+                    }
+                }
+                
+                input.value = '';
             }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            createMatrixRain();
+            
+            const input = document.getElementById('uuidInput');
+            input.focus();
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleUUIDInput();
+                }
+            });
         });
     </script>
 </body>
@@ -972,6 +1117,7 @@ async function handleSubscriptionRequest(request, user, url = null) {
             subscriptionContent = await generateClashConfig(finalLinks);
             contentType = 'text/yaml; charset=utf-8';
             break;
+        case atob('c3VyZ2U='):
         case atob('c3VyZ2Uy'):
         case atob('c3VyZ2Uz'):
         case atob('c3VyZ2U0'):
@@ -1461,8 +1607,8 @@ async function handleSubscriptionPage(request, user = null) {
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: "Courier New", monospace;
-            background: #000; color: #00ff00; min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #1a1a2e; color: #00ff00; min-height: 100vh;
             overflow-x: hidden; position: relative;
         }
         .matrix-bg {
@@ -1676,16 +1822,16 @@ async function handleSubscriptionPage(request, user = null) {
         <div class="card">
             <h2 class="card-title">[ 选择客户端 ]</h2>
             <div class="client-grid">
-                <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='))">CLASH</button>
-                <button class="client-btn" onclick="generateClientLink(atob('c3VyZ2U='))">SURGE</button>
-                <button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='))">SING-BOX</button>
-                <button class="client-btn" onclick="generateClientLink(atob('bG9vbg=='))">LOON</button>
-                <button class="client-btn" onclick="generateClientLink(atob('cXVhbng='))">QUANTUMULT X</button>
-                <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='))">V2RAY</button>
-                <button class="client-btn" onclick="generateClientLink(atob('c2hhZG93cm9ja2V0'))">Shadowrocket</button>
-                <button class="client-btn" onclick="generateClientLink(atob('c3Rhc2g='))">STASH</button>
-                <button class="client-btn" onclick="generateClientLink(atob('bmVrb3JheQ=='))">NEKORAY</button>
-                <button class="client-btn" onclick="generateClientLink(atob('djJyYXluZw=='))">V2RAYNG</button>
+                <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
+                <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'STASH')">STASH</button>
+                <button class="client-btn" onclick="generateClientLink(atob('c3VyZ2U='), 'SURGE')">SURGE</button>
+                <button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
+                <button class="client-btn" onclick="generateClientLink(atob('bG9vbg=='), 'LOON')">LOON</button>
+                <button class="client-btn" onclick="generateClientLink(atob('cXVhbng='), 'QUANTUMULT X')">QUANTUMULT X</button>
+                <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
+                <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAYNG')">V2RAYNG</button>
+                <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'NEKORAY')">NEKORAY</button>
+                <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
                 <button class="client-btn" onclick="generateAutoLink()">自动识别</button>
             </div>
             <div class=atob('c3Vic2NyaXB0aW9uLXVybA==') id="clientSubscriptionUrl"></div>
@@ -1930,65 +2076,80 @@ async function handleSubscriptionPage(request, user = null) {
             }, timeout);
         }
         
-        function generateClientLink(clientType) {
+        function generateClientLink(clientType, clientName) {
             var currentUrl = window.location.href;
             var subscriptionUrl = currentUrl + "/sub";
+            var schemeUrl = '';
+            var displayName = clientName || '';
+            var finalUrl = subscriptionUrl;
             
             if (clientType === atob('djJyYXk=')) {
-                document.getElementById("clientSubscriptionUrl").textContent = subscriptionUrl;
+                finalUrl = subscriptionUrl;
+                document.getElementById("clientSubscriptionUrl").textContent = finalUrl;
                 document.getElementById("clientSubscriptionUrl").style.display = "block";
-                var schemeUrl = 'v2ray://install?url=' + encodeURIComponent(subscriptionUrl);
-                tryOpenApp(schemeUrl, function() {
-                    navigator.clipboard.writeText(subscriptionUrl).then(function() {
-                        alert(decodeURIComponent(escape(atob('VjJSYXkg6K6i6ZiF6ZO+5o6l5bey5aSN5Yi2'))));
+                
+                if (clientName === 'V2RAY') {
+                    navigator.clipboard.writeText(finalUrl).then(function() {
+                        alert(displayName + " 订阅链接已复制");
                     });
-                });
+                } else if (clientName === 'Shadowrocket') {
+                    schemeUrl = 'shadowrocket://add/' + encodeURIComponent(finalUrl);
+                    tryOpenApp(schemeUrl, function() {
+                        navigator.clipboard.writeText(finalUrl).then(function() {
+                            alert(displayName + " 订阅链接已复制");
+                        });
+                    });
+                } else if (clientName === 'V2RAYNG') {
+                    schemeUrl = 'v2rayng://install?url=' + encodeURIComponent(finalUrl);
+                    tryOpenApp(schemeUrl, function() {
+                        navigator.clipboard.writeText(finalUrl).then(function() {
+                            alert(displayName + " 订阅链接已复制");
+                        });
+                    });
+                } else if (clientName === 'NEKORAY') {
+                    schemeUrl = 'nekoray://install-config?url=' + encodeURIComponent(finalUrl);
+                    tryOpenApp(schemeUrl, function() {
+                        navigator.clipboard.writeText(finalUrl).then(function() {
+                            alert(displayName + " 订阅链接已复制");
+                        });
+                    });
+                }
             } else {
                 var encodedUrl = encodeURIComponent(subscriptionUrl);
-                var apiUrl = SUB_CONVERTER_URL + "?target=auto&url=" + encodedUrl + "&insert=false";
-                document.getElementById("clientSubscriptionUrl").textContent = apiUrl;
+                finalUrl = SUB_CONVERTER_URL + "?target=" + clientType + "&url=" + encodedUrl + "&insert=false";
+                document.getElementById("clientSubscriptionUrl").textContent = finalUrl;
                 document.getElementById("clientSubscriptionUrl").style.display = "block";
                 
-                var schemeUrl = '';
-                var displayName = clientType.toUpperCase();
-                
                 if (clientType === atob('Y2xhc2g=')) {
-                    schemeUrl = 'clash://install-config?url=' + encodeURIComponent(apiUrl);
-                    displayName = 'CLASH';
+                    if (clientName === 'STASH') {
+                        schemeUrl = 'stash://install?url=' + encodeURIComponent(finalUrl);
+                        displayName = 'STASH';
+                    } else {
+                        schemeUrl = 'clash://install-config?url=' + encodeURIComponent(finalUrl);
+                        displayName = 'CLASH';
+                    }
                 } else if (clientType === atob('c3VyZ2U=')) {
-                    schemeUrl = 'surge:///install-config?url=' + encodeURIComponent(apiUrl);
+                    schemeUrl = 'surge:///install-config?url=' + encodeURIComponent(finalUrl);
                     displayName = 'SURGE';
                 } else if (clientType === atob('c2luZ2JveA==')) {
-                    schemeUrl = 'sing-box://install-config?url=' + encodeURIComponent(apiUrl);
+                    schemeUrl = 'sing-box://install-config?url=' + encodeURIComponent(finalUrl);
                     displayName = 'SING-BOX';
                 } else if (clientType === atob('bG9vbg==')) {
-                    schemeUrl = 'loon://install?url=' + encodeURIComponent(apiUrl);
+                    schemeUrl = 'loon://install?url=' + encodeURIComponent(finalUrl);
                     displayName = 'LOON';
                 } else if (clientType === atob('cXVhbng=')) {
-                    schemeUrl = 'quantumult-x://install-config?url=' + encodeURIComponent(apiUrl);
+                    schemeUrl = 'quantumult-x://install-config?url=' + encodeURIComponent(finalUrl);
                     displayName = 'QUANTUMULT X';
-                } else if (clientType === atob('c2hhZG93cm9ja2V0')) {
-                    schemeUrl = 'shadowrocket://add/' + encodeURIComponent(apiUrl);
-                    displayName = 'Shadowrocket';
-                } else if (clientType === atob('c3Rhc2g=')) {
-                    schemeUrl = 'stash://install?url=' + encodeURIComponent(apiUrl);
-                    displayName = 'STASH';
-                } else if (clientType === atob('bmVrb3JheQ==')) {
-                    schemeUrl = 'nekoray://install-config?url=' + encodeURIComponent(apiUrl);
-                    displayName = 'NEKORAY';
-                } else if (clientType === atob('djJyYXluZw==')) {
-                    schemeUrl = 'v2rayng://install?url=' + encodeURIComponent(apiUrl);
-                    displayName = 'V2RAYNG';
                 }
                 
                 if (schemeUrl) {
                     tryOpenApp(schemeUrl, function() {
-                        navigator.clipboard.writeText(apiUrl).then(function() {
+                        navigator.clipboard.writeText(finalUrl).then(function() {
                             alert(displayName + " 订阅链接已复制");
                         });
                     });
                 } else {
-                    navigator.clipboard.writeText(apiUrl).then(function() {
+                    navigator.clipboard.writeText(finalUrl).then(function() {
                         alert(displayName + " 订阅链接已复制");
                     });
                 }
@@ -2007,45 +2168,6 @@ async function handleSubscriptionPage(request, user = null) {
         }
         
         function createMatrixRain() {
-            const matrixContainer = document.getElementById('matrixCodeRain');
-            const matrixChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-            const columns = Math.floor(window.innerWidth / 18);
-            
-            for (let i = 0; i < columns; i++) {
-                const column = document.createElement('div');
-                column.className = 'matrix-column';
-                column.style.left = (i * 18) + 'px';
-                column.style.animationDelay = Math.random() * 15 + 's';
-                column.style.animationDuration = (Math.random() * 15 + 8) + 's';
-                column.style.fontSize = (Math.random() * 4 + 12) + 'px';
-                column.style.opacity = Math.random() * 0.8 + 0.2;
-                
-                let text = '';
-                const charCount = Math.floor(Math.random() * 30 + 20);
-                for (let j = 0; j < charCount; j++) {
-                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                    const brightness = Math.random() > 0.1 ? '#00ff00' : '#00aa00';
-                    text += '<span style="color: ' + brightness + ';">' + char + '</span><br>';
-                }
-                column.innerHTML = text;
-                matrixContainer.appendChild(column);
-            }
-            
-            setInterval(function() {
-                const columns = matrixContainer.querySelectorAll('.matrix-column');
-                columns.forEach(function(column) {
-                    if (Math.random() > 0.95) {
-                        const chars = column.querySelectorAll('span');
-                        if (chars.length > 0) {
-                            const randomChar = chars[Math.floor(Math.random() * chars.length)];
-                            randomChar.style.color = '#ffffff';
-                            setTimeout(function() {
-                                randomChar.style.color = '#00ff00';
-                            }, 200);
-                        }
-                    }
-                });
-            }, 100);
         }
         
         async function checkSystemStatus() {
