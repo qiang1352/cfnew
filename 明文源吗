@@ -676,19 +676,6 @@ export default {
         .uuid-input:focus {
             border-color: var(--accent-color);
         }
-		.terminal-output {
-			width: 100%; /* 保证输入框宽度为 100% */
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px; /* 全圆角 */
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text-color);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-            margin-bottom: 15px; /* 在输入框下方添加间距 */
-            box-sizing: border-box;
-		}
         .submit-btn {
             width: 100%; /* 保证按钮宽度为 100% */
             display: block;
@@ -730,13 +717,7 @@ export default {
 		<h1>Worker 部署成功</h1>
         <div class="terminal-body" id="terminalBody">
             <div class="terminal-line">
-                <span class="terminal-output">恭喜你来到这</span>
-            </div>
-            <div class="terminal-line">
                 <p>${cp && cp.trim() ? '请输入你D变量的值' : '请输入你U变量的值'}</p>
-            </div>
-            <div class="terminal-line">
-                <p>命令: connect [${cp && cp.trim() ? 'PATH' : 'UUID'}]</p>
             </div>
             <div class="terminal-line">
                 <input type="text" class="uuid-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且回车...' : '输入U变量的内容并且回车...'}" autofocus>
@@ -755,11 +736,11 @@ export default {
             const line = document.createElement('div');
             line.className = 'terminal-line';
             
-            const prompt = document.createElement('span');
-            prompt.className = 'terminal-prompt';
-            prompt.textContent = 'root:~$';
+            const prompt = document.createElement('p');
+            prompt.className = '';
+            prompt.textContent = '';
             
-            const output = document.createElement('span');
+            const output = document.createElement('p');
             output.className = 'terminal-' + type;
             output.textContent = content;
             
