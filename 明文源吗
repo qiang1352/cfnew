@@ -610,6 +610,7 @@ export default {
 				}
 				
 				if (url.pathname === '/') {
+					const urlOrigin = url.origin;
 					const terminalHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -719,94 +720,43 @@ export default {
             <div class="terminal-line">
                 <p>${cp && cp.trim() ? '请输入你D变量的值' : '请输入你U变量的值'}</p>
             </div>
-            <div class="terminal-line">
-                <input type="text" class="uuid-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且回车...' : '输入U变量的内容并且回车...'}" autofocus>
-                <span class="terminal-cursor"></span>
-            </div>
 			<div class="input-group">
             	<input type="text" class="uuid-input" id="uuidInput" placeholder="${cp && cp.trim() ? '输入D变量的内容并且点击按钮...' : '输入U变量的内容并且点击按钮...'}" autofocus>
-            	<button class="submit-btn" id="submitBtn">获取订阅</button>
+            	<button class="submit-btn" onclick="redirectToSubscription()">获取订阅</button>
         </div>
         </div>
     </div>
     <script>
+		const urlOrigin = '${urlOrigin}';
         function isValidUUID(uuid) {
-            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-            return uuidRegex.test(uuid);
+            // 简单的 UUID v4 格式校验
+            return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(uuid);
         }
-        
-        function addTerminalLine(content, type = 'output') {
-            const terminalBody = document.getElementById('terminalBody');
-            const line = document.createElement('div');
-            line.className = 'terminal-line';
-            
-            const prompt = document.createElement('p');
-            prompt.className = '';
-            prompt.textContent = '';
-            
-            const output = document.createElement('p');
-            output.className = 'terminal-' + type;
-            output.textContent = content;
-            
-            line.appendChild(prompt);
-            line.appendChild(output);
-            terminalBody.appendChild(line);
-            
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        }
-        
-        function handleUUIDInput() {
-            const input = document.getElementById('uuidInput');
-            const inputValue = input.value.trim();
-            const cp = '${ cp }';
-            
-            if (inputValue) {
-                addTerminalLine(atob('Y29ubmVjdCA=') + inputValue, 'output');
-                
-                if (cp) {
-                    const cleanInput = inputValue.startsWith('/') ? inputValue : '/' + inputValue;
-                    addTerminalLine('正在连接...', 'output');
-                    setTimeout(() => {
-                        addTerminalLine('连接成功！返回结果...', 'success');
-                        setTimeout(() => {
-                            window.location.href = cleanInput;
-                        }, 1000);
-                    }, 500);
-                } else {
-                    if (isValidUUID(inputValue)) {
-                    addTerminalLine('正在入侵...', 'output');
-                    setTimeout(() => {
-                        addTerminalLine('连接成功！返回结果...', 'success');
-                        setTimeout(() => {
-                                window.location.href = '/' + inputValue;
-                        }, 1000);
-                    }, 500);
-                } else {
-                    addTerminalLine('错误: 无效的UUID格式', 'error');
-                    addTerminalLine('请重新输入有效的UUID', 'output');
-                    }
-                }
-                
-                input.value = '';
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            const input = document.getElementById('uuidInput');
-			const submitBtn = document.getElementById('submitBtn');
-            input.focus();
-            /* input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    handleUUIDInput();
-                }
-            });
-			*/
 
-    // *** 新增：为按钮添加点击事件监听，实现跳转功能 ***
-    if (submitBtn) {
-        submitBtn.addEventListener('click', handleUUIDInput);
-    }
+		function redirectToSubscription() {
+            const uuidInput = document.getElementById('uuidInput').value.trim();
+            
+            if (uuidInput === '') {
+                alert('请输入您的 UUID！');
+                return;
+            }
+
+            if (!isValidUUID(uuidInput)) {
+                // 如果格式不完全正确，给出警告，但依然允许用户继续
+                if (!confirm('您输入的 UUID 格式可能不正确，确定要继续吗？')) {
+                    return;
+                }
+            }
+
+            // 跳转到 /<UUID> 路径，由 Worker 的 handleSubscriptionPage 处理
+            window.location.href = urlOrigin + '/' + uuidInput;
+        }
+		
+        
+        document.getElementById('uuidInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                redirectToSubscription();
+            }
         });
     </script>
 </body>
