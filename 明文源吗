@@ -1612,7 +1612,7 @@ async function handleSubscriptionPage(request, user = null) {
         }
         .card-title {
             font-size: 1.8rem; margin-bottom: 20px;
-            color: #4a90e2; text-shadow: 0 0 5px #4a90e2;
+            color: #4a90e2;
         }
         .client-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1628,21 +1628,6 @@ async function handleSubscriptionPage(request, user = null) {
             text-align: center; position: relative;
             overflow: hidden;
         }
-        .client-btn::before {
-            content: ""; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0,255,0,0.4), transparent);
-            transition: left 0.6s ease;
-        }
-        .client-btn::after {
-            content: ""; position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(0,255,0,0.1) 50%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .client-btn:hover::before { left: 100%; }
-        .client-btn:hover::after { opacity: 1; }
         .client-btn:hover {
             background: #4a4e69;
 			transform: translateY(-1px);
@@ -1700,8 +1685,6 @@ async function handleSubscriptionPage(request, user = null) {
     </style>
 </head>
 <body>
-    <div class="matrix-bg"></div>
-    <div class="matrix-rain"></div>
     <div class="container">
         <div class="header">
             <h1 class="title">代理订阅中心</h1>
