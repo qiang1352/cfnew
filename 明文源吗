@@ -1508,43 +1508,6 @@ async function handleSubscriptionPage(request, user = null) {
             background: #1a1a2e; color: #4a90e2; min-height: 100vh;
             overflow-x: hidden; position: relative;
         }
-        .matrix-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
-            z-index: -1;
-            animation: bg-pulse 8s ease-in-out infinite;
-        }
-        .matrix-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
-            animation: matrix-fall 20s linear infinite;
-            z-index: -1;
-        }
-        .matrix-code-rain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -1;
-            overflow: hidden;
-        }
-        .matrix-column {
-            position: absolute; top: -100%; left: 0;
-            color: #4a90e2; 
-			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            font-size: 14px; line-height: 1.2;
-            animation: matrix-drop 15s linear infinite;
-            text-shadow: 0 0 5px #4a90e2;
-        }
-        .matrix-column:nth-child(odd) {
-            animation-duration: 12s;
-            animation-delay: -2s;
-        }
-        .matrix-column:nth-child(even) {
-            animation-duration: 18s;
-            animation-delay: -5s;
-        }
-        .matrix-column:nth-child(3n) {
-            animation-duration: 20s;
-            animation-delay: -8s;
-        }
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 40px; }
         .title {
@@ -1570,7 +1533,9 @@ async function handleSubscriptionPage(request, user = null) {
             background: #4a90e2;
             border: none;
             border-radius: 8px; /* 全圆角 */
-            padding: 15px 20px; color: #ffffff;
+            padding: 15px 20px; 
+			color: #ffffff;
+			font-size: 0.9rem;
             cursor: pointer; transition: all 0.4s ease;
             text-align: center; position: relative;
             overflow: hidden;
@@ -1609,13 +1574,6 @@ async function handleSubscriptionPage(request, user = null) {
             width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0,255,0,0.1), transparent);
             animation: url-scan 3s linear infinite;
-        }
-        .matrix-text {
-            position: fixed; top: 20px; right: 20px;
-            color: #4a90e2; 
-			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            font-size: 0.8rem; opacity: 0.6;
-            animation: matrix-flicker 3s infinite;
         }
 		.text-input {
             width: 100%; /* 保证输入框宽度为 100% */
@@ -1709,7 +1667,7 @@ async function handleSubscriptionPage(request, user = null) {
                             <option value="FI">🇫🇮 芬兰</option>
                             <option value="GB">🇬🇧 英国</option>
                         </select>
-                        <small id="wkRegionHint" style="color: #5d9cec; font-size: 0.85rem; display: none;">⚠️ 使用自定义ProxyIP时，地区选择已禁用</small>
+                        <small id="wkRegionHint" style="color: #5d9cec; font-size: 0.9rem; display: none;">⚠️ 使用自定义ProxyIP时，地区选择已禁用</small>
                     </div>
                     <button type="submit" class="client-btn" >保存地区配置</button>
                 </form>
@@ -1720,27 +1678,28 @@ async function handleSubscriptionPage(request, user = null) {
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="ev" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
-                                    <span style="font-size: 1.1rem;">启用 VLESS 协议</span>
+                                    <span>启用 VLESS 协议</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="et" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
-                                    <span style="font-size: 1.1rem;">启用 Trojan 协议</span>
+                                    <span>启用 Trojan 协议</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="ex" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
-                                    <span style="font-size: 1.1rem;">启用 xhttp 协议</span>
+                                    <span>启用 xhttp 协议</span>
                                 </label>
                             </div>
                             <div>
-                                <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-size: 0.95rem;">Trojan 密码 (可选):</label>
+                                <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-size: 0.9rem;">Trojan 密码 (可选):</label>
                                 <input type="text" id="tp" placeholder="留空则自动使用 UUID" class="text-input">
                             </div>
 							<button type="button" id="saveProtocolBtn" class="client-btn" >保存协议配置</button>
                         </div>
+						<button type="button" id="saveProtocolBtn" class="client-btn" >保存协议配置</button>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">自定义路径 (d):</label>
@@ -1777,19 +1736,19 @@ async function handleSubscriptionPage(request, user = null) {
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="epd" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
-                                    <span style="font-size: 1.1rem;">启用优选域名</span>
+                                    <span >启用优选域名</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="epi" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
-                                    <span style="font-size: 1.1rem;">启用优选 IP</span>
+                                    <span >启用优选 IP</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="egi" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
-                                    <span style="font-size: 1.1rem;">启用 GitHub 默认优选</span>
+                                    <span >启用 GitHub 默认优选</span>
                                 </label>
                             </div>
                         </div>
@@ -2013,13 +1972,13 @@ async function handleSubscriptionPage(request, user = null) {
                         // 获取自定义IP的详细信息
                         const customIPInfo = data.ci || '未知';
                         
-                        geoInfo.innerHTML = '检测方式: <span style="color: #ffaa00;">⚙️ 自定义ProxyIP模式 (p变量启用)</span>';
-                        regionStatus.innerHTML = 'Worker地区: <span style="color: #ffaa00;">🔧 自定义IP模式 (已禁用地区匹配)</span>';
+                        geoInfo.innerHTML = '检测方式: <span style="color: #ffaa00;"> 自定义ProxyIP模式 (p变量启用)</span>';
+                        regionStatus.innerHTML = 'Worker地区: <span style="color: #ffaa00;"> 自定义IP模式 (已禁用地区匹配)</span>';
                         
                         // 显示自定义IP配置状态，包含具体IP
                         if (backupStatus) backupStatus.innerHTML = 'ProxyIP状态: <span style="color: #ffaa00;">🔧 使用自定义ProxyIP: ' + customIPInfo + '</span>';
-                        if (currentIP) currentIP.innerHTML = '当前使用IP: <span style="color: #ffaa00;">✅ ' + customIPInfo + ' (p变量配置)</span>';
-                        if (regionMatch) regionMatch.innerHTML = '地区匹配: <span style="color: #ffaa00;">⚠️ 自定义IP模式，地区选择已禁用</span>';
+                        if (currentIP) currentIP.innerHTML = '当前使用IP: <span style="color: #ffaa00;"> ' + customIPInfo + ' (p变量配置)</span>';
+                        if (regionMatch) regionMatch.innerHTML = '地区匹配: <span style="color: #ffaa00;"> 自定义IP模式，地区选择已禁用</span>';
                         
                         return; // 提前返回，不执行后续的地区匹配逻辑
                     } else if (data.detectionMethod === '手动指定地区') {
@@ -2027,12 +1986,12 @@ async function handleSubscriptionPage(request, user = null) {
                         detectedRegion = data.region;
                         
                         geoInfo.innerHTML = '检测方式: <span style="color: #5d9cec;">手动指定地区</span>';
-                        regionStatus.innerHTML = 'Worker地区: <span style="color: #5d9cec;">🎯 ' + regionNames[detectedRegion] + ' (手动指定)</span>';
+                        regionStatus.innerHTML = 'Worker地区: <span style="color: #5d9cec;"> ' + regionNames[detectedRegion] + ' (手动指定)</span>';
                         
                         // 显示配置状态而不是检测状态
-                        if (backupStatus) backupStatus.innerHTML = 'ProxyIP状态: <span style="color: #5d9cec;">✅ 10/10 可用 (ProxyIP域名预设可用)</span>';
-                        if (currentIP) currentIP.innerHTML = '当前使用IP: <span style="color: #5d9cec;">✅ 智能就近选择中</span>';
-                        if (regionMatch) regionMatch.innerHTML = '地区匹配: <span style="color: #5d9cec;">✅ 同地区IP可用 (1个)</span>';
+                        if (backupStatus) backupStatus.innerHTML = 'ProxyIP状态: <span style="color: #5d9cec;"> 10/10 可用 (ProxyIP域名预设可用)</span>';
+                        if (currentIP) currentIP.innerHTML = '当前使用IP: <span style="color: #5d9cec;"> 智能就近选择中</span>';
+                        if (regionMatch) regionMatch.innerHTML = '地区匹配: <span style="color: #5d9cec;"> 同地区IP可用 (1个)</span>';
                         
                         return; // 提前返回，不执行后续的地区匹配逻辑
                     } else if (data.region && regionNames[data.region]) {
@@ -2045,19 +2004,19 @@ async function handleSubscriptionPage(request, user = null) {
                     geoInfo.innerHTML = '检测方式: <span style="color: #ff4444;">检测失败</span>';
                 }
                 
-                regionStatus.innerHTML = 'Worker地区: <span style="color: #5d9cec;">✅ ' + regionNames[detectedRegion] + '</span>';
+                regionStatus.innerHTML = 'Worker地区: <span style="color: #5d9cec;"> ' + regionNames[detectedRegion] + '</span>';
                 
                 // 直接显示配置状态，不再进行检测
                 if (backupStatus) {
-                    backupStatus.innerHTML = 'ProxyIP状态: <span style="color: #5d9cec;">✅ 10/10 可用 (ProxyIP域名预设可用)</span>';
+                    backupStatus.innerHTML = 'ProxyIP状态: <span style="color: #5d9cec;"> 10/10 可用 (ProxyIP域名预设可用)</span>';
                 }
                 
                 if (currentIP) {
-                    currentIP.innerHTML = '当前使用IP: <span style="color: #5d9cec;">✅ 智能就近选择中</span>';
+                    currentIP.innerHTML = '当前使用IP: <span style="color: #5d9cec;"> 智能就近选择中</span>';
                 }
                 
                 if (regionMatch) {
-                    regionMatch.innerHTML = '地区匹配: <span style="color: #5d9cec;">✅ 同地区IP可用 (1个)</span>';
+                    regionMatch.innerHTML = '地区匹配: <span style="color: #5d9cec;"> 同地区IP可用 (1个)</span>';
                 }
                 
             } catch (error) {
@@ -2093,7 +2052,7 @@ async function handleSubscriptionPage(request, user = null) {
                 
                 if (response.status === 503) {
                     // KV未配置
-                    document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;">⚠️ KV存储未启用或未配置</span>';
+                    document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;"> KV存储未启用或未配置</span>';
                     document.getElementById('configCard').style.display = 'block';
                     document.getElementById('currentConfig').textContent = 'KV存储未配置，无法使用配置管理功能。\\n\\n请在Cloudflare Workers中:\\n1. 创建KV命名空间\\n2. 绑定环境变量 C\\n3. 重新部署代码';
                 } else if (response.ok) {
@@ -2107,22 +2066,22 @@ async function handleSubscriptionPage(request, user = null) {
                         document.getElementById('configCard').style.display = 'block';
                         await loadCurrentConfig();
                     } else {
-                        document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;">⚠️ KV存储未启用或未配置</span>';
+                        document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;"> KV存储未启用或未配置</span>';
                         document.getElementById('configCard').style.display = 'block';
                         document.getElementById('currentConfig').textContent = 'KV存储未配置';
                         }
                     } catch (jsonError) {
-                        document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;">⚠️ KV存储检测失败</span>';
+                        document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;"> KV存储检测失败</span>';
                         document.getElementById('configCard').style.display = 'block';
                         document.getElementById('currentConfig').textContent = 'KV存储检测失败: 响应格式错误';
                     }
                 } else {
-                    document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;">⚠️ KV存储未启用或未配置</span>';
+                    document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;"> KV存储未启用或未配置</span>';
                     document.getElementById('configCard').style.display = 'block';
                     document.getElementById('currentConfig').textContent = 'KV存储检测失败 - 状态码: ' + response.status;
                 }
             } catch (error) {
-                document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;">⚠️ KV存储未启用或未配置</span>';
+                document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;"> KV存储未启用或未配置</span>';
                 document.getElementById('configCard').style.display = 'block';
                 document.getElementById('currentConfig').textContent = 'KV存储检测失败 - 错误: ' + error.message;
             }
