@@ -624,6 +624,42 @@ export default {
             overflow-x: hidden; position: relative;
             display: flex; justify-content: center; align-items: center;
         }
+        .matrix-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
+            z-index: -1;
+            animation: bg-pulse 8s ease-in-out infinite;
+        }
+        .matrix-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
+            animation: matrix-fall 20s linear infinite;
+            z-index: -1;
+        }
+        .matrix-code-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+            overflow: hidden;
+        }
+        .matrix-column {
+            position: absolute; top: -100%; left: 0;
+            color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 14px; line-height: 1.2;
+            animation: matrix-drop 15s linear infinite;
+            text-shadow: 0 0 5px #4a90e2;
+        }
+        .matrix-column:nth-child(odd) {
+            animation-duration: 12s;
+            animation-delay: -2s;
+        }
+        .matrix-column:nth-child(even) {
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+        .matrix-column:nth-child(3n) {
+            animation-duration: 20s;
+            animation-delay: -8s;
+        }
         .terminal {
             width: 90%; max-width: 800px; height: 500px;
             background: rgba(0, 0, 0, 0.9);
@@ -667,9 +703,9 @@ export default {
         }
         .terminal-input {
             background: transparent; border: none; outline: none;
-            color: #4a90e2; font-family: "Courier New", monospace;
+            color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-size: 14px; flex: 1;
-            caret-color: #00ff00;
+            caret-color: #4a90e2;
         }
         .terminal-input::placeholder {
             color: #00aa00; opacity: 0.7;
@@ -690,7 +726,7 @@ export default {
         }
         .matrix-text {
             position: fixed; top: 20px; right: 20px;
-            color: #4a90e2; font-family: "Courier New", monospace;
+            color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-size: 0.8rem; opacity: 0.6;
             animation: matrix-flicker 3s infinite;
         }
@@ -699,8 +735,6 @@ export default {
 <body>
     <div class="matrix-bg"></div>
     <div class="matrix-rain"></div>
-    <div class="matrix-code-rain" id="matrixCodeRain"></div>
-    <div class="matrix-text">终端</div>
     <div class="terminal">
         <div class="terminal-header">
             <div class="terminal-buttons">
@@ -731,8 +765,6 @@ export default {
         </div>
     </div>
     <script>
-        function createMatrixRain() {
-        }
         
         function isValidUUID(uuid) {
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -1060,7 +1092,7 @@ function generateLinksFromSource(list, user, workerDomain) {
     const defaultHttpsPorts = [443];
     const defaultHttpPorts = disableNonTLS ? [] : [80];
     const links = [];
-    const wsPath = encodeURIComponent('/');
+    const wsPath = '/';
     const proto = atob('dmxlc3M=');
 
     list.forEach(item => {
@@ -1135,7 +1167,7 @@ async function generateTrojanLinksFromSource(list, user, workerDomain) {
     const defaultHttpsPorts = [443];
     const defaultHttpPorts = disableNonTLS ? [] : [80];
     const links = [];
-    const wsPath = encodeURIComponent('/');
+    const wsPath = '/';
     
     const password = tp || user;
 
@@ -1513,6 +1545,43 @@ async function handleSubscriptionPage(request, user = null) {
             background: #1a1a2e; color: #4a90e2; min-height: 100vh;
             overflow-x: hidden; position: relative;
         }
+        .matrix-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, #000 0%, #001100 50%, #000 100%);
+            z-index: -1;
+            animation: bg-pulse 8s ease-in-out infinite;
+        }
+        .matrix-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.03) 2px, rgba(0,255,0,0.03) 4px);
+            animation: matrix-fall 20s linear infinite;
+            z-index: -1;
+        }
+        .matrix-code-rain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1;
+            overflow: hidden;
+        }
+        .matrix-column {
+            position: absolute; top: -100%; left: 0;
+            color: #4a90e2; 
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 14px; line-height: 1.2;
+            animation: matrix-drop 15s linear infinite;
+            text-shadow: 0 0 5px #4a90e2;
+        }
+        .matrix-column:nth-child(odd) {
+            animation-duration: 12s;
+            animation-delay: -2s;
+        }
+        .matrix-column:nth-child(even) {
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+        .matrix-column:nth-child(3n) {
+            animation-duration: 20s;
+            animation-delay: -8s;
+        }
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 40px; }
         .title {
@@ -1540,12 +1609,13 @@ async function handleSubscriptionPage(request, user = null) {
         .card::before {
             content: ""; position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent 49%, #00ff00 50%, transparent 51%);
+            background: linear-gradient(45deg, transparent 49%, #4a90e2 50%, transparent 51%);
             opacity: 0.2; pointer-events: none;
             animation: scan-line 3s linear infinite;
         }
         .card-title {
             font-size: 1.8rem; margin-bottom: 20px;
+            color: #4a90e2; text-shadow: 0 0 5px #4a90e2;
         }
         .client-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1555,7 +1625,7 @@ async function handleSubscriptionPage(request, user = null) {
             background: rgba(0, 20, 0, 0.8);
             border: 2px solid #4a90e2;
             padding: 15px 20px; color: #4a90e2;
-            font-family: "Courier New", monospace; font-weight: bold;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             cursor: pointer; transition: all 0.4s ease;
             text-align: center; position: relative;
             overflow: hidden;
@@ -1586,7 +1656,8 @@ async function handleSubscriptionPage(request, user = null) {
         .generate-btn {
             background: rgba(0, 255, 0, 0.15);
             border: 2px solid #4a90e2; padding: 15px 30px;
-            color: #4a90e2; font-family: "Courier New", monospace;
+            color: #4a90e2; 
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-weight: bold; cursor: pointer;
             transition: all 0.4s ease; margin-right: 15px;
             text-shadow: 0 0 8px #4a90e2;
@@ -1610,8 +1681,9 @@ async function handleSubscriptionPage(request, user = null) {
         .atob('c3Vic2NyaXB0aW9u')-url {
             background: rgba(0, 0, 0, 0.9);
             border: 2px solid #4a90e2; padding: 15px;
-            word-break: break-all; font-family: "Courier New", monospace;
-            color: #00ff00; margin-top: 20px; display: none;
+            word-break: break-all; 
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #4a90e2; margin-top: 20px; display: none;
             box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.3);
             border-radius: 5px;
             animation: url-glow 2s ease-in-out infinite alternate;
@@ -1626,7 +1698,8 @@ async function handleSubscriptionPage(request, user = null) {
         }
         .matrix-text {
             position: fixed; top: 20px; right: 20px;
-            color: #4a90e2; font-family: "Courier New", monospace;
+            color: #4a90e2; 
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             font-size: 0.8rem; opacity: 0.6;
             animation: matrix-flicker 3s infinite;
         }
@@ -1635,8 +1708,6 @@ async function handleSubscriptionPage(request, user = null) {
 <body>
     <div class="matrix-bg"></div>
     <div class="matrix-rain"></div>
-    <div class="matrix-code-rain" id="matrixCodeRain"></div>
-    <div class="matrix-text">终端 v2.1</div>
     <div class="container">
         <div class="header">
             <h1 class="title">代理订阅中心</h1>
@@ -1661,26 +1732,26 @@ async function handleSubscriptionPage(request, user = null) {
         </div>
         <div class="card">
             <h2 class="card-title">[ 系统状态 ]</h2>
-            <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: rgba(0, 20, 0, 0.8); border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1); position: relative; overflow: hidden;">
-                <div style="color: #00ff00; margin-bottom: 15px; font-weight: bold; text-shadow: 0 0 5px #00ff00;">[ 系统检测中... ]</div>
-                <div id="regionStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">Worker地区: 检测中...</div>
-                <div id="geoInfo" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">检测方式: 检测中...</div>
-                <div id="backupStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">ProxyIP状态: 检测中...</div>
-                <div id="currentIP" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">当前使用IP: 检测中...</div>
-                <div id="regionMatch" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">地区匹配: 检测中...</div>
-                <div id="selectionLogic" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
+            <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: rgba(0, 20, 0, 0.8); border: 2px solid #4a90e2; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1); position: relative; overflow: hidden;">
+                <div style="color: #4a90e2; margin-bottom: 15px; font-weight: bold; text-shadow: 0 0 5px #4a90e2;">[ 系统检测中... ]</div>
+                <div id="regionStatus" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">Worker地区: 检测中...</div>
+                <div id="geoInfo" style="margin: 8px 0; color: #00aa00; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">检测方式: 检测中...</div>
+                <div id="backupStatus" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">ProxyIP状态: 检测中...</div>
+                <div id="currentIP" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">当前使用IP: 检测中...</div>
+                <div id="regionMatch" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">地区匹配: 检测中...</div>
+                <div id="selectionLogic" style="margin: 8px 0; color: #00aa00; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
             </div>
         </div>
         <div class="card" id="configCard" style="display: none;">
             <h2 class="card-title">[ 配置管理 ]</h2>
-            <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: rgba(0, 20, 0, 0.8); border: 1px solid #00ff00; color: #00ff00;">
+            <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: rgba(0, 20, 0, 0.8); border: 1px solid #4a90e2; color: #4a90e2;">
                 检测KV状态中...
             </div>
             <div id="configContent" style="display: none;">
                 <form id="regionForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">指定地区 (wk):</label>
-                        <select id="wkRegion" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">指定地区 (wk):</label>
+                        <select id="wkRegion" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                             <option value="">自动检测</option>
                             <option value="US">🇺🇸 美国</option>
                             <option value="SG">🇸🇬 新加坡</option>
@@ -1695,91 +1766,91 @@ async function handleSubscriptionPage(request, user = null) {
                         </select>
                         <small id="wkRegionHint" style="color: #00aa00; font-size: 0.85rem; display: none;">⚠️ 使用自定义ProxyIP时，地区选择已禁用</small>
                     </div>
-                    <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">保存地区配置</button>
+                    <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #4a90e2; padding: 12px 24px; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #4a90e2; transition: all 0.4s ease;">保存地区配置</button>
                 </form>
                 <form id="otherConfigForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">协议选择:</label>
-                        <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #00ff00; border-radius: 5px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">协议选择:</label>
+                        <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #4a90e2; border-radius: 5px;">
                             <div style="margin-bottom: 10px;">
-                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="ev" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
                                     <span style="font-size: 1.1rem;">启用 VLESS 协议</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
-                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="et" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
                                     <span style="font-size: 1.1rem;">启用 Trojan 协议</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
-                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="ex" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
                                     <span style="font-size: 1.1rem;">启用 xhttp 协议</span>
                                 </label>
                             </div>
                             <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 0, 0.3);">
-                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-size: 0.95rem;">Trojan 密码 (可选):</label>
-                                <input type="text" id="tp" placeholder="留空则自动使用 UUID" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 13px;">
+                                <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-size: 0.95rem;">Trojan 密码 (可选):</label>
+                                <input type="text" id="tp" placeholder="留空则自动使用 UUID" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px;">
                                 <small style="color: #00aa00; font-size: 0.8rem; display: block; margin-top: 5px;">设置自定义 Trojan 密码。留空则使用 UUID。客户端会自动对密码进行 SHA224 哈希。</small>
                             </div>
                             <small style="color: #00aa00; font-size: 0.85rem; display: block; margin-top: 10px;">可以同时启用多个协议。订阅将生成选中协议的节点。<br>• VLESS WS: 基于 atob('V2ViU29ja2V0') 的标准协议<br>• Trojan: 使用 SHA224 密码认证<br>• xhttp: 基于 HTTP POST 的伪装协议（需要绑定自定义域名并开启 gRPC）</small>
-                            <button type="button" id="saveProtocolBtn" style="margin-top: 15px; background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 10px 20px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease; width: 100%;">保存协议配置</button>
+                            <button type="button" id="saveProtocolBtn" style="margin-top: 15px; background: rgba(0, 255, 0, 0.15); border: 2px solid #4a90e2; padding: 10px 20px; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #4a90e2; transition: all 0.4s ease; width: 100%;">保存协议配置</button>
                         </div>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">自定义路径 (d):</label>
-                        <input type="text" id="customPath" placeholder="例如: /mypath 或留空使用 UUID" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义路径 (d):</label>
+                        <input type="text" id="customPath" placeholder="例如: /mypath 或留空使用 UUID" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                         <small style="color: #00aa00; font-size: 0.85rem;">自定义订阅路径。留空则使用 UUID 作为路径。</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">自定义ProxyIP (p):</label>
-                        <input type="text" id="customIP" placeholder="例如: 1.2.3.4:443" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义ProxyIP (p):</label>
+                        <input type="text" id="customIP" placeholder="例如: 1.2.3.4:443" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                         <small style="color: #00aa00; font-size: 0.85rem;">自定义ProxyIP地址和端口</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">优选IP列表 (yx):</label>
-                        <input type="text" id="preferredIPs" placeholder="例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP列表 (yx):</label>
+                        <input type="text" id="preferredIPs" placeholder="例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                         <small style="color: #00aa00; font-size: 0.85rem;">格式: IP:端口#节点名称 或 IP:端口 (无#则使用默认名称)。支持多个，用逗号分隔。<span style="color: #ffaa00;">API添加的IP会自动显示在这里。</span></small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">优选IP来源URL (yxURL):</label>
-                        <input type="text" id="preferredIPsURL" placeholder="默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP来源URL (yxURL):</label>
+                        <input type="text" id="preferredIPsURL" placeholder="默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                         <small style="color: #00aa00; font-size: 0.85rem;">自定义优选IP列表来源URL，留空则使用默认地址</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">SOCKS5配置 (s):</label>
-                        <input type="text" id="socksConfig" placeholder="例如: user:pass@host:port 或 host:port" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">SOCKS5配置 (s):</label>
+                        <input type="text" id="socksConfig" placeholder="例如: user:pass@host:port 或 host:port" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                         <small style="color: #00aa00; font-size: 0.85rem;">SOCKS5代理地址，用于转发所有出站流量</small>
                     </div>
-                    <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">保存配置</button>
+                    <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #4a90e2; padding: 12px 24px; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #4a90e2; transition: all 0.4s ease;">保存配置</button>
                 </form>
                 
-                <h3 style="color: #00ff00; margin: 20px 0 15px 0; font-size: 1.2rem;">高级控制</h3>
+                <h3 style="color: #4a90e2; margin: 20px 0 15px 0; font-size: 1.2rem;">高级控制</h3>
                 <form id="advancedConfigForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">订阅转换地址:</label>
-                        <input type="text" id="scu" placeholder="默认: https://url.v1.mk/sub" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">订阅转换地址:</label>
+                        <input type="text" id="scu" placeholder="默认: https://url.v1.mk/sub" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                         <small style="color: #00aa00; font-size: 0.85rem;">自定义订阅转换API地址，留空则使用默认地址</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">内置优选类型:</label>
-                        <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #00ff00; border-radius: 5px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">内置优选类型:</label>
+                        <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #4a90e2; border-radius: 5px;">
                             <div style="margin-bottom: 10px;">
-                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="epd" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
                                     <span style="font-size: 1.1rem;">启用优选域名</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
-                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="epi" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
                                     <span style="font-size: 1.1rem;">启用优选 IP</span>
                                 </label>
                             </div>
                             <div style="margin-bottom: 10px;">
-                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
                                     <input type="checkbox" id="egi" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
                                     <span style="font-size: 1.1rem;">启用 GitHub 默认优选</span>
                                 </label>
@@ -1788,65 +1859,65 @@ async function handleSubscriptionPage(request, user = null) {
                         </div>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">允许API管理 (ae):</label>
-                        <select id="apiEnabled" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">允许API管理 (ae):</label>
+                        <select id="apiEnabled" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                             <option value="">默认（关闭API）</option>
                             <option value="yes">开启API管理</option>
                         </select>
                         <small style="color: #ffaa00; font-size: 0.85rem;">⚠️ 安全提醒：开启后允许通过API动态添加优选IP。建议仅在需要时开启。</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">地区匹配 (rm):</label>
-                        <select id="regionMatching" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">地区匹配 (rm):</label>
+                        <select id="regionMatching" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                             <option value="">默认（启用地区匹配）</option>
                             <option value="no">关闭地区匹配</option>
                         </select>
                         <small style="color: #00aa00; font-size: 0.85rem;">设置为"关闭"时不进行地区智能匹配</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">降级控制 (qj):</label>
-                        <select id="downgradeControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">降级控制 (qj):</label>
+                        <select id="downgradeControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                             <option value="">默认（不启用降级）</option>
                             <option value="no">启用降级模式</option>
                         </select>
                         <small style="color: #00aa00; font-size: 0.85rem;">设置为"启用"时：CF直连失败→SOCKS5连接→fallback地址</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">TLS控制 (dkby):</label>
-                        <select id="portControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">TLS控制 (dkby):</label>
+                        <select id="portControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                             <option value="">默认（保留所有节点）</option>
                             <option value="yes">仅TLS节点</option>
                         </select>
                         <small style="color: #00aa00; font-size: 0.85rem;">设置为"仅TLS节点"时只生成带TLS的节点，不生成非TLS节点（如80端口）</small>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">优选控制 (yxby):</label>
-                        <select id="preferredControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选控制 (yxby):</label>
+                        <select id="preferredControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
                             <option value="">默认（启用优选）</option>
                             <option value="yes">关闭优选</option>
                         </select>
                         <small style="color: #00aa00; font-size: 0.85rem;">设置为"关闭优选"时只使用原生地址，不生成优选IP和域名节点</small>
                     </div>
-                    <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">保存高级配置</button>
+                    <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #4a90e2; padding: 12px 24px; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #4a90e2; transition: all 0.4s ease;">保存高级配置</button>
                 </form>
-                <div id="currentConfig" style="background: rgba(0, 0, 0, 0.9); border: 1px solid #00ff00; padding: 15px; margin: 10px 0; font-family: 'Courier New', monospace; color: #00ff00;">
+                <div id="currentConfig" style="background: rgba(0, 0, 0, 0.9); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #4a90e2;">
                     加载中...
                 </div>
-                <div id="pathTypeInfo" style="background: rgba(0, 20, 0, 0.7); border: 1px solid #00ff00; padding: 15px; margin: 10px 0; font-family: 'Courier New', monospace; color: #00ff00;">
+                <div id="pathTypeInfo" style="background: rgba(0, 20, 0, 0.7); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #4a90e2;">
                     <div style="font-weight: bold; margin-bottom: 8px; color: #44ff44; text-shadow: 0 0 5px #44ff44;">📍 当前路径配置</div>
                     <div id="pathTypeStatus">检测中...</div>
                 </div>
-                <button onclick="loadCurrentConfig()" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">刷新配置</button>
-                <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 2px solid #ff0000; padding: 12px 24px; color: #ff0000; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #ff0000; transition: all 0.4s ease;">重置配置</button>
+                <button onclick="loadCurrentConfig()" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #4a90e2; padding: 12px 24px; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #4a90e2; transition: all 0.4s ease;">刷新配置</button>
+                <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 2px solid #ff0000; padding: 12px 24px; color: #ff0000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #ff0000; transition: all 0.4s ease;">重置配置</button>
             </div>
-            <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #00ff00; background: rgba(0, 20, 0, 0.8); color: #00ff00; text-shadow: 0 0 5px #00ff00;"></div>
+            <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #4a90e2; background: rgba(0, 20, 0, 0.8); color: #4a90e2; text-shadow: 0 0 5px #4a90e2;"></div>
         </div>
         
         <div class="card">
             <h2 class="card-title">[ 相关链接 ]</h2>
             <div style="text-align: center; margin: 20px 0;">
-                <a href="https://github.com/byJoey/cfnew" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">GitHub 项目</a>
-                <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">YouTube @joeyblog</a>
+                <a href="https://github.com/byJoey/cfnew" target="_blank" style="color: #4a90e2; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #4a90e2;">GitHub 项目</a>
+                <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #4a90e2; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #4a90e2;">YouTube @joeyblog</a>
             </div>
         </div>
     </div>
@@ -1988,9 +2059,6 @@ async function handleSubscriptionPage(request, user = null) {
             navigator.clipboard.writeText(apiUrl).then(function() {
                 alert("自动识别订阅链接已复制，客户端访问时会根据User-Agent自动识别并返回对应格式");
             });
-        }
-        
-        function createMatrixRain() {
         }
         
         async function checkSystemStatus() {
@@ -2215,13 +2283,13 @@ async function handleSubscriptionPage(request, user = null) {
             if (cp && cp.trim()) {
                 // 使用自定义路径 (d)
                 pathTypeStatus.innerHTML = '<div style="color: #44ff44;">使用类型: <strong>自定义路径 (d)</strong></div>' +
-                    '<div style="margin-top: 5px; color: #00ff00;">当前路径: <span style="color: #ffaa00;">' + cp + '</span></div>' +
+                    '<div style="margin-top: 5px; color: #4a90e2;">当前路径: <span style="color: #ffaa00;">' + cp + '</span></div>' +
                     '<div style="margin-top: 5px; font-size: 0.9rem; color: #00aa00;">访问地址: ' + 
                     (currentUrl.split('/')[0] + '//' + currentUrl.split('/')[2]) + cp + '/sub</div>';
             } else {
                 // 使用 UUID (u)
                 pathTypeStatus.innerHTML = '<div style="color: #44ff44;">使用类型: <strong>UUID 路径 (u)</strong></div>' +
-                    '<div style="margin-top: 5px; color: #00ff00;">当前路径: <span style="color: #ffaa00;">' + (currentPath || '(UUID)') + '</span></div>' +
+                    '<div style="margin-top: 5px; color: #4a90e2;">当前路径: <span style="color: #ffaa00;">' + (currentPath || '(UUID)') + '</span></div>' +
                     '<div style="margin-top: 5px; font-size: 0.9rem; color: #00aa00;">访问地址: ' + currentUrl.split('/sub')[0] + '/sub</div>';
             }
         }
@@ -2311,8 +2379,8 @@ async function handleSubscriptionPage(request, user = null) {
             const statusDiv = document.getElementById('statusMessage');
             statusDiv.textContent = message;
             statusDiv.style.display = 'block';
-            statusDiv.style.color = type === 'success' ? '#00ff00' : '#ff0000';
-            statusDiv.style.borderColor = type === 'success' ? '#00ff00' : '#ff0000';
+            statusDiv.style.color = type === 'success' ? '#4a90e2' : '#ff0000';
+            statusDiv.style.borderColor = type === 'success' ? '#4a90e2' : '#ff0000';
             
             setTimeout(function() {
                 statusDiv.style.display = 'none';
@@ -2377,7 +2445,6 @@ async function handleSubscriptionPage(request, user = null) {
         }
         
         document.addEventListener('DOMContentLoaded', function() {
-            createMatrixRain();
             checkSystemStatus();
             checkKVStatus();
             
@@ -3128,7 +3195,7 @@ function generateLinksFromNewIPs(list, user, workerDomain) {
     const CF_HTTPS_PORTS = [443, 2053, 2083, 2087, 2096, 8443];
     
     const links = [];
-    const wsPath = encodeURIComponent('/');
+    const wsPath = '/';
     const proto = atob('dmxlc3M=');
     
     list.forEach(item => {
@@ -3192,7 +3259,7 @@ async function generateTrojanLinksFromNewIPs(list, user, workerDomain) {
     const CF_HTTPS_PORTS = [443, 2053, 2083, 2087, 2096, 8443];
     
     const links = [];
-    const wsPath = encodeURIComponent('/');
+    const wsPath = '/';
     
     const password = tp || user;
     
