@@ -1648,7 +1648,7 @@ async function handleSubscriptionPage(request, user = null) {
 		.subscription-url {
             background: #1a1a2e;
             border: 1px solid #4a4e69; 
-            padding: 15px;
+            padding: 12px;
             word-break: break-all; 
             color: #5d9cec;
             margin-top: 20px; 
@@ -1795,7 +1795,7 @@ async function handleSubscriptionPage(request, user = null) {
                         </div>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">允许API管理 (ae):</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold;">允许API管理 (ae):</label>
                         <select id="apiEnabled" >
                             <option value="">默认（关闭API）</option>
                             <option value="yes">开启API管理</option>
