@@ -1818,8 +1818,10 @@ async function handleSubscriptionPage(request, user = null) {
                     <div style="font-weight: bold; margin-bottom: 8px; color: #a8e6df; ">当前路径配置</div>
                     <div id="pathTypeStatus">检测中...</div>
                 </div>
-				<button onclick="loadCurrentConfig()" class="client-btn" >保存配置</button>
-                <button onclick="resetAllConfig()" class="reset-btn">重置配置</button>
+				<div class="client-grid">
+					<button onclick="loadCurrentConfig()" class="client-btn" >保存配置</button>
+					<button onclick="resetAllConfig()" class="reset-btn">重置配置</button>
+				</div>
             </div>
             <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #2dc4b6; background: rgba(0, 20, 0, 0.8); color: #2dc4b6; text-shadow: 0 0 5px #2dc4b6;"></div>
         </div>
