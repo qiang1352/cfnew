@@ -1647,7 +1647,7 @@ async function handleSubscriptionPage(request, user = null) {
             padding: 12px;
             border: 1px solid #4a4e69;
             border-radius: 8px; /* 全圆角 */
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: #1a1a2e;
             color: #5d9cec;
             font-size: 0.9rem;
             outline: none;
@@ -1663,10 +1663,19 @@ async function handleSubscriptionPage(request, user = null) {
             padding: 12px;
             border: 1px solid #4a4e69;
             border-radius: 8px; /* 全圆角 */
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: #1a1a2e;
             color: #5d9cec;
             font-size: 0.9rem;
 		}
+		select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            background-color: #5d9cec;
+        }
+
+        select:hover {
+            border-color: #4a90e2;
+        }
     </style>
 </head>
 <body>
@@ -1694,7 +1703,7 @@ async function handleSubscriptionPage(request, user = null) {
         </div>
         <div class="card">
             <h2 class="card-title">[ 系统状态 ]</h2>
-            <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: #1a1a2e; border: 2px solid #4a90e2; position: relative; overflow: hidden;">
+            <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: #1a1a2e; border: 1px solid #4a90e2; border-radius: 8px; position: relative; overflow: hidden;">
                 <div style="color: #4a90e2; margin-bottom: 15px; font-weight: bold; ">[ 系统检测中... ]</div>
                 <div id="regionStatus" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; ">Worker地区: 检测中...</div>
                 <div id="geoInfo" style="margin: 8px 0; color: #5d9cec; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 0.9rem; ">检测方式: 检测中...</div>
@@ -1849,15 +1858,15 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
 					<button type="submit" class="client-btn" >保存高级配置</button>
                 </form>
-                <div id="currentConfig" style="background: rgba(0, 0, 0, 0.9); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; color: #4a90e2;">
+                <div id="currentConfig" style="background: #1a1a2e; border: 1px solid #4a90e2; padding: 15px; margin: 10px 0;">
                     加载中...
                 </div>
-                <div id="pathTypeInfo" style="background: rgba(0, 20, 0, 0.7); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0;font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; color: #4a90e2;">
+                <div id="pathTypeInfo" style="background: #1a1a2e; border: 1px solid #4a90e2; padding: 15px; margin: 10px 0;">
                     <div style="font-weight: bold; margin-bottom: 8px; color: #5d9cec; ">📍 当前路径配置</div>
                     <div id="pathTypeStatus">检测中...</div>
                 </div>
 				<button onclick="loadCurrentConfig()" class="client-btn" >保存配置</button>
-                <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 2px solid #ff0000; padding: 12px 24px; color: #ff0000; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-weight: bold; cursor: pointer;">重置配置</button>
+                <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 1px solid #ff0000; padding: 12px 24px; color: #ff0000; ">重置配置</button>
             </div>
             <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #4a90e2; background: rgba(0, 20, 0, 0.8); color: #4a90e2; text-shadow: 0 0 5px #4a90e2;"></div>
         </div>
@@ -2257,7 +2266,7 @@ async function handleSubscriptionPage(request, user = null) {
                 if (hasCustomIP) {
                     wkRegion.style.opacity = '0.5';
                     wkRegion.style.cursor = 'not-allowed';
-                    wkRegion.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                    wkRegion.style.backgroundColor = '#1a1a2e';
                     // 显示提示信息
                     if (wkRegionHint) {
                         wkRegionHint.style.display = 'block';
@@ -2266,7 +2275,7 @@ async function handleSubscriptionPage(request, user = null) {
                 } else {
                     wkRegion.style.opacity = '1';
                     wkRegion.style.cursor = 'pointer';
-                    wkRegion.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                    wkRegion.style.backgroundColor = '#1a1a2e';
                     // 隐藏提示信息
                     if (wkRegionHint) {
                         wkRegionHint.style.display = 'none';
