@@ -1570,13 +1570,6 @@ async function handleSubscriptionPage(request, user = null) {
             box-shadow: 0 6px 15px rgba(45, 196, 182, 0.5);
             background: linear-gradient(135deg, #35d4c5 0%, #23b5a8 100%);
         }
-		.client-btn:disabled {
-            background: #3a4a5d;
-            color: #a8e6df;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
 		.reset-btn {
             background: linear-gradient(135deg, #3a4a5d 0%, #2a3a4d 100%);
             color: #a8e6df;
@@ -1696,9 +1689,9 @@ async function handleSubscriptionPage(request, user = null) {
                             <option value="FI">🇫🇮 芬兰</option>
                             <option value="GB">🇬🇧 英国</option>
                         </select>
-                        <small id="wkRegionHint" style="color: #a8e6df; font-size: 0.9rem; display: none;">⚠️ 使用自定义ProxyIP时，地区选择已禁用</small>
+                        <small id="wkRegionHint" style="color: #a8e6df; font-size: 0.9rem; display: none;"> 使用自定义ProxyIP时，地区选择已禁用</small>
                     </div>
-                    <button type="submit" class="client-btn" onclick="handleSave(this)">保存地区配置</button>
+                    <button type="submit" class="client-btn">保存地区配置</button>
                 </form>
                 <form id="otherConfigForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
@@ -1834,16 +1827,6 @@ async function handleSubscriptionPage(request, user = null) {
         </div>
     </div>
     <script>
-		// 处理保存操作
-        function handleSave(button) {
-            // 保存原始文字
-            const originalText = button.textContent;
-            
-            // 禁用按钮并改变文字
-            button.disabled = true;
-            button.textContent = '保存配置中...';
-            
-        }
         // 订阅转换地址（从服务器配置注入）
         var SUB_CONVERTER_URL = "${ scu }";
         
