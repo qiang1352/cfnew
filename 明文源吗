@@ -1673,8 +1673,8 @@ async function handleSubscriptionPage(request, user = null) {
             border: 1px solid #4a4e69;
             border-radius: 8px; /* 全圆角 */
             background-color: rgba(255, 255, 255, 0.05);
-            color: #e0e0f0;
-            font-size: 1rem;
+            color: #5d9cec;
+            font-size: 0.8rem;
             outline: none;
             transition: border-color 0.3s;
             margin-bottom: 15px; /* 在输入框下方添加间距 */
@@ -1683,6 +1683,15 @@ async function handleSubscriptionPage(request, user = null) {
         .text-input:focus {
             border-color: #4a90e2;
         }
+		select{
+			width: 100%; /* 保证输入框宽度为 100% */
+            padding: 12px;
+            border: 1px solid #4a4e69;
+            border-radius: 8px; /* 全圆角 */
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #5d9cec;
+            font-size: 0.8rem;
+		}
     </style>
 </head>
 <body>
@@ -1770,37 +1779,31 @@ async function handleSubscriptionPage(request, user = null) {
                             </div>
                             <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 0, 0.3);">
                                 <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-size: 0.95rem;">Trojan 密码 (可选):</label>
-                                <input type="text" id="tp" placeholder="留空则自动使用 UUID" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 13px;">
-                                <small style="color: #5d9cec; font-size: 0.8rem; display: block; margin-top: 5px;">设置自定义 Trojan 密码。留空则使用 UUID。客户端会自动对密码进行 SHA224 哈希。</small>
+                                <input type="text" id="tp" placeholder="留空则自动使用 UUID" class="text-input">
                             </div>
-                            <small style="color: #5d9cec; font-size: 0.85rem; display: block; margin-top: 10px;">可以同时启用多个协议。订阅将生成选中协议的节点。<br>• VLESS WS: 基于 atob('V2ViU29ja2V0') 的标准协议<br>• Trojan: 使用 SHA224 密码认证<br>• xhttp: 基于 HTTP POST 的伪装协议（需要绑定自定义域名并开启 gRPC）</small>
 							<button type="button" id="saveProtocolBtn" class="client-btn" >保存协议配置</button>
                         </div>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义路径 (d):</label>
-                        <input type="text" id="customPath" placeholder="例如: /mypath 或留空使用 UUID" class="text-input";>
-                        <small style="color: #5d9cec; font-size: 0.85rem;">自定义订阅路径。留空则使用 UUID 作为路径。</small>
+                        <input type="text" id="customPath" placeholder="例如: /mypath 或留空使用 UUID" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义ProxyIP (p):</label>
-                        <input type="text" id="customIP" placeholder="例如: 1.2.3.4:443" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
-                        <small style="color: #5d9cec; font-size: 0.85rem;">自定义ProxyIP地址和端口</small>
+                        <input type="text" id="customIP" placeholder="例如: 1.2.3.4:443" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP列表 (yx):</label>
-                        <input type="text" id="preferredIPs" placeholder="例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
-                        <small style="color: #5d9cec; font-size: 0.85rem;">格式: IP:端口#节点名称 或 IP:端口 (无#则使用默认名称)。支持多个，用逗号分隔。<span style="color: #ffaa00;">API添加的IP会自动显示在这里。</span></small>
+                        <input type="text" id="preferredIPs" placeholder="例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点" class="text-input">
+                        
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP来源URL (yxURL):</label>
-                        <input type="text" id="preferredIPsURL" placeholder="默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
-                        <small style="color: #5d9cec; font-size: 0.85rem;">自定义优选IP列表来源URL，留空则使用默认地址</small>
+                        <input type="text" id="preferredIPsURL" placeholder="默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">SOCKS5配置 (s):</label>
-                        <input type="text" id="socksConfig" placeholder="例如: user:pass@host:port 或 host:port" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
-                        <small style="color: #5d9cec; font-size: 0.85rem;">SOCKS5代理地址，用于转发所有出站流量</small>
+                        <input type="text" id="socksConfig" placeholder="例如: user:pass@host:port 或 host:port" class="text-input">
                     </div>
 					<button type="submit" class="client-btn" >保存配置</button>
                 </form>
@@ -1809,8 +1812,7 @@ async function handleSubscriptionPage(request, user = null) {
                 <form id="advancedConfigForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">订阅转换地址:</label>
-                        <input type="text" id="scu" placeholder="默认: https://url.v1.mk/sub" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
-                        <small style="color: #5d9cec; font-size: 0.85rem;">自定义订阅转换API地址，留空则使用默认地址</small>
+                        <input type="text" id="scu" placeholder="默认: https://url.v1.mk/sub" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">内置优选类型:</label>
@@ -1833,16 +1835,14 @@ async function handleSubscriptionPage(request, user = null) {
                                     <span style="font-size: 1.1rem;">启用 GitHub 默认优选</span>
                                 </label>
                             </div>
-                            <small style="color: #5d9cec; font-size: 0.85rem; display: block; margin-top: 10px;">控制订阅中包含哪些内置优选节点。默认全部启用。</small>
                         </div>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">允许API管理 (ae):</label>
-                        <select id="apiEnabled" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
+                        <select id="apiEnabled" >
                             <option value="">默认（关闭API）</option>
                             <option value="yes">开启API管理</option>
                         </select>
-                        <small style="color: #ffaa00; font-size: 0.85rem;">⚠️ 安全提醒：开启后允许通过API动态添加优选IP。建议仅在需要时开启。</small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">地区匹配 (rm):</label>
@@ -1850,7 +1850,6 @@ async function handleSubscriptionPage(request, user = null) {
                             <option value="">默认（启用地区匹配）</option>
                             <option value="no">关闭地区匹配</option>
                         </select>
-                        <small style="color: #5d9cec; font-size: 0.85rem;">设置为"关闭"时不进行地区智能匹配</small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">降级控制 (qj):</label>
@@ -1858,7 +1857,6 @@ async function handleSubscriptionPage(request, user = null) {
                             <option value="">默认（不启用降级）</option>
                             <option value="no">启用降级模式</option>
                         </select>
-                        <small style="color: #5d9cec; font-size: 0.85rem;">设置为"启用"时：CF直连失败→SOCKS5连接→fallback地址</small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">TLS控制 (dkby):</label>
@@ -1866,7 +1864,6 @@ async function handleSubscriptionPage(request, user = null) {
                             <option value="">默认（保留所有节点）</option>
                             <option value="yes">仅TLS节点</option>
                         </select>
-                        <small style="color: #5d9cec; font-size: 0.85rem;">设置为"仅TLS节点"时只生成带TLS的节点，不生成非TLS节点（如80端口）</small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选控制 (yxby):</label>
@@ -1874,7 +1871,6 @@ async function handleSubscriptionPage(request, user = null) {
                             <option value="">默认（启用优选）</option>
                             <option value="yes">关闭优选</option>
                         </select>
-                        <small style="color: #5d9cec; font-size: 0.85rem;">设置为"关闭优选"时只使用原生地址，不生成优选IP和域名节点</small>
                     </div>
 					<button type="submit" class="client-btn" >保存高级配置</button>
                 </form>
