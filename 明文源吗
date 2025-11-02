@@ -619,7 +619,7 @@ export default {
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background: #1a1a2e; color: #4a90e2; min-height: 100vh;
             overflow-x: hidden; position: relative;
             display: flex; justify-content: center; align-items: center;
@@ -643,7 +643,7 @@ export default {
         }
         .matrix-column {
             position: absolute; top: -100%; left: 0;
-            color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             font-size: 14px; line-height: 1.2;
             animation: matrix-drop 15s linear infinite;
             text-shadow: 0 0 5px #4a90e2;
@@ -703,7 +703,7 @@ export default {
         }
         .terminal-input {
             background: transparent; border: none; outline: none;
-            color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             font-size: 14px; flex: 1;
             caret-color: #4a90e2;
         }
@@ -726,7 +726,7 @@ export default {
         }
         .matrix-text {
             position: fixed; top: 20px; right: 20px;
-            color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             font-size: 0.8rem; opacity: 0.6;
             animation: matrix-flicker 3s infinite;
         }
@@ -1541,7 +1541,7 @@ async function handleSubscriptionPage(request, user = null) {
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background: #1a1a2e; color: #4a90e2; min-height: 100vh;
             overflow-x: hidden; position: relative;
         }
@@ -1565,7 +1565,7 @@ async function handleSubscriptionPage(request, user = null) {
         .matrix-column {
             position: absolute; top: -100%; left: 0;
             color: #4a90e2; 
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             font-size: 14px; line-height: 1.2;
             animation: matrix-drop 15s linear infinite;
             text-shadow: 0 0 5px #4a90e2;
@@ -1608,7 +1608,7 @@ async function handleSubscriptionPage(request, user = null) {
             border: none;
             border-radius: 8px; /* 全圆角 */
             padding: 15px 20px; color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             cursor: pointer; transition: all 0.4s ease;
             text-align: center; position: relative;
             overflow: hidden;
@@ -1621,7 +1621,7 @@ async function handleSubscriptionPage(request, user = null) {
             background: rgba(0, 255, 0, 0.15);
             border: 2px solid #4a90e2; padding: 15px 30px;
             color: #4a90e2; 
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             font-weight: bold; cursor: pointer;
             transition: all 0.4s ease; margin-right: 15px;
             text-shadow: 0 0 8px #4a90e2;
@@ -1646,7 +1646,7 @@ async function handleSubscriptionPage(request, user = null) {
             background: rgba(0, 0, 0, 0.9);
             border: 2px solid #4a90e2; padding: 15px;
             word-break: break-all; 
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             color: #4a90e2; margin-top: 20px; display: none;
             box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.4), 0 0 20px rgba(0, 255, 0, 0.3);
             border-radius: 5px;
@@ -1663,9 +1663,25 @@ async function handleSubscriptionPage(request, user = null) {
         .matrix-text {
             position: fixed; top: 20px; right: 20px;
             color: #4a90e2; 
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             font-size: 0.8rem; opacity: 0.6;
             animation: matrix-flicker 3s infinite;
+        }
+		.text-input {
+            width: 100%; /* 保证输入框宽度为 100% */
+            padding: 12px;
+            border: 1px solid #4a4e69;
+            border-radius: 8px; /* 全圆角 */
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #e0e0f0;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 15px; /* 在输入框下方添加间距 */
+            box-sizing: border-box;
+        }
+        .text-input:focus {
+            border-color: #4a90e2;
         }
     </style>
 </head>
@@ -1696,12 +1712,12 @@ async function handleSubscriptionPage(request, user = null) {
             <h2 class="card-title">[ 系统状态 ]</h2>
             <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: #1a1a2e; border: 2px solid #4a90e2; position: relative; overflow: hidden;">
                 <div style="color: #4a90e2; margin-bottom: 15px; font-weight: bold; text-shadow: 0 0 5px #4a90e2;">[ 系统检测中... ]</div>
-                <div id="regionStatus" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">Worker地区: 检测中...</div>
-                <div id="geoInfo" style="margin: 8px 0; color: #5d9cec; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #5d9cec;">检测方式: 检测中...</div>
-                <div id="backupStatus" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">ProxyIP状态: 检测中...</div>
-                <div id="currentIP" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">当前使用IP: 检测中...</div>
-                <div id="regionMatch" style="margin: 8px 0; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; text-shadow: 0 0 3px #4a90e2;">地区匹配: 检测中...</div>
-                <div id="selectionLogic" style="margin: 8px 0; color: #5d9cec; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #5d9cec;">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
+                <div id="regionStatus" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">Worker地区: 检测中...</div>
+                <div id="geoInfo" style="margin: 8px 0; color: #5d9cec; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #5d9cec;">检测方式: 检测中...</div>
+                <div id="backupStatus" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">ProxyIP状态: 检测中...</div>
+                <div id="currentIP" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">当前使用IP: 检测中...</div>
+                <div id="regionMatch" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">地区匹配: 检测中...</div>
+                <div id="selectionLogic" style="margin: 8px 0; color: #5d9cec; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #5d9cec;">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
             </div>
         </div>
         <div class="card" id="configCard" style="display: none;">
@@ -1713,7 +1729,7 @@ async function handleSubscriptionPage(request, user = null) {
                 <form id="regionForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">指定地区 (wk):</label>
-                        <select id="wkRegion" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <select id="wkRegion" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                             <option value="">自动检测</option>
                             <option value="US">🇺🇸 美国</option>
                             <option value="SG">🇸🇬 新加坡</option>
@@ -1754,7 +1770,7 @@ async function handleSubscriptionPage(request, user = null) {
                             </div>
                             <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 0, 0.3);">
                                 <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-size: 0.95rem;">Trojan 密码 (可选):</label>
-                                <input type="text" id="tp" placeholder="留空则自动使用 UUID" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px;">
+                                <input type="text" id="tp" placeholder="留空则自动使用 UUID" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 13px;">
                                 <small style="color: #5d9cec; font-size: 0.8rem; display: block; margin-top: 5px;">设置自定义 Trojan 密码。留空则使用 UUID。客户端会自动对密码进行 SHA224 哈希。</small>
                             </div>
                             <small style="color: #5d9cec; font-size: 0.85rem; display: block; margin-top: 10px;">可以同时启用多个协议。订阅将生成选中协议的节点。<br>• VLESS WS: 基于 atob('V2ViU29ja2V0') 的标准协议<br>• Trojan: 使用 SHA224 密码认证<br>• xhttp: 基于 HTTP POST 的伪装协议（需要绑定自定义域名并开启 gRPC）</small>
@@ -1763,27 +1779,27 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义路径 (d):</label>
-                        <input type="text" id="customPath" placeholder="例如: /mypath 或留空使用 UUID" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <input type="text" id="customPath" placeholder="例如: /mypath 或留空使用 UUID" class="text-input";>
                         <small style="color: #5d9cec; font-size: 0.85rem;">自定义订阅路径。留空则使用 UUID 作为路径。</small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义ProxyIP (p):</label>
-                        <input type="text" id="customIP" placeholder="例如: 1.2.3.4:443" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <input type="text" id="customIP" placeholder="例如: 1.2.3.4:443" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                         <small style="color: #5d9cec; font-size: 0.85rem;">自定义ProxyIP地址和端口</small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP列表 (yx):</label>
-                        <input type="text" id="preferredIPs" placeholder="例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <input type="text" id="preferredIPs" placeholder="例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                         <small style="color: #5d9cec; font-size: 0.85rem;">格式: IP:端口#节点名称 或 IP:端口 (无#则使用默认名称)。支持多个，用逗号分隔。<span style="color: #ffaa00;">API添加的IP会自动显示在这里。</span></small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP来源URL (yxURL):</label>
-                        <input type="text" id="preferredIPsURL" placeholder="默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <input type="text" id="preferredIPsURL" placeholder="默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                         <small style="color: #5d9cec; font-size: 0.85rem;">自定义优选IP列表来源URL，留空则使用默认地址</small>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">SOCKS5配置 (s):</label>
-                        <input type="text" id="socksConfig" placeholder="例如: user:pass@host:port 或 host:port" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <input type="text" id="socksConfig" placeholder="例如: user:pass@host:port 或 host:port" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                         <small style="color: #5d9cec; font-size: 0.85rem;">SOCKS5代理地址，用于转发所有出站流量</small>
                     </div>
 					<button type="submit" class="client-btn" >保存配置</button>
@@ -1793,7 +1809,7 @@ async function handleSubscriptionPage(request, user = null) {
                 <form id="advancedConfigForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">订阅转换地址:</label>
-                        <input type="text" id="scu" placeholder="默认: https://url.v1.mk/sub" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <input type="text" id="scu" placeholder="默认: https://url.v1.mk/sub" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                         <small style="color: #5d9cec; font-size: 0.85rem;">自定义订阅转换API地址，留空则使用默认地址</small>
                     </div>
                     <div style="margin-bottom: 15px;">
@@ -1822,7 +1838,7 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">允许API管理 (ae):</label>
-                        <select id="apiEnabled" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <select id="apiEnabled" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                             <option value="">默认（关闭API）</option>
                             <option value="yes">开启API管理</option>
                         </select>
@@ -1830,7 +1846,7 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">地区匹配 (rm):</label>
-                        <select id="regionMatching" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <select id="regionMatching" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                             <option value="">默认（启用地区匹配）</option>
                             <option value="no">关闭地区匹配</option>
                         </select>
@@ -1838,7 +1854,7 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">降级控制 (qj):</label>
-                        <select id="downgradeControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <select id="downgradeControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                             <option value="">默认（不启用降级）</option>
                             <option value="no">启用降级模式</option>
                         </select>
@@ -1846,7 +1862,7 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">TLS控制 (dkby):</label>
-                        <select id="portControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <select id="portControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                             <option value="">默认（保留所有节点）</option>
                             <option value="yes">仅TLS节点</option>
                         </select>
@@ -1854,7 +1870,7 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选控制 (yxby):</label>
-                        <select id="preferredControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px;">
+                        <select id="preferredControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
                             <option value="">默认（启用优选）</option>
                             <option value="yes">关闭优选</option>
                         </select>
@@ -1862,15 +1878,15 @@ async function handleSubscriptionPage(request, user = null) {
                     </div>
 					<button type="submit" class="client-btn" >保存高级配置</button>
                 </form>
-                <div id="currentConfig" style="background: rgba(0, 0, 0, 0.9); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #4a90e2;">
+                <div id="currentConfig" style="background: rgba(0, 0, 0, 0.9); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; color: #4a90e2;">
                     加载中...
                 </div>
-                <div id="pathTypeInfo" style="background: rgba(0, 20, 0, 0.7); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #4a90e2;">
+                <div id="pathTypeInfo" style="background: rgba(0, 20, 0, 0.7); border: 1px solid #4a90e2; padding: 15px; margin: 10px 0;font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; color: #4a90e2;">
                     <div style="font-weight: bold; margin-bottom: 8px; color: #5d9cec; ">📍 当前路径配置</div>
                     <div id="pathTypeStatus">检测中...</div>
                 </div>
 				<button onclick="loadCurrentConfig()" class="client-btn" >保存配置</button>
-                <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 2px solid #ff0000; padding: 12px 24px; color: #ff0000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-weight: bold; cursor: pointer;">重置配置</button>
+                <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 2px solid #ff0000; padding: 12px 24px; color: #ff0000; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-weight: bold; cursor: pointer;">重置配置</button>
             </div>
             <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #4a90e2; background: rgba(0, 20, 0, 0.8); color: #4a90e2; text-shadow: 0 0 5px #4a90e2;"></div>
         </div>
@@ -2065,7 +2081,7 @@ async function handleSubscriptionPage(request, user = null) {
                         isManualRegionMode = true;
                         detectedRegion = data.region;
                         
-                        geoInfo.innerHTML = '检测方式: <span style="color: #44aa44;">手动指定地区</span>';
+                        geoInfo.innerHTML = '检测方式: <span style="color: #5d9cec;">手动指定地区</span>';
                         regionStatus.innerHTML = 'Worker地区: <span style="color: #5d9cec;">🎯 ' + regionNames[detectedRegion] + ' (手动指定)</span>';
                         
                         // 显示配置状态而不是检测状态
