@@ -1585,7 +1585,7 @@ async function handleSubscriptionPage(request, user = null) {
         .container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
         .header { text-align: center; margin-bottom: 40px; }
         .title {
-            font-size: 3.5rem; font-weight: bold;
+            font-size: 3rem; font-weight: bold;
             margin-bottom: 10px;
         }
         .subtitle { margin-bottom: 30px; font-size: 1.2rem; }
@@ -1616,31 +1616,6 @@ async function handleSubscriptionPage(request, user = null) {
         .client-btn:hover {
             background: #5d9cec;
 			transform: translateY(-1px);
-        }
-        .generate-btn {
-            background: rgba(0, 255, 0, 0.15);
-            border: 2px solid #4a90e2; padding: 15px 30px;
-            color: #4a90e2; 
-			font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            font-weight: bold; cursor: pointer;
-            transition: all 0.4s ease; margin-right: 15px;
-            text-shadow: 0 0 8px #4a90e2;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        .generate-btn::before {
-            content: ""; position: absolute; top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0,255,0,0.5), transparent);
-            transition: left 0.8s ease;
-        }
-        .generate-btn:hover::before { left: 100%; }
-        .generate-btn:hover {
-            background: rgba(0, 255, 0, 0.4);
-            box-shadow: 0 0 30px #4a90e2, 0 0 40px rgba(0, 255, 0, 0.6);
-            transform: translateY(-4px) scale(1.08);
-            text-shadow: 0 0 15px #4a90e2, 0 0 25px #4a90e2;
         }
         .atob('c3Vic2NyaXB0aW9u')-url {
             background: rgba(0, 0, 0, 0.9);
@@ -1674,7 +1649,7 @@ async function handleSubscriptionPage(request, user = null) {
             border-radius: 8px; /* 全圆角 */
             background-color: rgba(255, 255, 255, 0.05);
             color: #5d9cec;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             outline: none;
             transition: border-color 0.3s;
             margin-bottom: 15px; /* 在输入框下方添加间距 */
@@ -1690,7 +1665,7 @@ async function handleSubscriptionPage(request, user = null) {
             border-radius: 8px; /* 全圆角 */
             background-color: rgba(255, 255, 255, 0.05);
             color: #5d9cec;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
 		}
     </style>
 </head>
@@ -1715,18 +1690,18 @@ async function handleSubscriptionPage(request, user = null) {
                 <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
                 <button class="client-btn" onclick="generateAutoLink()">自动识别</button>
             </div>
-            <div class=atob('c3Vic2NyaXB0aW9uLXVybA==') id="clientSubscriptionUrl"></div>
+            <div class="text-input" id="clientSubscriptionUrl"></div>
         </div>
         <div class="card">
             <h2 class="card-title">[ 系统状态 ]</h2>
             <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: #1a1a2e; border: 2px solid #4a90e2; position: relative; overflow: hidden;">
-                <div style="color: #4a90e2; margin-bottom: 15px; font-weight: bold; text-shadow: 0 0 5px #4a90e2;">[ 系统检测中... ]</div>
-                <div id="regionStatus" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">Worker地区: 检测中...</div>
-                <div id="geoInfo" style="margin: 8px 0; color: #5d9cec; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #5d9cec;">检测方式: 检测中...</div>
-                <div id="backupStatus" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">ProxyIP状态: 检测中...</div>
-                <div id="currentIP" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">当前使用IP: 检测中...</div>
-                <div id="regionMatch" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; text-shadow: 0 0 3px #4a90e2;">地区匹配: 检测中...</div>
-                <div id="selectionLogic" style="margin: 8px 0; color: #5d9cec; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 0.9rem; text-shadow: 0 0 3px #5d9cec;">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
+                <div style="color: #4a90e2; margin-bottom: 15px; font-weight: bold; ">[ 系统检测中... ]</div>
+                <div id="regionStatus" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; ">Worker地区: 检测中...</div>
+                <div id="geoInfo" style="margin: 8px 0; color: #5d9cec; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 0.9rem; ">检测方式: 检测中...</div>
+                <div id="backupStatus" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; ">ProxyIP状态: 检测中...</div>
+                <div id="currentIP" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; ">当前使用IP: 检测中...</div>
+                <div id="regionMatch" style="margin: 8px 0; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; ">地区匹配: 检测中...</div>
+                <div id="selectionLogic" style="margin: 8px 0; color: #5d9cec; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 0.9rem; ">选择逻辑: 同地区 → 邻近地区 → 其他地区</div>
             </div>
         </div>
         <div class="card" id="configCard" style="display: none;">
@@ -1737,8 +1712,8 @@ async function handleSubscriptionPage(request, user = null) {
             <div id="configContent" style="display: none;">
                 <form id="regionForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">指定地区 (wk):</label>
-                        <select id="wkRegion" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">指定地区 (wk):</label>
+                        <select id="wkRegion" >
                             <option value="">自动检测</option>
                             <option value="US">🇺🇸 美国</option>
                             <option value="SG">🇸🇬 新加坡</option>
@@ -1757,7 +1732,7 @@ async function handleSubscriptionPage(request, user = null) {
                 </form>
                 <form id="otherConfigForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">协议选择:</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">协议选择:</label>
                         <div style="padding: 15px; border: 1px solid #4a90e2; border-radius: 5px;">
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
@@ -1777,7 +1752,7 @@ async function handleSubscriptionPage(request, user = null) {
                                     <span style="font-size: 1.1rem;">启用 xhttp 协议</span>
                                 </label>
                             </div>
-                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 0, 0.3);">
+                            <div>
                                 <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-size: 0.95rem;">Trojan 密码 (可选):</label>
                                 <input type="text" id="tp" placeholder="留空则自动使用 UUID" class="text-input">
                             </div>
@@ -1785,24 +1760,24 @@ async function handleSubscriptionPage(request, user = null) {
                         </div>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义路径 (d):</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">自定义路径 (d):</label>
                         <input type="text" id="customPath" placeholder="例如: /mypath 或留空使用 UUID" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">自定义ProxyIP (p):</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">自定义ProxyIP (p):</label>
                         <input type="text" id="customIP" placeholder="例如: 1.2.3.4:443" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP列表 (yx):</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">优选IP列表 (yx):</label>
                         <input type="text" id="preferredIPs" placeholder="例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点" class="text-input">
                         
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选IP来源URL (yxURL):</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">优选IP来源URL (yxURL):</label>
                         <input type="text" id="preferredIPsURL" placeholder="默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">SOCKS5配置 (s):</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">SOCKS5配置 (s):</label>
                         <input type="text" id="socksConfig" placeholder="例如: user:pass@host:port 或 host:port" class="text-input">
                     </div>
 					<button type="submit" class="client-btn" >保存配置</button>
@@ -1811,11 +1786,11 @@ async function handleSubscriptionPage(request, user = null) {
                 <h3 style="color: #4a90e2; margin: 20px 0 15px 0; font-size: 1.2rem;">高级控制</h3>
                 <form id="advancedConfigForm" style="margin-bottom: 20px;">
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">订阅转换地址:</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">订阅转换地址:</label>
                         <input type="text" id="scu" placeholder="默认: https://url.v1.mk/sub" class="text-input">
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">内置优选类型:</label>
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">内置优选类型:</label>
                         <div style="padding: 15px; border: 1px solid #4a90e2; border-radius: 5px;">
                             <div style="margin-bottom: 10px;">
                                 <label style="display: inline-flex; align-items: center; cursor: pointer; color: #4a90e2;">
@@ -1845,29 +1820,29 @@ async function handleSubscriptionPage(request, user = null) {
                         </select>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">地区匹配 (rm):</label>
-                        <select id="regionMatching" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">地区匹配 (rm):</label>
+                        <select id="regionMatching" >
                             <option value="">默认（启用地区匹配）</option>
                             <option value="no">关闭地区匹配</option>
                         </select>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">降级控制 (qj):</label>
-                        <select id="downgradeControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">降级控制 (qj):</label>
+                        <select id="downgradeControl" >
                             <option value="">默认（不启用降级）</option>
                             <option value="no">启用降级模式</option>
                         </select>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">TLS控制 (dkby):</label>
-                        <select id="portControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">TLS控制 (dkby):</label>
+                        <select id="portControl" >
                             <option value="">默认（保留所有节点）</option>
                             <option value="yes">仅TLS节点</option>
                         </select>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; text-shadow: 0 0 3px #4a90e2;">优选控制 (yxby):</label>
-                        <select id="preferredControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #4a90e2; color: #4a90e2; font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px;">
+                        <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">优选控制 (yxby):</label>
+                        <select id="preferredControl" >
                             <option value="">默认（启用优选）</option>
                             <option value="yes">关闭优选</option>
                         </select>
@@ -1890,8 +1865,8 @@ async function handleSubscriptionPage(request, user = null) {
         <div class="card">
             <h2 class="card-title">[ 相关链接 ]</h2>
             <div style="text-align: center; margin: 20px 0;">
-                <a href="https://github.com/byJoey/cfnew" target="_blank" style="color: #4a90e2; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #4a90e2;">GitHub 项目</a>
-                <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #4a90e2; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #4a90e2;">YouTube @joeyblog</a>
+                <a href="https://github.com/byJoey/cfnew" target="_blank" style="color: #4a90e2; text-decoration: none; margin: 0 20px; font-size: 1.2rem; ">GitHub 项目</a>
+                <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #4a90e2; text-decoration: none; margin: 0 20px; font-size: 1.2rem; ">YouTube @joeyblog</a>
             </div>
         </div>
     </div>
