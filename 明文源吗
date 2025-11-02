@@ -1614,7 +1614,7 @@ async function handleSubscriptionPage(request, user = null) {
             border-radius: 8px;
         }
 		::placeholder {
-			color: #5d9cec;
+			color: #2c2c54;
 		}
     </style>
 </head>
@@ -1699,7 +1699,6 @@ async function handleSubscriptionPage(request, user = null) {
                             </div>
 							<button type="button" id="saveProtocolBtn" class="client-btn" >保存协议配置</button>
                         </div>
-						<button type="button" id="saveProtocolBtn" class="client-btn" >保存协议配置</button>
                     </div>
                     <div style="margin-bottom: 15px;">
                         <label style="display: block; margin-bottom: 8px; color: #4a90e2; font-weight: bold; ">自定义路径 (d):</label>
