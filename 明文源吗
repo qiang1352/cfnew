@@ -1598,13 +1598,10 @@ async function handleSubscriptionPage(request, user = null) {
         }
         .subtitle { color: #00aa00; margin-bottom: 30px; font-size: 1.2rem; }
         .card {
-            background: rgba(0, 20, 0, 0.9);
-            border: 2px solid #4a90e2;
-            border-radius: 0; padding: 30px; margin-bottom: 20px;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.1);
-            position: relative;
-            backdrop-filter: blur(10px);
-            animation: card-glow 4s ease-in-out infinite;
+            background: #2c2c54;
+            border-radius: 12px; 
+			padding: 30px; 
+			margin-bottom: 20px;
         }
         .card::before {
             content: ""; position: absolute; top: 0; left: 0;
@@ -1622,15 +1619,14 @@ async function handleSubscriptionPage(request, user = null) {
             gap: 15px; margin: 20px 0;
         }
         .client-btn {
-            background: rgba(0, 20, 0, 0.8);
-            border: 2px solid #4a90e2;
-            padding: 15px 20px; color: #4a90e2;
+            background: #4a90e2;
+            border: none;
+            border-radius: 8px; /* 全圆角 */
+            padding: 15px 20px; color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             cursor: pointer; transition: all 0.4s ease;
             text-align: center; position: relative;
             overflow: hidden;
-            text-shadow: 0 0 5px #4a90e2;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
         }
         .client-btn::before {
             content: ""; position: absolute; top: 0; left: -100%;
@@ -1648,10 +1644,8 @@ async function handleSubscriptionPage(request, user = null) {
         .client-btn:hover::before { left: 100%; }
         .client-btn:hover::after { opacity: 1; }
         .client-btn:hover {
-            background: rgba(0, 255, 0, 0.3);
-            box-shadow: 0 0 25px #4a90e2, 0 0 35px rgba(0, 255, 0, 0.5);
-            transform: translateY(-3px) scale(1.05);
-            text-shadow: 0 0 10px #4a90e2, 0 0 20px #4a90e2;
+            background: #4a4e69;
+			transform: translateY(-1px);
         }
         .generate-btn {
             background: rgba(0, 255, 0, 0.15);
