@@ -1974,8 +1974,8 @@ async function handleSubscriptionPage(request, user = null) {
                 regionMatch: 'تطبیق منطقه: ',
                 selectionLogic: 'منطق انتخاب: ',
                 kvStatusChecking: 'در حال بررسی وضعیت KV...',
-                kvEnabled: '✅ ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
-                kvDisabled: '⚠️ ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
+                kvEnabled: 'ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
+                kvDisabled: 'ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
                 specifyRegion: 'تعیین منطقه (wk):',
                 autoDetect: 'تشخیص خودکار',
                 saveRegion: 'ذخیره تنظیمات منطقه',
@@ -2020,7 +2020,7 @@ async function handleSubscriptionPage(request, user = null) {
                 builtinPreferredHint: 'کنترل اینکه کدام گره‌های ترجیحی داخلی در اشتراک گنجانده شوند. به طور پیش‌فرض همه فعال هستند.',
                 apiEnabledDefault: 'پیش‌فرض (بستن API)',
                 apiEnabledYes: 'فعال‌سازی مدیریت API',
-                apiEnabledHint: '⚠️ هشدار امنیتی: فعال‌سازی این گزینه اجازه می‌دهد IP های ترجیحی از طریق API به طور پویا اضافه شوند. توصیه می‌شود فقط در صورت نیاز فعال کنید.',
+                apiEnabledHint: 'هشدار امنیتی: فعال‌سازی این گزینه اجازه می‌دهد IP های ترجیحی از طریق API به طور پویا اضافه شوند. توصیه می‌شود فقط در صورت نیاز فعال کنید.',
                 regionMatchingDefault: 'پیش‌فرض (فعال‌سازی تطبیق منطقه)',
                 regionMatchingNo: 'بستن تطبیق منطقه',
                 regionMatchingHint: 'وقتی "بستن" تنظیم شود، تطبیق هوشمند منطقه انجام نمی‌شود',
@@ -2266,7 +2266,7 @@ async function handleSubscriptionPage(request, user = null) {
                                 <option value="FI">${t.regionNames.FI}</option>
                                 <option value="GB">${t.regionNames.GB}</option>
                         </select>
-                            <small id="wkRegionHint" style="color: #2dc4b6; font-size: 0.85rem; display: none;">⚠️ ${t.customIPDisabledHint}</small>
+                            <small id="wkRegionHint" style="color: #2dc4b6; font-size: 0.85rem; display: none;">${t.customIPDisabledHint}</small>
                     </div>
                         <button type="submit" class="client-btn">${t.saveRegion}</button>
                 </form>
@@ -2721,21 +2721,21 @@ async function handleSubscriptionPage(request, user = null) {
                         
                         // 显示自定义IP配置状态，包含具体IP
                             if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #ffaa00;">🔧 ' + t.usingCustomProxyIP + customIPInfo + '</span>';
-                            if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #ffaa00;">✅ ' + customIPInfo + t.customIPConfig + '</span>';
-                            if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #ffaa00;">⚠️ ' + t.customIPModeDisabled + '</span>';
+                            if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #ffaa00;">' + customIPInfo + t.customIPConfig + '</span>';
+                            if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #ffaa00;">' + t.customIPModeDisabled + '</span>';
                         
                         return; // 提前返回，不执行后续的地区匹配逻辑
                         } else if (data.detectionMethod === '手动指定地区' || data.detectionMethod === 'تعیین منطقه دستی') {
                         isManualRegionMode = true;
                         detectedRegion = data.region;
                         
-                            geoInfo.innerHTML = t.detectionMethod + '<span style="color: #44aa44;">' + t.manualRegion + '</span>';
-                            regionStatus.innerHTML = t.workerRegion + '<span style="color: #2dc4b6;">🎯 ' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
+                            geoInfo.innerHTML = t.detectionMethod + '<span style="color: #2dc4b6;">' + t.manualRegion + '</span>';
+                            regionStatus.innerHTML = t.workerRegion + '<span style="color: #2dc4b6;">' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
                         
                         // 显示配置状态而不是检测状态
-                            if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #2dc4b6;">✅ ' + t.proxyIPAvailable + '</span>';
-                            if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #2dc4b6;">✅ ' + t.smartSelection + '</span>';
-                            if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #2dc4b6;">✅ ' + t.sameRegionIP + '</span>';
+                            if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #2dc4b6;">' + t.proxyIPAvailable + '</span>';
+                            if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #2dc4b6;">' + t.smartSelection + '</span>';
+                            if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #2dc4b6;">' + t.sameRegionIP + '</span>';
                         
                         return; // 提前返回，不执行后续的地区匹配逻辑
                         } else if (data.region && t.regionNames[data.region]) {
@@ -2748,19 +2748,19 @@ async function handleSubscriptionPage(request, user = null) {
                         geoInfo.innerHTML = t.detectionMethod + '<span style="color: #ff4444;">' + t.detectionFailed + '</span>';
                 }
                 
-                    regionStatus.innerHTML = t.workerRegion + '<span style="color: #2dc4b6;">✅ ' + t.regionNames[detectedRegion] + '</span>';
+                    regionStatus.innerHTML = t.workerRegion + '<span style="color: #2dc4b6;">' + t.regionNames[detectedRegion] + '</span>';
                 
                 // 直接显示配置状态，不再进行检测
                 if (backupStatus) {
-                        backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #2dc4b6;">✅ ' + t.proxyIPAvailable + '</span>';
+                        backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #2dc4b6;">' + t.proxyIPAvailable + '</span>';
                 }
                 
                 if (currentIP) {
-                        currentIP.innerHTML = t.currentIP + '<span style="color: #2dc4b6;">✅ ' + t.smartSelection + '</span>';
+                        currentIP.innerHTML = t.currentIP + '<span style="color: #2dc4b6;">' + t.smartSelection + '</span>';
                 }
                 
                 if (regionMatch) {
-                        regionMatch.innerHTML = t.regionMatch + '<span style="color: #2dc4b6;">✅ ' + t.sameRegionIP + '</span>';
+                        regionMatch.innerHTML = t.regionMatch + '<span style="color: #2dc4b6;">' + t.sameRegionIP + '</span>';
                 }
                 
             } catch (error) {
@@ -2910,21 +2910,21 @@ async function handleSubscriptionPage(request, user = null) {
                     
                     const translations = {
                         zh: {
-                            kvDisabled: '⚠️ KV存储未启用或未配置',
+                            kvDisabled: 'KV存储未启用或未配置',
                             kvNotConfigured: 'KV存储未配置，无法使用配置管理功能。\\n\\n请在Cloudflare Workers中:\\n1. 创建KV命名空间\\n2. 绑定环境变量 C\\n3. 重新部署代码',
                             kvNotEnabled: 'KV存储未配置',
-                            kvEnabled: '✅ KV存储已启用，可以使用配置管理功能',
-                            kvCheckFailed: '⚠️ KV存储检测失败',
+                            kvEnabled: 'KV存储已启用，可以使用配置管理功能',
+                            kvCheckFailed: 'KV存储检测失败',
                             kvCheckFailedFormat: 'KV存储检测失败: 响应格式错误',
                             kvCheckFailedStatus: 'KV存储检测失败 - 状态码: ',
                             kvCheckFailedError: 'KV存储检测失败 - 错误: '
                         },
                         fa: {
-                            kvDisabled: '⚠️ ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
+                            kvDisabled: 'ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
                             kvNotConfigured: 'ذخیره‌سازی KV پیکربندی نشده است، نمی‌توانید از عملکرد مدیریت تنظیمات استفاده کنید.\\n\\nلطفا در Cloudflare Workers:\\n1. فضای نام KV ایجاد کنید\\n2. متغیر محیطی C را پیوند دهید\\n3. کد را دوباره مستقر کنید',
                             kvNotEnabled: 'ذخیره‌سازی KV پیکربندی نشده است',
-                            kvEnabled: '✅ ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
-                            kvCheckFailed: '⚠️ بررسی ذخیره‌سازی KV ناموفق',
+                            kvEnabled: 'ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
+                            kvCheckFailed: 'بررسی ذخیره‌سازی KV ناموفق',
                             kvCheckFailedFormat: 'بررسی ذخیره‌سازی KV ناموفق: خطای فرمت پاسخ',
                             kvCheckFailedStatus: 'بررسی ذخیره‌سازی KV ناموفق - کد وضعیت: ',
                             kvCheckFailedError: 'بررسی ذخیره‌سازی KV ناموفق - خطا: '
@@ -2944,7 +2944,7 @@ async function handleSubscriptionPage(request, user = null) {
                     
                         // 检查响应是否包含KV配置信息
                         if (data && data.kvEnabled === true) {
-                            document.getElementById('kvStatus').innerHTML = '<span style="color: #2dc4b6;">' + t.kvEnabled + '</span>';
+                            document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;">' + t.kvEnabled + '</span>';
                             document.getElementById('configContent').style.display = 'block';
                             document.getElementById('configCard').style.display = 'block';
                             await loadCurrentConfig();
@@ -2983,11 +2983,11 @@ async function handleSubscriptionPage(request, user = null) {
                 
                 const translations = {
                     zh: {
-                        kvDisabled: '⚠️ KV存储未启用或未配置',
+                        kvDisabled: 'KV存储未启用或未配置',
                         kvCheckFailedError: 'KV存储检测失败 - 错误: '
                     },
                     fa: {
-                        kvDisabled: '⚠️ ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
+                        kvDisabled: 'ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
                         kvCheckFailedError: 'بررسی ذخیره‌سازی KV ناموفق - خطا: '
                     }
                 };
@@ -3079,14 +3079,11 @@ async function handleSubscriptionPage(request, user = null) {
             if (cp && cp.trim()) {
                 // 使用自定义路径 (d)
                 pathTypeStatus.innerHTML = '<div style="color: #2dc4b6;">使用类型: <strong>自定义路径 (d)</strong></div>' +
-                    '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + cp + '</span></div>' +
-                    '<div style="margin-top: 5px; font-size: 0.9rem; color: #2dc4b6;">访问地址: ' + 
-                    (currentUrl.split('/')[0] + '//' + currentUrl.split('/')[2]) + cp + '/sub</div>';
+                    '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + cp + '</span></div>';
             } else {
                 // 使用 UUID (u)
                 pathTypeStatus.innerHTML = '<div style="color: #2dc4b6;">使用类型: <strong>UUID 路径 (u)</strong></div>' +
-                    '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + (currentPath || '(UUID)') + '</span></div>' +
-                    '<div style="margin-top: 5px; font-size: 0.9rem; color: #2dc4b6;">访问地址: ' + currentUrl.split('/sub')[0] + '/sub</div>';
+                    '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + (currentPath || '(UUID)') + '</span></div>';
             }
         }
         
@@ -3113,7 +3110,7 @@ async function handleSubscriptionPage(request, user = null) {
                 } else {
                     wkRegion.style.opacity = '1';
                     wkRegion.style.cursor = 'pointer';
-                    wkRegion.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                    wkRegion.style.backgroundColor = '#1e2b3a';
                     // 隐藏提示信息
                     if (wkRegionHint) {
                         wkRegionHint.style.display = 'none';
