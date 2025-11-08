@@ -2136,7 +2136,7 @@ async function handleSubscriptionPage(request, user = null) {
         </div>
         <div class="card" id="configCard" style="display: none;">
                 <h2 class="card-title">${t.configManagement}</h2>
-            <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: #1e2b3a; border: 1px solid #2dc4b6; color: #2dc4b6;">
+            <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; color: #2dc4b6;">
                     ${t.kvStatusChecking}
             </div>
             <div id="configContent" style="display: none;">
