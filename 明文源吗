@@ -2086,6 +2086,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 10V3L4 14h7v7l9-11h-7z' fill='%23667eea'/%3E%3C/svg%3E" type="image/svg+xml">
             <title>${t.title}</title>
         <style>
             * {
