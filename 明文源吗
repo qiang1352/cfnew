@@ -2329,29 +2329,21 @@ h1 {
         font-size: 0.9rem;
         padding: 0.5rem 1.2rem;
       }
-	  .client-grid{
-		grid-template-columns: repeat(2, 1fr);
-	}
     }
+	@media (min-width: 768px) {.client-grid{grid-template-columns: repeat(2, 1fr);}}
         </style>
     </head>
     <body>
         <div class="container">
             <div class="icon-wrapper"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-			<h1>Hello Snippets!</h1>
+			<h1>Hello Workers!</h1>
 			<div class="status">功能已启用</div>
 			<p class="description">您的服务正在正常运行,享受安全、快速的网络连接体验</p>
                 <div class="client-grid">
-                    <button class="btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
-                    <button class="btn" onclick="generateClientLink(atob('Y2xhc2g='), 'STASH')">STASH</button>
-                    <button class="btn" onclick="generateClientLink(atob('c3VyZ2U='), 'SURGE')">SURGE</button>
-                    <button class="btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
-                    <button class="btn" onclick="generateClientLink(atob('bG9vbg=='), 'LOON')">LOON</button>
-                    <button class="btn" onclick="generateClientLink(atob('cXVhbng='), 'QUANTUMULT X')">QUANTUMULT X</button>
-                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
-                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAYNG')">V2RAYNG</button>
-                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'NEKORAY')">NEKORAY</button>
-                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
+                    <button class="btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>CLASH</button>
+                    <button class="btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>SING-BOX</button>
+                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>V2RAY</button>
+                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>Shadowrocket</button>
                 </div>
                 <div class="subscription-url" id="clientSubscriptionUrl"></div>
 
