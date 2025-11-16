@@ -1424,7 +1424,7 @@
             portsToGenerate.forEach(({ port, tls }) => {
                 if (tls) {
                     
-                    const wsNodeName = `${nodeNameBase}`;
+                    const wsNodeName = `${nodeNameBase}-${port}-WS-TLS`;
                     const wsParams = new URLSearchParams({ 
                         encryption: 'none', 
                         security: 'tls', 
@@ -1437,7 +1437,7 @@
                     links.push(`${proto}://${user}@${safeIP}:${port}?${wsParams.toString()}#${encodeURIComponent(wsNodeName)}`);
                 } else {
                     
-                    const wsNodeName = `${nodeNameBase}`;
+                    const wsNodeName = `${nodeNameBase}-${port}-WS`;
                     const wsParams = new URLSearchParams({
                         encryption: 'none',
                         security: 'none',
@@ -2087,15 +2087,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 10V3L4 14h7v7l9-11h-7z' fill='%23667eea'/%3E%3C/svg%3E" type="image/svg+xml">
-            <title>${t.title}</title>
+        <title>${t.title}</title>
         <style>
-            * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
             body {
-				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
 				min-height: 100vh;
 				display: flex;
 				justify-content: center;
@@ -2105,7 +2101,7 @@
 				overflow: hidden;
 				z-index: 1;
 				padding: 20px
-			}
+            }
 			body::before {
 				content: '';
 				position: absolute;
@@ -2132,7 +2128,7 @@
 				0%, 100% { transform: translateY(0) scale(1); }
 				50% { transform: translateY(-20px) scale(1.05); }
 			}
-			.container {
+            .container {
 				position: relative;
 				z-index: 1;
 				background: rgba(255, 255, 255, 0.95);
@@ -2145,289 +2141,414 @@
 				text-align: center;
 				animation: slideUp 0.6s ease-out
 			}
+			@keyframes slideUp {
+				from {
+					opacity: 0;
+					transform: translateY(30px)
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0)
+				}
+			}
+			.icon-wrapper {
+				width: 80px;
+				height: 80px;
+				margin: 0 auto 1.5rem;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				border-radius: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				animation: pulse 2s ease-in-out infinite
+			}
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px)
-    }
+			@keyframes pulse {
 
-    to {
-        opacity: 1;
-        transform: translateY(0)
-    }
-}
+				0%,
+				100% {
+					transform: scale(1)
+				}
 
-.icon-wrapper {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: pulse 2s ease-in-out infinite
-}
+				50% {
+					transform: scale(1.05)
+				}
+			}
+			.icon-wrapper svg {
+				width: 45px;
+				height: 45px;
+				fill: white
+			}
+			h1 {
+				font-size: 2rem;
+				font-weight: 700;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				margin-bottom: 0.5rem;
+				letter-spacing: -0.5px
+			}
+			.status {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+				color: white;
+				padding: 0.6rem 1.5rem;
+				border-radius: 50px;
+				font-weight: 500;
+				font-size: 0.95rem;
+				margin: 1.5rem 0 2rem;
+				box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3)
+			}
+			.status::before {
+				content: '✓';
+				width: 20px;
+				height: 20px;
+				background: rgba(255, 255, 255, 0.3);
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: bold
+			}
+			.description {
+				color: #64748b;
+				font-size: 0.95rem;
+				line-height: 1.6;
+				margin-bottom: 2rem
+			}
+			.subtitle {
+				margin-bottom: 30px;
+				font-size: 1.2rem
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.75rem;
+				padding: 1rem 2rem;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				color: white;
+				text-decoration: none;
+				border: none;
+				border-radius: 12px;
+				font-weight: 600;
+				font-size: 1rem;
+				transition: all 0.3s ease;
+				box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+				position: relative;
+				overflow: hidden;
+				cursor: pointer;
+				width: 100%;
+				margin-bottom: 1rem
+			}
+			.btn::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: -100%;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+				transition: left 0.5s ease
+			}
+			.btn:hover::before {
+				left: 100%
+			}
+			.btn:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4)
+			}
+			.btn:active {
+				transform: translateY(0)
+			}
+			.btn svg {
+				width: 20px;
+				height: 20px;
+				fill: white;
+				flex-shrink: 0
+			}
+			.subscription-url {
+				background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+				border: none;
+				color: white;
+				font-weight: 600;
+				font-size: 1rem;
+				text-decoration: none;
+				padding: 12px 15px;
+				word-break: break-all;
+				margin-top: 20px;
+				display: none;
+				border-radius: 8px;
+			}
+			.client-grid {
+				display:grid;
+				grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+				gap:15px;
+				margin:20px 0
+			}
+			.footer {
+				margin-top: 2rem;
+				padding-top: 1.5rem;
+				border-top: 1px solid #e2e8f0;
+				color: #94a3b8;
+				font-size: 0.85rem;
+			}
+			@media (max-width: 480px) {
+				.container {
+					padding: 2.5rem 1.5rem;
+					}
 
-@keyframes pulse {
+				h1 {
+					font-size: 1.75rem;
+					}
 
-    0%,
-    100% {
-        transform: scale(1)
-    }
+				.icon-wrapper {
+					width: 70px;
+					height: 70px;
+					}
 
-    50% {
-        transform: scale(1.05)
-    }
-}
-
-.icon-wrapper svg {
-    width: 45px;
-    height: 45px;
-    fill: white
-}
-h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.5px
-}
-
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    margin: 1.5rem 0 2rem;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3)
-}
-
-.status::before {
-    content: '✓';
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold
-}
-
-.description {
-    color: #64748b;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 2rem
-}
-
-.subtitle {
-    margin-bottom: 30px;
-    font-size: 1.2rem
-}
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom: 1rem
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s ease
-}
-
-.btn:hover::before {
-    left: 100%
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4)
-}
-
-.btn:active {
-    transform: translateY(0)
-}
-
-.btn svg {
-    width: 20px;
-    height: 20px;
-    fill: white;
-    flex-shrink: 0
-}
-.subscription-url {
-    background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
-    border: none;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    padding: 12px 15px;
-    word-break: break-all;
-    margin-top: 20px;
-    display: none;
-    border-radius: 8px;
-}
-.client-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:15px;margin:20px 0}
-			.footer {margin-top: 2rem;padding-top: 1.5rem;border-top: 1px solid #e2e8f0;color: #94a3b8;font-size: 0.85rem;}
-			    /* 移动端优化 */
-    @media (max-width: 480px) {
-      .container {
-        padding: 2.5rem 1.5rem;
-      }
-
-      h1 {
-        font-size: 1.75rem;
-      }
-
-      .icon-wrapper {
-        width: 70px;
-        height: 70px;
-      }
-
-      .icon-wrapper svg {
-        width: 40px;
-        height: 40px;
-      }
-
-      .btn {
-        padding: 0.9rem 1.5rem;
-        font-size: 0.95rem;
-      }
-
-      .status {
-        font-size: 0.9rem;
-        padding: 0.5rem 1.2rem;
-      }
-    }
-	@media (min-width: 768px) {.client-grid{grid-template-columns: repeat(2, 1fr);}}
+				.icon-wrapper svg {
+					width: 40px;
+					height: 40px;
+					}
+				.btn {
+					padding: 0.9rem 1.5rem;
+					font-size: 0.95rem;
+					}
+				.status {
+					font-size: 0.9rem;
+					padding: 0.5rem 1.2rem;
+					}
+			}
+			@media (min-width: 768px) {
+				.client-grid {
+					grid-template-columns: repeat(2, 1fr);
+					}
+			}
 
         </style>
     </head>
     <body>
-	<div id="tsparticles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
+		<div id="tsparticles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></div>
         <div class="container">
-            <div class="icon-wrapper"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+			<div class="icon-wrapper"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
 			<h1>Hello Workers!</h1>
 			<div class="status">功能已启用</div>
 			<p class="description">您的服务正在正常运行,享受安全、快速的网络连接体验</p>
-                <div class="client-grid">
-                    <button class="btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>CLASH</button>
-                    <button class="btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>SING-BOX</button>
-                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>V2RAY</button>
-                    <button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>Shadowrocket</button>
+			<div class="client-grid">
+				<button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
+				<button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'STASH')">STASH</button>
+				<button class="client-btn" onclick="generateClientLink(atob('c3VyZ2U='), 'SURGE')">SURGE</button>
+				<button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
+				<button class="client-btn" onclick="generateClientLink(atob('bG9vbg=='), 'LOON')">LOON</button>
+				<button class="client-btn" onclick="generateClientLink(atob('cXVhbng='), 'QUANTUMULT X')">QUANTUMULT X</button>
+				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
+				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAYNG')">V2RAYNG</button>
+				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'NEKORAY')">NEKORAY</button>
+				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
+			</div>
+			<div class="subscription-url" id="clientSubscriptionUrl"></div>
+			<div class="footer">Powered by Cloudflare</div>
+            <div class="card">
+                    <h2 class="card-title">${t.systemStatus}</h2>
+                <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: rgba(0, 20, 0, 0.8); border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1); position: relative; overflow: hidden;">
+                        <div style="color: #00ff00; margin-bottom: 15px; font-weight: bold; text-shadow: 0 0 5px #00ff00;">[ ${t.checking} ]</div>
+                        <div id="regionStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.workerRegion}${t.checking}</div>
+                        <div id="geoInfo" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">${t.detectionMethod}${t.checking}</div>
+                        <div id="backupStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.proxyIPStatus}${t.checking}</div>
+                        <div id="currentIP" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.currentIP}${t.checking}</div>
+                        <div id="regionMatch" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.regionMatch}${t.checking}</div>
+                        <div id="selectionLogic" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">${t.selectionLogic}${t.selectionLogicText}</div>
                 </div>
-                <div class="subscription-url" id="clientSubscriptionUrl"></div>
-
-			    <div class="footer">
-      Powered by Cloudflare
-    </div>
+            </div>
+            <div class="card" id="configCard" style="display: none;">
+                    <h2 class="card-title">${t.configManagement}</h2>
+                <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: rgba(0, 20, 0, 0.8); border: 1px solid #00ff00; color: #00ff00;">
+                        ${t.kvStatusChecking}
+                </div>
+                <div id="configContent" style="display: none;">
+                    <form id="regionForm" style="margin-bottom: 20px;">
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.specifyRegion}</label>
+                            <select id="wkRegion" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                    <option value="">${t.autoDetect}</option>
+                                    <option value="US">${t.regionNames.US}</option>
+                                    <option value="SG">${t.regionNames.SG}</option>
+                                    <option value="JP">${t.regionNames.JP}</option>
+                                    <option value="HK">${t.regionNames.HK}</option>
+                                    <option value="KR">${t.regionNames.KR}</option>
+                                    <option value="DE">${t.regionNames.DE}</option>
+                                    <option value="SE">${t.regionNames.SE}</option>
+                                    <option value="NL">${t.regionNames.NL}</option>
+                                    <option value="FI">${t.regionNames.FI}</option>
+                                    <option value="GB">${t.regionNames.GB}</option>
+                            </select>
+                                <small id="wkRegionHint" style="color: #00aa00; font-size: 0.85rem; display: none;">⚠️ ${t.customIPDisabledHint}</small>
+                        </div>
+                            <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">${t.saveRegion}</button>
+                    </form>
+                    <form id="otherConfigForm" style="margin-bottom: 20px;">
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.protocolSelection}</label>
+                            <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #00ff00; border-radius: 5px;">
+                                <div style="margin-bottom: 10px;">
+                                    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                        <input type="checkbox" id="ev" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                                            <span style="font-size: 1.1rem;">${t.enableVLESS}</span>
+                                    </label>
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                        <input type="checkbox" id="et" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                                            <span style="font-size: 1.1rem;">${t.enableTrojan}</span>
+                                    </label>
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                        <input type="checkbox" id="ex" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                                            <span style="font-size: 1.1rem;">${t.enableXhttp}</span>
+                                    </label>
+                                </div>
+                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0, 255, 0, 0.3);">
+                                        <label style="display: block; margin-bottom: 8px; color: #00ff00; font-size: 0.95rem;">${t.trojanPassword}</label>
+                                        <input type="text" id="tp" placeholder="${t.trojanPasswordPlaceholder}" style="width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.8); border: 1px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 13px;">
+                                        <small style="color: #00aa00; font-size: 0.8rem; display: block; margin-top: 5px;">${t.trojanPasswordHint}</small>
+                                </div>
+                                    <small style="color: #00aa00; font-size: 0.85rem; display: block; margin-top: 10px;">${t.protocolHint}</small>
+                                    <button type="button" id="saveProtocolBtn" style="margin-top: 15px; background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 10px 20px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease; width: 100%;">${t.saveProtocol}</button>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.customHomepage}</label>
+                                <input type="text" id="customHomepage" placeholder="${t.customHomepagePlaceholder}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <small style="color: #00aa00; font-size: 0.85rem;">${t.customHomepageHint}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.customPath}</label>
+                                <input type="text" id="customPath" placeholder="${isFarsi ? 'مثال: /mypath یا خالی بگذارید تا از UUID استفاده شود' : '例如: /mypath 或留空使用 UUID'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <small style="color: #00aa00; font-size: 0.85rem;">${isFarsi ? 'مسیر اشتراک سفارشی. اگر خالی بگذارید از UUID به عنوان مسیر استفاده می‌شود.' : '自定义订阅路径。留空则使用 UUID 作为路径。'}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.customIP}</label>
+                                <input type="text" id="customIP" placeholder="${isFarsi ? 'مثال: 1.2.3.4:443' : '例如: 1.2.3.4:443'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <small style="color: #00aa00; font-size: 0.85rem;">${isFarsi ? 'آدرس و پورت ProxyIP سفارشی' : '自定义ProxyIP地址和端口'}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.preferredIPs}</label>
+                                <input type="text" id="preferredIPs" placeholder="${isFarsi ? 'مثال: 1.2.3.4:443#گره هنگ‌کنگ,5.6.7.8:80#گره آمریکا,example.com:8443#گره سنگاپور' : '例如: 1.2.3.4:443#香港节点,5.6.7.8:80#美国节点,example.com:8443#新加坡节点'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <small style="color: #00aa00; font-size: 0.85rem;">${isFarsi ? 'فرمت: IP:پورت#نام گره یا IP:پورت (بدون # از نام پیش‌فرض استفاده می‌شود). پشتیبانی از چندین مورد، با کاما جدا می‌شوند. <span style="color: #ffaa00;">IP های اضافه شده از طریق API به طور خودکار در اینجا نمایش داده می‌شوند.</span>' : '格式: IP:端口#节点名称 或 IP:端口 (无#则使用默认名称)。支持多个，用逗号分隔。<span style="color: #ffaa00;">API添加的IP会自动显示在这里。</span>'}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.preferredIPsURL}</label>
+                                <input type="text" id="preferredIPsURL" placeholder="${isFarsi ? 'پیش‌فرض: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt' : '默认: https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <small style="color: #00aa00; font-size: 0.85rem;">${isFarsi ? 'URL منبع لیست IP ترجیحی سفارشی، اگر خالی بگذارید از آدرس پیش‌فرض استفاده می‌شود' : '自定义优选IP列表来源URL，留空则使用默认地址'}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.socks5Config}</label>
+                                <input type="text" id="socksConfig" placeholder="${isFarsi ? 'مثال: user:pass@host:port یا host:port' : '例如: user:pass@host:port 或 host:port'}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <small style="color: #00aa00; font-size: 0.85rem;">${isFarsi ? 'آدرس پروکسی SOCKS5، برای انتقال تمام ترافیک خروجی استفاده می‌شود' : 'SOCKS5代理地址，用于转发所有出站流量'}</small>
+                        </div>
+                            <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">${t.saveConfig}</button>
+                    </form>
+                    
+                        <h3 style="color: #00ff00; margin: 20px 0 15px 0; font-size: 1.2rem;">${t.advancedControl}</h3>
+                    <form id="advancedConfigForm" style="margin-bottom: 20px;">
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.subscriptionConverter}</label>
+                                <input type="text" id="scu" placeholder="${t.subscriptionConverterPlaceholder}" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                <small style="color: #00aa00; font-size: 0.85rem;">${t.subscriptionConverterHint}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.builtinPreferred}</label>
+                            <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #00ff00; border-radius: 5px;">
+                                <div style="margin-bottom: 10px;">
+                                    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                        <input type="checkbox" id="epd" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                                            <span style="font-size: 1.1rem;">${t.enablePreferredDomain}</span>
+                                    </label>
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                        <input type="checkbox" id="epi" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                                            <span style="font-size: 1.1rem;">${t.enablePreferredIP}</span>
+                                    </label>
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <label style="display: inline-flex; align-items: center; cursor: pointer; color: #00ff00;">
+                                        <input type="checkbox" id="egi" checked style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
+                                            <span style="font-size: 1.1rem;">${t.enableGitHubPreferred}</span>
+                                    </label>
+                                </div>
+                                    <small style="color: #00aa00; font-size: 0.85rem; display: block; margin-top: 10px;">${t.builtinPreferredHint}</small>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.allowAPIManagement}</label>
+                            <select id="apiEnabled" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                    <option value="">${t.apiEnabledDefault}</option>
+                                    <option value="yes">${t.apiEnabledYes}</option>
+                            </select>
+                                <small style="color: #ffaa00; font-size: 0.85rem;">${t.apiEnabledHint}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.regionMatching}</label>
+                            <select id="regionMatching" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                    <option value="">${t.regionMatchingDefault}</option>
+                                    <option value="no">${t.regionMatchingNo}</option>
+                            </select>
+                                <small style="color: #00aa00; font-size: 0.85rem;">${t.regionMatchingHint}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.downgradeControl}</label>
+                            <select id="downgradeControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                    <option value="">${t.downgradeControlDefault}</option>
+                                    <option value="no">${t.downgradeControlNo}</option>
+                            </select>
+                                <small style="color: #00aa00; font-size: 0.85rem;">${t.downgradeControlHint}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.tlsControl}</label>
+                            <select id="portControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                    <option value="">${t.tlsControlDefault}</option>
+                                    <option value="yes">${t.tlsControlYes}</option>
+                            </select>
+                                <small style="color: #00aa00; font-size: 0.85rem;">${t.tlsControlHint}</small>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 8px; color: #00ff00; font-weight: bold; text-shadow: 0 0 3px #00ff00;">${t.preferredControl}</label>
+                            <select id="preferredControl" style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff00; color: #00ff00; font-family: 'Courier New', monospace; font-size: 14px;">
+                                    <option value="">${t.preferredControlDefault}</option>
+                                    <option value="yes">${t.preferredControlYes}</option>
+                            </select>
+                                <small style="color: #00aa00; font-size: 0.85rem;">${t.preferredControlHint}</small>
+                        </div>
+                            <button type="submit" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">${t.saveAdvanced}</button>
+                    </form>
+                    <div id="currentConfig" style="background: rgba(0, 0, 0, 0.9); border: 1px solid #00ff00; padding: 15px; margin: 10px 0; font-family: 'Courier New', monospace; color: #00ff00;">
+                            ${t.loading}
+                    </div>
+                    <div id="pathTypeInfo" style="background: rgba(0, 20, 0, 0.7); border: 1px solid #00ff00; padding: 15px; margin: 10px 0; font-family: 'Courier New', monospace; color: #00ff00;">
+                            <div style="font-weight: bold; margin-bottom: 8px; color: #44ff44; text-shadow: 0 0 5px #44ff44;">${t.currentConfig}</div>
+                            <div id="pathTypeStatus">${t.checking}</div>
+                    </div>
+                        <button onclick="loadCurrentConfig()" style="background: rgba(0, 255, 0, 0.15); border: 2px solid #00ff00; padding: 12px 24px; color: #00ff00; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; margin-right: 10px; text-shadow: 0 0 8px #00ff00; transition: all 0.4s ease;">${t.refreshConfig}</button>
+                        <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 2px solid #ff0000; padding: 12px 24px; color: #ff0000; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #ff0000; transition: all 0.4s ease;">${t.resetConfig}</button>
+                </div>
+                <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #00ff00; background: rgba(0, 20, 0, 0.8); color: #00ff00; text-shadow: 0 0 5px #00ff00;"></div>
+            </div>
             
+            <div class="card">
+                    <h2 class="card-title">${t.relatedLinks}</h2>
+                <div style="text-align: center; margin: 20px 0;">
+                        <a href="https://github.com/byJoey/cfnew" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">${t.githubProject}</a>
+                    <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">YouTube @joeyblog</a>
+                </div>
+            </div>
         </div>
-		<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/umd/tsparticles.min.js"></script>
         <script>
-		tsParticles.load({
-                id: "tsparticles",
-                options: {
-                    fullScreen: { 
-                        enable: false // 我们手动设置了容器大小
-                    },
-                    particles: {
-                        number: {
-                            value: 80, // 粒子数量
-                        },
-                        color: {
-                            value: "#ffffff", // 粒子颜色 (白色)
-                        },
-                        links: {
-                            enable: true,
-                            distance: 150, // 连线距离
-                            color: "#ffffff", // 连线颜色 (白色)
-                            opacity: 0.4,
-                            width: 1,
-                        },
-                        move: {
-                            enable: true,
-                            speed: 1,
-                            direction: "none",
-                            random: false,
-                            straight: false,
-                            outModes: {
-                                default: "bounce",
-                            },
-                            attract: { enable: false, rotateX: 600, rotateY: 1200 },
-                        },
-                        shape: {
-                            type: "circle",
-                        },
-                        size: {
-                            value: { min: 1, max: 3 },
-                        },
-                    },
-                    interactivity: {
-                        events: {
-                            onHover: {
-                                enable: true, // 启用鼠标悬停交互
-                                mode: "repulse", // 鼠标接近时粒子排斥
-                            },
-                            onClick: {
-                                enable: true, // 启用鼠标点击交互
-                                mode: "push", // 点击时增加粒子
-                            },
-                        },
-                        modes: {
-                            repulse: {
-                                distance: 100, // 鼠标排斥的距离
-                                duration: 0.4,
-                            },
-                            push: {
-                                quantity: 4, // 每次点击增加 4 个粒子
-                            }
-                        },
-                    },
-                    detectRetina: true,
-                    background: {
-                        color: {
-                            // 背景颜色可以留空，以便显示您的 CSS 渐变背景
-                            value: "transparent", 
-                        }
-                    }
-                },
-            });
-		
-		
             // 订阅转换地址（从服务器配置注入）
             var SUB_CONVERTER_URL = "${ scu }";
             // 远程配置URL（硬编码）
@@ -2640,7 +2761,49 @@ h1 {
                     }
                 }
             }
-
+            
+            function createMatrixRain() {
+                const matrixContainer = document.getElementById('matrixCodeRain');
+                const matrixChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                const columns = Math.floor(window.innerWidth / 18);
+                
+                for (let i = 0; i < columns; i++) {
+                    const column = document.createElement('div');
+                    column.className = 'matrix-column';
+                    column.style.left = (i * 18) + 'px';
+                    column.style.animationDelay = Math.random() * 15 + 's';
+                    column.style.animationDuration = (Math.random() * 15 + 8) + 's';
+                    column.style.fontSize = (Math.random() * 4 + 12) + 'px';
+                    column.style.opacity = Math.random() * 0.8 + 0.2;
+                    
+                    let text = '';
+                    const charCount = Math.floor(Math.random() * 30 + 20);
+                    for (let j = 0; j < charCount; j++) {
+                        const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                        const brightness = Math.random() > 0.1 ? '#00ff00' : '#00aa00';
+                        text += '<span style="color: ' + brightness + ';">' + char + '</span><br>';
+                    }
+                    column.innerHTML = text;
+                    matrixContainer.appendChild(column);
+                }
+                
+                setInterval(function() {
+                    const columns = matrixContainer.querySelectorAll('.matrix-column');
+                    columns.forEach(function(column) {
+                        if (Math.random() > 0.95) {
+                            const chars = column.querySelectorAll('span');
+                            if (chars.length > 0) {
+                                const randomChar = chars[Math.floor(Math.random() * chars.length)];
+                                randomChar.style.color = '#ffffff';
+                                setTimeout(function() {
+                                    randomChar.style.color = '#00ff00';
+                                }, 200);
+                            }
+                        }
+                    });
+                }, 100);
+            }
+            
             async function checkSystemStatus() {
                 try {
                     const cfStatus = document.getElementById('cfStatus');
@@ -3265,6 +3428,7 @@ h1 {
             }
             
             document.addEventListener('DOMContentLoaded', function() {
+                createMatrixRain();
                 checkSystemStatus();
                 checkKVStatus();
                 
@@ -4025,19 +4189,19 @@ h1 {
             
             if (CF_HTTPS_PORTS.includes(port)) {
                 
-                const wsNodeName = `${nodeName}`;
+                const wsNodeName = `${nodeName}-${port}-WS-TLS`;
                 const link = `${proto}://${user}@${item.ip}:${port}?encryption=none&security=tls&sni=${workerDomain}&fp=chrome&type=ws&host=${workerDomain}&path=${wsPath}#${encodeURIComponent(wsNodeName)}`;
                 links.push(link);
             } else if (CF_HTTP_PORTS.includes(port)) {
                 
                 if (!disableNonTLS) {
-                    const wsNodeName = `${nodeName}`;
+                    const wsNodeName = `${nodeName}-${port}-WS`;
                     const link = `${proto}://${user}@${item.ip}:${port}?encryption=none&security=none&type=ws&host=${workerDomain}&path=${wsPath}#${encodeURIComponent(wsNodeName)}`;
                     links.push(link);
                 }
             } else {
                 
-                const wsNodeName = `${nodeName}`;
+                const wsNodeName = `${nodeName}-${port}-WS-TLS`;
                 const link = `${proto}://${user}@${item.ip}:${port}?encryption=none&security=tls&sni=${workerDomain}&fp=chrome&type=ws&host=${workerDomain}&path=${wsPath}#${encodeURIComponent(wsNodeName)}`;
                 links.push(link);
             }
