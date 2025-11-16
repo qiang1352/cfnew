@@ -2339,19 +2339,13 @@
 			<div class="status">功能已启用</div>
 			<p class="description">您的服务正在正常运行,享受安全、快速的网络连接体验</p>
 			<div class="client-grid">
-				<button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
-				<button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'STASH')">STASH</button>
-				<button class="client-btn" onclick="generateClientLink(atob('c3VyZ2U='), 'SURGE')">SURGE</button>
-				<button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
-				<button class="client-btn" onclick="generateClientLink(atob('bG9vbg=='), 'LOON')">LOON</button>
-				<button class="client-btn" onclick="generateClientLink(atob('cXVhbng='), 'QUANTUMULT X')">QUANTUMULT X</button>
-				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
-				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAYNG')">V2RAYNG</button>
-				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'NEKORAY')">NEKORAY</button>
-				<button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
+				<button class="btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
+				<button class="btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
+				<button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
+				<button class="btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
 			</div>
 			<div class="subscription-url" id="clientSubscriptionUrl"></div>
-			<div class="footer">Powered by Cloudflare</div>
+			
             <div class="card">
                     <h2 class="card-title">${t.systemStatus}</h2>
                 <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: rgba(0, 20, 0, 0.8); border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1); position: relative; overflow: hidden;">
@@ -2364,6 +2358,7 @@
                         <div id="selectionLogic" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">${t.selectionLogic}${t.selectionLogicText}</div>
                 </div>
             </div>
+			<div class="footer">Powered by Cloudflare</div>
             <div class="card" id="configCard" style="display: none;">
                     <h2 class="card-title">${t.configManagement}</h2>
                 <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: rgba(0, 20, 0, 0.8); border: 1px solid #00ff00; color: #00ff00;">
@@ -2538,14 +2533,6 @@
                         <button onclick="resetAllConfig()" style="background: rgba(255, 0, 0, 0.15); border: 2px solid #ff0000; padding: 12px 24px; color: #ff0000; font-family: 'Courier New', monospace; font-weight: bold; cursor: pointer; text-shadow: 0 0 8px #ff0000; transition: all 0.4s ease;">${t.resetConfig}</button>
                 </div>
                 <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #00ff00; background: rgba(0, 20, 0, 0.8); color: #00ff00; text-shadow: 0 0 5px #00ff00;"></div>
-            </div>
-            
-            <div class="card">
-                    <h2 class="card-title">${t.relatedLinks}</h2>
-                <div style="text-align: center; margin: 20px 0;">
-                        <a href="https://github.com/byJoey/cfnew" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">${t.githubProject}</a>
-                    <a href="https://www.youtube.com/@joeyblog" target="_blank" style="color: #00ff00; text-decoration: none; margin: 0 20px; font-size: 1.2rem; text-shadow: 0 0 5px #00ff00;">YouTube @joeyblog</a>
-                </div>
             </div>
         </div>
         <script>
@@ -2760,48 +2747,6 @@
                         });
                     }
                 }
-            }
-            
-            function createMatrixRain() {
-                const matrixContainer = document.getElementById('matrixCodeRain');
-                const matrixChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-                const columns = Math.floor(window.innerWidth / 18);
-                
-                for (let i = 0; i < columns; i++) {
-                    const column = document.createElement('div');
-                    column.className = 'matrix-column';
-                    column.style.left = (i * 18) + 'px';
-                    column.style.animationDelay = Math.random() * 15 + 's';
-                    column.style.animationDuration = (Math.random() * 15 + 8) + 's';
-                    column.style.fontSize = (Math.random() * 4 + 12) + 'px';
-                    column.style.opacity = Math.random() * 0.8 + 0.2;
-                    
-                    let text = '';
-                    const charCount = Math.floor(Math.random() * 30 + 20);
-                    for (let j = 0; j < charCount; j++) {
-                        const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                        const brightness = Math.random() > 0.1 ? '#00ff00' : '#00aa00';
-                        text += '<span style="color: ' + brightness + ';">' + char + '</span><br>';
-                    }
-                    column.innerHTML = text;
-                    matrixContainer.appendChild(column);
-                }
-                
-                setInterval(function() {
-                    const columns = matrixContainer.querySelectorAll('.matrix-column');
-                    columns.forEach(function(column) {
-                        if (Math.random() > 0.95) {
-                            const chars = column.querySelectorAll('span');
-                            if (chars.length > 0) {
-                                const randomChar = chars[Math.floor(Math.random() * chars.length)];
-                                randomChar.style.color = '#ffffff';
-                                setTimeout(function() {
-                                    randomChar.style.color = '#00ff00';
-                                }, 200);
-                            }
-                        }
-                    });
-                }, 100);
             }
             
             async function checkSystemStatus() {
@@ -3428,7 +3373,6 @@
             }
             
             document.addEventListener('DOMContentLoaded', function() {
-                createMatrixRain();
                 checkSystemStatus();
                 checkKVStatus();
                 
