@@ -2375,10 +2375,10 @@
 			
 			.form-input {
 				width: 100%;
-				padding: 1rem 1.25rem;
+				padding: 0.6rem 0.8rem;
 				background: rgba(255, 255, 255, 0.9);
 				border: 2px solid #e2e8f0;
-				border-radius: 12px;
+				border-radius: 8px;
 				font-size: 1rem;
 				font-family: inherit;
 				color: #374151;
@@ -2396,6 +2396,30 @@
 
 			.form-input::placeholder {
 				color: #9ca3af;
+			}
+			.form-select {
+				width: 100%;
+				padding: 0.6rem 0.8rem;
+				background: rgba(255, 255, 255, 0.95);
+				border: 2px solid #e2e8f0;
+				border-radius: 8px;
+				font-size: 1rem;
+				font-family: inherit;
+				color: #2d3748;
+				transition: all 0.3s ease;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+				appearance: none;
+				cursor: pointer;
+			}
+			.form-select:focus {
+				outline: none;
+				border-color: #667eea;
+				background: rgba(255, 255, 255, 0.98);
+				box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+				transform: translateY(-2px);
+			}
+			.form-select:hover {
+				border-color: #cbd5e0;
 			}
         </style>
     </head>
@@ -2417,7 +2441,7 @@
             </div>
             <div class="card">
                     <h2 class="card-title">${t.systemStatus}</h2>
-                <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: rgba(0, 20, 0, 0.8); border: 2px solid #00ff00; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1); position: relative; overflow: hidden;">
+                <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; position: relative; overflow: hidden;">
                         <div style="color: #00ff00; margin-bottom: 15px; font-weight: bold; text-shadow: 0 0 5px #00ff00;">[ ${t.checking} ]</div>
                         <div id="regionStatus" style="margin: 8px 0; color: #00ff00; font-family: 'Courier New', monospace; text-shadow: 0 0 3px #00ff00;">${t.workerRegion}${t.checking}</div>
                         <div id="geoInfo" style="margin: 8px 0; color: #00aa00; font-family: 'Courier New', monospace; font-size: 0.9rem; text-shadow: 0 0 3px #00aa00;">${t.detectionMethod}${t.checking}</div>
@@ -2436,7 +2460,7 @@
                     <form id="regionForm" style="margin-bottom: 20px;">
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #667eea; font-weight: bold; ">${t.specifyRegion}</label>
-                            <select id="wkRegion" class="form-input">
+                            <select id="wkRegion" class="form-select">
                                     <option value="">${t.autoDetect}</option>
                                     <option value="US">${t.regionNames.US}</option>
                                     <option value="SG">${t.regionNames.SG}</option>
@@ -2577,35 +2601,35 @@
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #667eea; font-weight: bold; ">${t.allowAPIManagement}</label>
-                            <select id="apiEnabled" class="form-input">
+                            <select id="apiEnabled" class="form-select">
                                     <option value="">${t.apiEnabledDefault}</option>
                                     <option value="yes">${t.apiEnabledYes}</option>
                             </select>
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #667eea; font-weight: bold; ">${t.regionMatching}</label>
-                            <select id="regionMatching" class="form-input">
+                            <select id="regionMatching" class="form-select">
                                     <option value="">${t.regionMatchingDefault}</option>
                                     <option value="no">${t.regionMatchingNo}</option>
                             </select>
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #667eea; font-weight: bold; ">${t.downgradeControl}</label>
-                            <select id="downgradeControl" class="form-input">
+                            <select id="downgradeControl" class="form-select">
                                     <option value="">${t.downgradeControlDefault}</option>
                                     <option value="no">${t.downgradeControlNo}</option>
                             </select>
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #667eea; font-weight: bold; ">${t.tlsControl}</label>
-                            <select id="portControl" class="form-input">
+                            <select id="portControl" class="form-select">
                                     <option value="">${t.tlsControlDefault}</option>
                                     <option value="yes">${t.tlsControlYes}</option>
                             </select>
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #667eea; font-weight: bold; ">${t.preferredControl}</label>
-                            <select id="preferredControl" class="form-input">
+                            <select id="preferredControl" class="form-select">
                                     <option value="">${t.preferredControlDefault}</option>
                                     <option value="yes">${t.preferredControlYes}</option>
                             </select>
