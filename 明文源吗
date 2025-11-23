@@ -2337,7 +2337,7 @@
             <div class="card">
                 <h2 class="card-title">${t.systemStatus}</h2>
                 <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; position: relative; overflow: hidden;">
-                        <div id="regionStatus" style="margin: 8px 0; color: #2dc4b6; ">${t.workerRegion}${t.checking}</div>
+
                         <div id="geoInfo" style="margin: 8px 0; color: #2dc4b6;">${t.detectionMethod}${t.checking}</div>
                         <div id="backupStatus" style="margin: 8px 0; color: #2dc4b6; ">${t.proxyIPStatus}${t.checking}</div>
                         <div id="currentIP" style="margin: 8px 0; color: #2dc4b6; ">${t.currentIP}${t.checking}</div>
@@ -2345,7 +2345,7 @@
                         <div id="selectionLogic" style="margin: 8px 0; color: #2dc4b6;">${t.selectionLogic}${t.selectionLogicText}</div>
 						
 						<div id="regionStatus" class="status-item">
-							<span class="status-label">${t.workerRegion}${t.checking}</span>
+							<span class="status-label">${t.workerRegion}</span>
 							<span class="status-value">${t.checking}</span>
 						</div>
                 </div>
