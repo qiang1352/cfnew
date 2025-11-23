@@ -2390,12 +2390,6 @@
 			<h1>Hello Workers!</h1>
 			<div class="status">功能已启用</div>
 			<p class="description">您的服务正在正常运行,享受安全、快速的网络连接体验</p>
-			<div id="systemStatus" class="status">
-                <svg viewBox="0 0 24 24">
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                </svg>[ ${t.checking} ]
-                <div id="regionStatus">${t.workerRegion}${t.checking}</div>
-            </div>
             <div class="card">
                 <div class="client-grid">
                     <button class="btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
@@ -2405,9 +2399,12 @@
                 </div>
                 <div class="subscription-url" id="clientSubscriptionUrl"></div>
             </div>
-
-
-
+            <div class="card">
+                <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; position: relative; overflow: hidden;">
+                        <div style="color: #ffffff; margin-bottom: 15px; font-weight: bold; ">[ ${t.checking} ]</div>
+                        <div id="regionStatus" style="margin: 8px 0; color: #ffffff; ">${t.workerRegion}${t.checking}</div>
+                </div>
+            </div>
 			<div class="footer">Powered by Cloudflare</div>
         </div>
         <script>
