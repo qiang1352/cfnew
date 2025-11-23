@@ -2266,7 +2266,7 @@
 				margin-bottom: 30px;
 				font-size: 1.2rem
 			}
-			.btn {
+			.client-btn {
 				display: inline-flex;
 				align-items: center;
 				justify-content: center;
@@ -2287,7 +2287,7 @@
 				width: 100%;
 				margin-bottom: 1rem
 			}
-			.btn::before {
+			.client-btn::before {
 				content: '';
 				position: absolute;
 				top: 0;
@@ -2297,17 +2297,17 @@
 				background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 				transition: left 0.5s ease
 			}
-			.btn:hover::before {
+			.client-btn:hover::before {
 				left: 100%
 			}
-			.btn:hover {
+			.client-btn:hover {
 				transform: translateY(-2px);
 				box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4)
 			}
-			.btn:active {
+			.client-btn:active {
 				transform: translateY(0)
 			}
-			.btn svg {
+			.client-btn svg {
 				width: 20px;
 				height: 20px;
 				fill: white;
@@ -2365,7 +2365,7 @@
 					width: 40px;
 					height: 40px;
 					}
-				.btn {
+				.client-btn {
 					padding: 0.9rem 1.5rem;
 					font-size: 0.95rem;
 					}
@@ -2381,13 +2381,25 @@
 			}
 			.status-content {
 				border-radius: 12px;
-				padding: 1.25rem;
+				padding: 8px 15px;
 				font-size: 0.9rem;
 				line-height: 1.5;
 				color: #4a5568;
 				border-left: 4px solid #10b981;
 				transition: all 0.3s ease;
 				background: rgba(16, 185, 129, 0.05);
+				margin-top:30px;
+				text-align:left;
+				display: flex;
+				align-items: center;
+				gap: 1rem; /* 设置元素之间的间距 */
+				flex-wrap: nowrap; /* 防止换行 */
+				white-space: nowrap; /* 防止文本换行 */
+			}
+			.status-content > div {
+				flex-shrink: 0; /* 防止元素被压缩 */
+				/* 如果需要固定宽度可以设置 */
+				/* min-width: 100px; */
 			}
         </style>
     </head>
@@ -2408,12 +2420,9 @@
             </div>
             <div class="card">
                 <div id="systemStatus" class="status-content">
-                        <div style="color: #4a5568; margin-bottom: 15px; font-weight: bold; ">[ ${t.checking} ]</div>
-                        <div id="regionStatus" style="margin: 8px 0; color: #4a5568;">${t.workerRegion}${t.checking}</div>
-                        <div id="geoInfo" style="margin: 8px 0; color: #4a5568; ">${t.detectionMethod}${t.checking}</div>
-                        <div id="backupStatus" style="margin: 8px 0; color: #4a5568; ">${t.proxyIPStatus}${t.checking}</div>
-                        <div id="currentIP" style="margin: 8px 0; color: #4a5568; ">${t.currentIP}${t.checking}</div>
-                        <div id="regionMatch" style="margin: 8px 0; color: #4a5568; ">${t.regionMatch}${t.checking}</div>
+					<div>[ ${t.checking} ]</div>
+					<div id="regionStatus">${t.workerRegion}${t.checking}</div>
+					<div id="geoInfo">${t.detectionMethod}${t.checking}</div>
                 </div>
             </div>
         <div class="footer">Powered by Cloudflare</div>    
@@ -2744,12 +2753,12 @@
                             detectedRegion = data.region;
                             
                                 geoInfo.innerHTML = t.detectionMethod + '<span style="color: #44aa44;">' + t.manualRegion + '</span>';
-                                regionStatus.innerHTML = t.workerRegion + '<span style="color: #44ff44;">🎯 ' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
+                                regionStatus.innerHTML = t.workerRegion + '<span style="color: #4a5568;">' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
                             
                             // 显示配置状态而不是检测状态
-                                if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #44ff44;">✅ ' + t.proxyIPAvailable + '</span>';
-                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #44ff44;">✅ ' + t.smartSelection + '</span>';
-                                if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #44ff44;">✅ ' + t.sameRegionIP + '</span>';
+                                if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #4a5568;">✅ ' + t.proxyIPAvailable + '</span>';
+                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #4a5568;">✅ ' + t.smartSelection + '</span>';
+                                if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #4a5568;">✅ ' + t.sameRegionIP + '</span>';
                             
                             return; // 提前返回，不执行后续的地区匹配逻辑
                             } else if (data.region && t.regionNames[data.region]) {
