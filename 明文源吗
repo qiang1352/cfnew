@@ -2314,12 +2314,12 @@
 			.client-btn.copied {
 				background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 			}
-			.btn-v2ray {
+			.btn-clash {
 				background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
 				box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
 			}
 
-			.btn-v2ray:hover {
+			.btn-clash:hover {
 				box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
 			}
 			.subscription-url {
@@ -2334,6 +2334,12 @@
 				margin-top: 20px;
 				display: none;
 				border-radius: 8px;
+			}
+			.client-grid {
+				display:grid;
+				grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+				gap:15px;
+				margin:20px 0
 			}
 			.footer {
 				margin-top: 2rem;
@@ -2369,6 +2375,11 @@
 					padding: 0.5rem 1.2rem;
 					}
 			}
+			@media (min-width: 768px) {
+				.client-grid {
+					grid-template-columns: repeat(2, 1fr);
+					}
+			}
 			.status-content {
 				border-radius: 12px;
 				padding: 8px 15px;
@@ -2399,9 +2410,15 @@
 			<h1>Hello Workers!</h1>
 			<div class="status">功能已启用</div>
 			<p class="description">多客户端支持 • 智能优选 • 一键生成</p>
-			<button class="clash-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
-			<button class="clash-btn v2ray-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
-			<div class="subscription-url" id="clientSubscriptionUrl"></div>
+            <div class="card">
+                <div class="client-grid">
+                    <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>CLASH</button>
+                    <button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>SING-BOX</button>
+                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>V2RAY</button>
+                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,1C1.89,1 1,1.89 1,3V14C1,15.11 1.89,16 3,16C6.67,16 10.33,16 14,16C15.11,16 16,15.11 16,14C16,10.33 16,6.67 16,3C16,1.89 15.11,1 14,1H3M3,3H14V14H3V3M18,7V9H20V20H9V18H7V20C7,21.11 7.89,22 9,22H20C21.11,22 22,21.11 22,20V9C22,7.89 21.11,7 20,7H18Z" /></svg>Shadowrocket</button>
+                </div>
+                <div class="subscription-url" id="clientSubscriptionUrl"></div>
+            </div>
             <div class="card">
                 <div id="systemStatus" class="status-content">
 					<div id="regionStatus">${t.workerRegion}${t.checking}</div>
@@ -2538,27 +2555,6 @@
                 var schemeUrl = '';
                 var displayName = clientName || '';
                 var finalUrl = subscriptionUrl;
-                
-				// 获取被点击的按钮元素
-				var clickedButton = event.target;
-				var originalHTML = clickedButton.innerHTML;
-				var originalText = clickedButton.textContent;
-				
-				// 创建对勾图标
-				var checkIcon = '<svg class="copied-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>';
-				
-				function updateButtonToCopied() {
-					// 添加copied类改变背景色
-					clickedButton.classList.add('copied');
-					// 更新按钮内容为对勾图标 + "链接已复制"
-					clickedButton.innerHTML = checkIcon + '链接已复制';
-					
-					// 4秒后恢复原状
-					setTimeout(function() {
-						clickedButton.classList.remove('copied');
-						clickedButton.innerHTML = originalHTML;
-					}, 4000);
-				}
 				
                 if (clientType === atob('djJyYXk=')) {
                     finalUrl = subscriptionUrl;
@@ -2573,27 +2569,27 @@
                     
                     if (clientName === 'V2RAY') {
                         navigator.clipboard.writeText(finalUrl).then(function() {
-							updateButtonToCopied();
+							alert(displayName + " " + t.subscriptionCopied);
                         });
                     } else if (clientName === 'Shadowrocket') {
                         schemeUrl = 'shadowrocket://add/' + encodeURIComponent(finalUrl);
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                updateButtonToCopied();
+                                alert(displayName + " " + t.subscriptionCopied);
                             });
                         });
                     } else if (clientName === 'V2RAYNG') {
                         schemeUrl = 'v2rayng://install?url=' + encodeURIComponent(finalUrl);
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                updateButtonToCopied();
+                                alert(displayName + " " + t.subscriptionCopied);
                             });
                         });
                     } else if (clientName === 'NEKORAY') {
                         schemeUrl = 'nekoray://install-config?url=' + encodeURIComponent(finalUrl);
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                updateButtonToCopied();
+                                alert(displayName + " " + t.subscriptionCopied);
                             });
                         });
                     }
@@ -2634,12 +2630,12 @@
                     if (schemeUrl) {
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                updateButtonToCopied();
+                                alert(displayName + " " + t.subscriptionCopied);
                             });
                         });
                     } else {
                         navigator.clipboard.writeText(finalUrl).then(function() {
-                                updateButtonToCopied();
+                                alert(displayName + " " + t.subscriptionCopied);
                         });
                     }
                 }
