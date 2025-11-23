@@ -1914,7 +1914,7 @@
                     regionMatch: '地区匹配: ',
                     selectionLogic: '选择逻辑: ',
                     kvStatusChecking: '检测KV状态中...',
-                    kvEnabled: '✅ KV存储已启用，可以使用配置管理功能',
+                    kvEnabled: 'KV存储已启用，可以使用配置管理功能',
                     kvDisabled: '⚠️ KV存储未启用或未配置',
                     specifyRegion: '指定地区 (wk):',
                     autoDetect: '自动检测',
@@ -2021,7 +2021,7 @@
                     regionMatch: 'تطبیق منطقه: ',
                     selectionLogic: 'منطق انتخاب: ',
                     kvStatusChecking: 'در حال بررسی وضعیت KV...',
-                    kvEnabled: '✅ ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
+                    kvEnabled: 'ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
                     kvDisabled: '⚠️ ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
                     specifyRegion: 'تعیین منطقه (wk):',
                     autoDetect: 'تشخیص خودکار',
@@ -2311,6 +2311,9 @@
 				fill: white;
 				flex-shrink: 0
 			}
+			.client.copied {
+				background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+			}
 			.btn-telegram {
 				background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
 				box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
@@ -2553,6 +2556,27 @@
                 var displayName = clientName || '';
                 var finalUrl = subscriptionUrl;
                 
+				// 获取被点击的按钮元素
+				var clickedButton = event.target;
+				var originalHTML = clickedButton.innerHTML;
+				var originalText = clickedButton.textContent;
+				
+				// 创建对勾图标
+				var checkIcon = '<svg class="copied-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>';
+				
+				function updateButtonToCopied() {
+					// 添加copied类改变背景色
+					clickedButton.classList.add('copied');
+					// 更新按钮内容为对勾图标 + "链接已复制"
+					clickedButton.innerHTML = checkIcon + '链接已复制';
+					
+					// 2秒后恢复原状
+					setTimeout(function() {
+						clickedButton.classList.remove('copied');
+						clickedButton.innerHTML = originalHTML;
+					}, 2000);
+				}
+				
                 if (clientType === atob('djJyYXk=')) {
                     finalUrl = subscriptionUrl;
                     var urlElement = document.getElementById("clientSubscriptionUrl");
@@ -2566,27 +2590,27 @@
                     
                     if (clientName === 'V2RAY') {
                         navigator.clipboard.writeText(finalUrl).then(function() {
-                                alert(displayName + " " + t.subscriptionCopied);
+							updateButtonToCopied();
                         });
                     } else if (clientName === 'Shadowrocket') {
                         schemeUrl = 'shadowrocket://add/' + encodeURIComponent(finalUrl);
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                    alert(displayName + " " + t.subscriptionCopied);
+                                updateButtonToCopied();
                             });
                         });
                     } else if (clientName === 'V2RAYNG') {
                         schemeUrl = 'v2rayng://install?url=' + encodeURIComponent(finalUrl);
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                    alert(displayName + " " + t.subscriptionCopied);
+                                updateButtonToCopied();
                             });
                         });
                     } else if (clientName === 'NEKORAY') {
                         schemeUrl = 'nekoray://install-config?url=' + encodeURIComponent(finalUrl);
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                    alert(displayName + " " + t.subscriptionCopied);
+                                updateButtonToCopied();
                             });
                         });
                     }
@@ -2627,12 +2651,12 @@
                     if (schemeUrl) {
                         tryOpenApp(schemeUrl, function() {
                             navigator.clipboard.writeText(finalUrl).then(function() {
-                                    alert(displayName + " " + t.subscriptionCopied);
+                                updateButtonToCopied();
                             });
                         });
                     } else {
                         navigator.clipboard.writeText(finalUrl).then(function() {
-                                alert(displayName + " " + t.subscriptionCopied);
+                                updateButtonToCopied();
                         });
                     }
                 }
@@ -2741,7 +2765,7 @@
                             
                             // 显示自定义IP配置状态，包含具体IP
                                 if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #ffaa00;">🔧 ' + t.usingCustomProxyIP + customIPInfo + '</span>';
-                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #ffaa00;">✅ ' + customIPInfo + t.customIPConfig + '</span>';
+                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #ffaa00;">' + customIPInfo + t.customIPConfig + '</span>';
                                 if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #ffaa00;">⚠️ ' + t.customIPModeDisabled + '</span>';
                             
                             return; // 提前返回，不执行后续的地区匹配逻辑
@@ -2753,9 +2777,9 @@
                                 regionStatus.innerHTML = t.workerRegion + '<span style="color: #4a5568;">' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
                             
                             // 显示配置状态而不是检测状态
-                                if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #4a5568;">✅ ' + t.proxyIPAvailable + '</span>';
-                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #4a5568;">✅ ' + t.smartSelection + '</span>';
-                                if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #4a5568;">✅ ' + t.sameRegionIP + '</span>';
+                                if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #4a5568;">' + t.proxyIPAvailable + '</span>';
+                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #4a5568;">' + t.smartSelection + '</span>';
+                                if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #4a5568;">' + t.sameRegionIP + '</span>';
                             
                             return; // 提前返回，不执行后续的地区匹配逻辑
                             } else if (data.region && t.regionNames[data.region]) {
@@ -2768,19 +2792,19 @@
                             geoInfo.innerHTML = t.detectionMethod + '<span style="color: #ff4444;">' + t.detectionFailed + '</span>';
                     }
                     
-                        regionStatus.innerHTML = t.workerRegion + '<span style="color: #4a5568;">✅ ' + t.regionNames[detectedRegion] + '</span>';
+                        regionStatus.innerHTML = t.workerRegion + '<span style="color: #4a5568;">' + t.regionNames[detectedRegion] + '</span>';
                     
                     // 直接显示配置状态，不再进行检测
                     if (backupStatus) {
-                            backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #4a5568;">✅ ' + t.proxyIPAvailable + '</span>';
+                            backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #4a5568;">' + t.proxyIPAvailable + '</span>';
                     }
                     
                     if (currentIP) {
-                            currentIP.innerHTML = t.currentIP + '<span style="color: #4a5568;">✅ ' + t.smartSelection + '</span>';
+                            currentIP.innerHTML = t.currentIP + '<span style="color: #4a5568;">' + t.smartSelection + '</span>';
                     }
                     
                     if (regionMatch) {
-                            regionMatch.innerHTML = t.regionMatch + '<span style="color: #4a5568;">✅ ' + t.sameRegionIP + '</span>';
+                            regionMatch.innerHTML = t.regionMatch + '<span style="color: #4a5568;">' + t.sameRegionIP + '</span>';
                     }
                     
                 } catch (error) {
@@ -2933,7 +2957,7 @@
                                 kvDisabled: '⚠️ KV存储未启用或未配置',
                                 kvNotConfigured: 'KV存储未配置，无法使用配置管理功能。\\n\\n请在Cloudflare Workers中:\\n1. 创建KV命名空间\\n2. 绑定环境变量 C\\n3. 重新部署代码',
                                 kvNotEnabled: 'KV存储未配置',
-                                kvEnabled: '✅ KV存储已启用，可以使用配置管理功能',
+                                kvEnabled: 'KV存储已启用，可以使用配置管理功能',
                                 kvCheckFailed: '⚠️ KV存储检测失败',
                                 kvCheckFailedFormat: 'KV存储检测失败: 响应格式错误',
                                 kvCheckFailedStatus: 'KV存储检测失败 - 状态码: ',
@@ -2943,7 +2967,7 @@
                                 kvDisabled: '⚠️ ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
                                 kvNotConfigured: 'ذخیره‌سازی KV پیکربندی نشده است، نمی‌توانید از عملکرد مدیریت تنظیمات استفاده کنید.\\n\\nلطفا در Cloudflare Workers:\\n1. فضای نام KV ایجاد کنید\\n2. متغیر محیطی C را پیوند دهید\\n3. کد را دوباره مستقر کنید',
                                 kvNotEnabled: 'ذخیره‌سازی KV پیکربندی نشده است',
-                                kvEnabled: '✅ ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
+                                kvEnabled: 'ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
                                 kvCheckFailed: '⚠️ بررسی ذخیره‌سازی KV ناموفق',
                                 kvCheckFailedFormat: 'بررسی ذخیره‌سازی KV ناموفق: خطای فرمت پاسخ',
                                 kvCheckFailedStatus: 'بررسی ذخیره‌سازی KV ناموفق - کد وضعیت: ',
