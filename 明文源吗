@@ -2122,6 +2122,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 10V3L4 14h7v7l9-11h-7z' fill='%232dc4b6'/%3E%3C/svg%3E" type="image/svg+xml">
         <title>${t.title}</title>
 		<style>
 			* { margin: 0; padding: 0; box-sizing: border-box; }
@@ -2129,6 +2130,15 @@
 				font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 				background: #1e2b3a; color: #2dc4b6; min-height: 100vh;
 				overflow-x: hidden; position: relative;
+			}
+			#particles-js {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 0;
+				pointer-events: none;
 			}
 			.container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
 			.header { text-align: center; margin-bottom: 40px; }
@@ -2268,7 +2278,7 @@
 				width: 80px;
 				height: 80px;
 				margin: 0 auto 1.5rem;
-				background: linear-gradient(135deg, #2dc4b6 0%, #6dd0c7 50%, #a8e6df 100%);
+				background: linear-gradient(135deg, #2dc4b6 0%, #6dd0c7 50%, #2dc4b6 100%);
 				border-radius: 20px;
 				display: flex;
 				align-items: center;
@@ -2295,14 +2305,15 @@
 		</style>
     </head>
     <body>
+		<div id="particles-js"></div>
         <div class="container">
 		<div class="icon-wrapper"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
             <div class="header">
-                    <h1 class="title">${t.title}</h1>
-                    <p class="subtitle">${t.subtitle}</p>
+                <h1 class="title">${t.title}</h1>
+                <p class="subtitle">${t.subtitle}</p>
             </div>
             <div class="card">
-                    <h2 class="card-title">${t.selectClient}</h2>
+                <h2 class="card-title">${t.selectClient}</h2>
                 <div class="client-grid">
                     <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
                     <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
@@ -2312,9 +2323,8 @@
                 <div class="subscription-url" id="clientSubscriptionUrl"></div>
             </div>
             <div class="card">
-                    <h2 class="card-title">${t.systemStatus}</h2>
+                <h2 class="card-title">${t.systemStatus}</h2>
                 <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; position: relative; overflow: hidden;">
-                        <div style="color: #2dc4b6; margin-bottom: 15px; font-weight: bold;">[ ${t.checking} ]</div>
                         <div id="regionStatus" style="margin: 8px 0; color: #2dc4b6; ">${t.workerRegion}${t.checking}</div>
                         <div id="geoInfo" style="margin: 8px 0; color: #2dc4b6;">${t.detectionMethod}${t.checking}</div>
                         <div id="backupStatus" style="margin: 8px 0; color: #2dc4b6; ">${t.proxyIPStatus}${t.checking}</div>
@@ -2324,9 +2334,9 @@
                 </div>
             </div>
             <div class="card" id="configCard" style="display: none;">
-                    <h2 class="card-title">${t.configManagement}</h2>
+                <h2 class="card-title">${t.configManagement}</h2>
                 <div id="kvStatus" style="margin-bottom: 20px; padding: 10px; background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; color: #2dc4b6;">
-                        ${t.kvStatusChecking}
+                    ${t.kvStatusChecking}
                 </div>
                 <div id="configContent" style="display: none;">
                     <form id="regionForm" style="margin-bottom: 20px;">
@@ -2528,6 +2538,102 @@
                 </div>
             </div>
         </div>
+		<!-- 引入粒子库 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // 初始化粒子效果
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: {
+                        value: 80,
+                        density: {
+                            enable: true,
+                            value_area: 800
+                        }
+                    },
+                    color: {
+                        value: ["#2dc4b6", "#6dd0c7", "#a8e6df", "#1fa89c"]
+                    },
+                    shape: {
+                        type: "circle",
+                        stroke: {
+                            width: 0,
+                            color: "#000000"
+                        }
+                    },
+                    opacity: {
+                        value: 0.5,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 1,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 2,
+                            size_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#2dc4b6",
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                        attract: {
+                            enable: false,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: "grab"
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: "push"
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 140,
+                            line_linked: {
+                                opacity: 0.5
+                            }
+                        },
+                        push: {
+                            particles_nb: 4
+                        }
+                    }
+                },
+                retina_detect: true
+            });
+        });
+    </script>
         <script>
             // 订阅转换地址（从服务器配置注入）
             var SUB_CONVERTER_URL = "${ scu }";
