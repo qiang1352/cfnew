@@ -2363,7 +2363,7 @@
 			.footer {
 				margin-top: 2rem;
 				padding-top: 0.5rem;
-				border-top: 1px solid #e2e8f0;
+				border-top: 1px solid #94a3b8;
 				color: #94a3b8;
 				font-size: 0.85rem;
 				text-align: center;
@@ -2636,7 +2636,6 @@
 						</div>
 						<div class="link-title">GitHub 项目</div>
 					</a>
-					
 					<a href="https://www.youtube.com/@joeyblog" target="_blank" class="link-card">
 						<div class="link-icon youtube-icon">
 							<svg viewBox="0 0 24 24" fill="currentColor">
@@ -2646,9 +2645,7 @@
 						<div class="link-title">YouTube 频道</div>
 					</a>
 				</div>
-				    <div class="footer">
-      Powered by Cloudflare
-    </div>
+				<div class="footer">Powered by Cloudflare</div>
 			</div>	
         </div>
         <script>
