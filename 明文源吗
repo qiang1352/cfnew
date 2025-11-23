@@ -2230,7 +2230,16 @@
 				margin-bottom: 0.5rem;
 				letter-spacing: -0.5px;
 			}
-			
+			h2 {
+				font-size: 1.1rem;
+				font-weight: 700;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				margin-bottom: 0.5rem;
+				letter-spacing: -0.5px;
+			}
 			.status {
 				display: inline-flex;
 				align-items: center;
@@ -2380,7 +2389,16 @@
 					grid-template-columns: repeat(2, 1fr);
 					}
 			}
-			
+			.status-content {
+				border-radius: 12px;
+				padding: 1.25rem;
+				font-size: 0.9rem;
+				line-height: 1.5;
+				color: #4a5568;
+				border-left: 4px solid #10b981;
+				transition: all 0.3s ease;
+				background: rgba(16, 185, 129, 0.05);
+			}
         </style>
     </head>
     <body>
@@ -2401,16 +2419,12 @@
             </div>
             <div class="card">
                 <h2>${t.systemStatus}</h2>
-                <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; position: relative; overflow: hidden;">
+                <div id="systemStatus" class="status-content">
                         <div style="color: #ffffff; margin-bottom: 15px; font-weight: bold; ">[ ${t.checking} ]</div>
                         <div id="regionStatus" style="margin: 8px 0; color: #ffffff; ">${t.workerRegion}${t.checking}</div>
-                        <div id="geoInfo" style="margin: 8px 0; color: #ffffff; ">${t.detectionMethod}${t.checking}</div>
-                        <div id="backupStatus" style="margin: 8px 0; color: #ffffff; ">${t.proxyIPStatus}${t.checking}</div>
-                        <div id="currentIP" style="margin: 8px 0; color: #ffffff; ">${t.currentIP}${t.checking}</div>
-                        <div id="regionMatch" style="margin: 8px 0; color: #ffffff; ">${t.regionMatch}${t.checking}</div>
-                        <div id="selectionLogic" style="margin: 8px 0; color: #ffffff; ">${t.selectionLogic}${t.selectionLogicText}</div>
                 </div>
             </div>
+			<div class="footer">Powered by Cloudflare</div>
         </div>
         <script>
             // 订阅转换地址（从服务器配置注入）
