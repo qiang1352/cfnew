@@ -2185,28 +2185,29 @@
 				cursor: pointer;
 				transition: all 0.3s ease;
 				box-shadow: 0 4px 12px rgba(45, 196, 182, 0.4);
+				padding: 12px 25px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				padding: 20px 15px; /* 调整内边距以适应新布局 */
 			}
 			.client-btn:hover {
 				transform: translateY(-2px);
 				box-shadow: 0 6px 15px rgba(45, 196, 182, 0.5);
 				background: linear-gradient(135deg, #35d4c5 0%, #23b5a8 100%);
 			}
-			.client-btn-lg {
-				padding: 20px 25px;
-			}
-			.client-btn-sm {
-				padding: 12px 25px;
-			}
 			.btn-icon {
-				width: 40px;
-				height: 40px;
+				width: 36px;
+				height: 36px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 			}
 			.btn-icon svg {
-				width: 32px;
-				height: 32px;
+				width: 30px;
+				height: 30px;
 				fill: currentColor;
 			}
 			.reset-btn {
@@ -2380,7 +2381,7 @@
             <div class="card">
                 <h2 class="card-title">${t.selectClient}</h2>
                 <div class="client-grid">
-                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">
+                    <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">
 						<div class="btn-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
 								<path d="M5.566 4.657A4.505 4.505 0 0 1 6.75 4.5h10.5c.41 0 .806.055 1.183.157A3 3 0 0 0 15.75 3h-7.5a3 3 0 0 0-2.684 1.657ZM2.25 12a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3v-6ZM5.25 7.5c-.41 0-.806.055-1.184.157A3 3 0 0 1 6.75 6h10.5a3 3 0 0 1 2.683 1.657A4.505 4.505 0 0 0 18.75 7.5H5.25Z" />
@@ -2388,7 +2389,7 @@
 						</div>
 						CLASH
 					</button>
-                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">
+                    <button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">
 						<div class="btn-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
 								<path fill-rule="evenodd" d="M1.5 9.832v1.793c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875V9.832a3 3 0 0 0-.722-1.952l-3.285-3.832A3 3 0 0 0 16.215 3h-8.43a3 3 0 0 0-2.278 1.048L2.222 7.88A3 3 0 0 0 1.5 9.832ZM7.785 4.5a1.5 1.5 0 0 0-1.139.524L3.881 8.25h3.165a3 3 0 0 1 2.496 1.336l.164.246a1.5 1.5 0 0 0 1.248.668h2.092a1.5 1.5 0 0 0 1.248-.668l.164-.246a3 3 0 0 1 2.496-1.336h3.165l-2.765-3.226a1.5 1.5 0 0 0-1.139-.524h-8.43Z" clip-rule="evenodd" />
@@ -2397,7 +2398,7 @@
 						</div>
 						SING-BOX
 					</button>
-                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">
+                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">
 						<div class="btn-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
 								<path d="M5.625 3.75a2.625 2.625 0 1 0 0 5.25h12.75a2.625 2.625 0 0 0 0-5.25H5.625ZM3.75 11.25a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5H3.75ZM3 15.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75ZM3.75 18.75a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5H3.75Z" />
@@ -2405,7 +2406,7 @@
 						</div>
 						V2RAY
 					</button>
-                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">
+                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">
 						<div class="btn-icon">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
 								<path fill-rule="evenodd" d="M9.315 7.584C12.195 3.883 16.695 1.5 21.75 1.5a.75.75 0 0 1 .75.75c0 5.056-2.383 9.555-6.084 12.436A6.75 6.75 0 0 1 9.75 22.5a.75.75 0 0 1-.75-.75v-4.131A15.838 15.838 0 0 1 6.382 15H2.25a.75.75 0 0 1-.75-.75 6.75 6.75 0 0 1 7.815-6.666ZM15 6.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" clip-rule="evenodd" />
