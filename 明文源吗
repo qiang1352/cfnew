@@ -2260,10 +2260,39 @@
 			input[type="checkbox"]{
 				accent-color: #2dc4b6;
 			}
+			.icon-wrapper {
+				width: 80px;
+				height: 80px;
+				margin: 0 auto 1.5rem;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				border-radius: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				animation: pulse 2s ease-in-out infinite
+			}
+
+			@keyframes pulse {
+
+				0%,
+				100% {
+					transform: scale(1)
+				}
+
+				50% {
+					transform: scale(1.05)
+				}
+			}
+			.icon-wrapper svg {
+				width: 45px;
+				height: 45px;
+				fill: white
+			}
 		</style>
     </head>
     <body>
         <div class="container">
+		<div class="icon-wrapper"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
             <div class="header">
                     <h1 class="title">${t.title}</h1>
                     <p class="subtitle">${t.subtitle}</p>
@@ -2305,7 +2334,7 @@
                     <form id="regionForm" style="margin-bottom: 20px;">
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #2dc4b6; font-weight: bold;">${t.specifyRegion}</label>
-                            <select id="wkRegion">
+                            <select id="wkRegion" class="text-input">
                                     <option value="">${t.autoDetect}</option>
                                     <option value="US">${t.regionNames.US}</option>
                                     <option value="SG">${t.regionNames.SG}</option>
@@ -2385,7 +2414,7 @@
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #2dc4b6; font-weight: bold; ">${t.builtinPreferred}</label>
-                            <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #2dc4b6; border-radius: 5px;">
+                            <div style="background: #1e2b3a; padding: 15px; border: 1px solid #2dc4b6; border-radius: 8px;">
                                 <div style="margin-bottom: 10px;">
                                     <label style="display: inline-flex; align-items: center; cursor: pointer; color: #2dc4b6;">
                                         <input type="checkbox" id="epd" style="margin-right: 8px; width: 18px; height: 18px; cursor: pointer;">
@@ -2408,7 +2437,7 @@
                         </div>
                         <div style="margin-bottom: 15px;">
                                 <label style="display: block; margin-bottom: 8px; color: #2dc4b6; font-weight: bold; ">优选IP筛选设置</label>
-                            <div style="padding: 15px; background: rgba(0, 20, 0, 0.6); border: 1px solid #2dc4b6; border-radius: 5px;">
+                            <div style="background: #1e2b3a; padding: 15px; border: 1px solid #2dc4b6; border-radius: 8px;">
                                 <div style="margin-bottom: 15px;">
                                     <label style="display: block; margin-bottom: 8px; color: #2dc4b6; font-weight: bold; ">IP版本选择</label>
                                     <div style="display: flex; gap: 20px; flex-wrap: wrap;">
@@ -2485,8 +2514,10 @@
                             <div style="font-weight: bold; margin-bottom: 8px; color: #a8e6df;">${t.currentConfig}</div>
                             <div id="pathTypeStatus">${t.checking}</div>
                     </div>
+					<div class="client-grid">
                         <button onclick="loadCurrentConfig()" class="client-btn">${t.refreshConfig}</button>
                         <button onclick="resetAllConfig()" class="reset-btn">${t.resetConfig}</button>
+					</div>
                 </div>
                 <div id="statusMessage" style="display: none; padding: 10px; margin: 10px 0; border: 1px solid #2dc4b6; background: #1e2b3a; color: #2dc4b6; border-radius: 8px;"></div>
             </div>
@@ -3039,7 +3070,7 @@
                         
                             // 检查响应是否包含KV配置信息
                             if (data && data.kvEnabled === true) {
-                                document.getElementById('kvStatus').innerHTML = '<span style="color: #2dc4b6;">' + t.kvEnabled + '</span>';
+                                document.getElementById('kvStatus').innerHTML = '<span style="color: #ffaa00;">' + t.kvEnabled + '</span>';
                                 document.getElementById('configContent').style.display = 'block';
                                 document.getElementById('configCard').style.display = 'block';
                                 await loadCurrentConfig();
@@ -3180,13 +3211,13 @@
                     // 使用自定义路径 (d)
                     pathTypeStatus.innerHTML = '<div style="color: #2dc4b6;">使用类型: <strong>自定义路径 (d)</strong></div>' +
                         '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + cp + '</span></div>' +
-                        '<div style="margin-top: 5px; font-size: 0.9rem; color: #00aa00;">访问地址: ' + 
+                        '<div style="margin-top: 5px; color: #2dc4b6;">访问地址: ' + 
                         (currentUrl.split('/')[0] + '//' + currentUrl.split('/')[2]) + cp + '/sub</div>';
                 } else {
                     // 使用 UUID (u)
                     pathTypeStatus.innerHTML = '<div style="color: #2dc4b6;">使用类型: <strong>UUID 路径 (u)</strong></div>' +
                         '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + (currentPath || '(UUID)') + '</span></div>' +
-                        '<div style="margin-top: 5px; font-size: 0.9rem; color: #00aa00;">访问地址: ' + currentUrl.split('/sub')[0] + '/sub</div>';
+                        '<div style="margin-top: 5px; color: #2dc4b6;">访问地址: ' + currentUrl.split('/sub')[0] + '/sub</div>';
                 }
             }
             
