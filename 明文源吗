@@ -2178,19 +2178,23 @@
 				background: linear-gradient(135deg, #2dc4b6 0%, #1fa89c 100%);
 				color: #1e2b3a;
 				border: none;
-				padding: 12px 25px;
 				border-radius: 8px;
 				font-size: 1rem;
 				font-weight: 600;
 				cursor: pointer;
 				transition: all 0.3s ease;
-				width: 100%;
 				box-shadow: 0 4px 12px rgba(45, 196, 182, 0.4);
 			}
 			.client-btn:hover {
 				transform: translateY(-2px);
 				box-shadow: 0 6px 15px rgba(45, 196, 182, 0.5);
 				background: linear-gradient(135deg, #35d4c5 0%, #23b5a8 100%);
+			}
+			.client-btn-lg {
+				padding: 20px 25px;
+			}
+			.client-btn-sm {
+				padding: 12px 25px;
 			}
 			.reset-btn {
 				background: linear-gradient(135deg, #3a4a5d 0%, #2a3a4d 100%);
@@ -2264,7 +2268,7 @@
 				width: 80px;
 				height: 80px;
 				margin: 0 auto 1.5rem;
-				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				background: linear-gradient(135deg, #2dc4b6 0%, #6dd0c7 50%, #a8e6df 100%);
 				border-radius: 20px;
 				display: flex;
 				align-items: center;
@@ -2300,16 +2304,10 @@
             <div class="card">
                     <h2 class="card-title">${t.selectClient}</h2>
                 <div class="client-grid">
-                    <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('Y2xhc2g='), 'STASH')">STASH</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('c3VyZ2U='), 'SURGE')">SURGE</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('bG9vbg=='), 'LOON')">LOON</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('cXVhbng='), 'QUANTUMULT X')">QUANTUMULT X</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'V2RAYNG')">V2RAYNG</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'NEKORAY')">NEKORAY</button>
-                    <button class="client-btn" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
+                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
+                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('c2luZ2JveA=='), 'SING-BOX')">SING-BOX</button>
+                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('djJyYXk='), 'V2RAY')">V2RAY</button>
+                    <button class="client-btn client-btn-lg" onclick="generateClientLink(atob('djJyYXk='), 'Shadowrocket')">Shadowrocket</button>
                 </div>
                 <div class="subscription-url" id="clientSubscriptionUrl"></div>
             </div>
@@ -2348,7 +2346,7 @@
                                     <option value="GB">${t.regionNames.GB}</option>
                             </select>
                         </div>
-                            <button type="submit" class="client-btn">${t.saveRegion}</button>
+                            <button type="submit" class="client-btn client-btn-sm">${t.saveRegion}</button>
                     </form>
                     <form id="otherConfigForm" style="margin-bottom: 20px;">
                         <div style="margin-bottom: 15px;">
@@ -2376,7 +2374,7 @@
                                         <label style="display: block; margin-bottom: 8px; color: #2dc4b6; font-size: 0.95rem;">${t.trojanPassword}</label>
                                         <input type="text" id="tp" placeholder="${t.trojanPasswordPlaceholder}" class="text-input">
                                 </div>
-                                    <button type="button" id="saveProtocolBtn" class="client-btn">${t.saveProtocol}</button>
+                                    <button type="button" id="saveProtocolBtn" class="client-btn client-btn-sm">${t.saveProtocol}</button>
                             </div>
                         </div>
                         <div style="margin-bottom: 15px;">
@@ -2403,7 +2401,7 @@
                                 <label style="display: block; margin-bottom: 8px; color: #2dc4b6; font-weight: bold; ">${t.socks5Config}</label>
                                 <input type="text" id="socksConfig" placeholder="${isFarsi ? 'مثال: user:pass@host:port یا host:port' : '例如: user:pass@host:port 或 host:port'}" class="text-input">
                         </div>
-                            <button type="submit" class="client-btn">${t.saveConfig}</button>
+                            <button type="submit" class="client-btn client-btn-sm">${t.saveConfig}</button>
                     </form>
                     
                         <h3 style="color: #2dc4b6; margin: 20px 0 15px 0; font-size: 1.2rem;">${t.advancedControl}</h3>
@@ -2505,7 +2503,7 @@
                                     <option value="yes">${t.preferredControlYes}</option>
                             </select>
                         </div>
-                            <button type="submit" class="client-btn">${t.saveAdvanced}</button>
+                            <button type="submit" class="client-btn client-btn-sm">${t.saveAdvanced}</button>
                     </form>
                     <div id="currentConfig" style="background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; padding: 15px; margin: 10px 0;">
                             ${t.loading}
@@ -2515,7 +2513,7 @@
                             <div id="pathTypeStatus">${t.checking}</div>
                     </div>
 					<div class="client-grid">
-                        <button onclick="loadCurrentConfig()" class="client-btn">${t.refreshConfig}</button>
+                        <button onclick="loadCurrentConfig()" class="client-btn client-btn-sm">${t.refreshConfig}</button>
                         <button onclick="resetAllConfig()" class="reset-btn">${t.resetConfig}</button>
 					</div>
                 </div>
