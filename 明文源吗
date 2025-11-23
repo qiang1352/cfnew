@@ -2973,7 +2973,7 @@
                             isManualRegionMode = true;
                             detectedRegion = data.region;
                             
-                                geoInfo.innerHTML = t.detectionMethod + '<span style="color: #44aa44;">' + t.manualRegion + '</span>';
+                                geoInfo.innerHTML ='<span style="color: #2dc4b6; min-width: 150px;">' + t.detectionMethod + '</span>' + '<span style="color: ##a8e6df;">' + t.manualRegion + '</span>';
                                 regionStatus.innerHTML = t.workerRegion + '<span style="color: #2dc4b6;">' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
                             
                             // 显示配置状态而不是检测状态
