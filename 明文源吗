@@ -2178,7 +2178,7 @@
 				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 				max-width: 700px;
 				width: 100%;
-				
+				text-align: center;
 				animation: slideUp 0.6s ease-out;
 				margin: auto 0;
 			}
@@ -2229,18 +2229,6 @@
 				background-clip: text;
 				margin-bottom: 0.5rem;
 				letter-spacing: -0.5px;
-				text-align: center;
-			}
-			h2 {
-				font-size: 1.5rem;
-				font-weight: 700;
-				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-				background-clip: text;
-				margin-bottom: 0.5rem;
-				letter-spacing: -0.5px;
-				text-align: center;
 			}
 			
 			.status {
@@ -2392,65 +2380,7 @@
 					grid-template-columns: repeat(2, 1fr);
 					}
 			}
-			
-			.form-input {
-				width: 100%;
-				padding: 0.6rem 0.8rem;
-				background: rgba(255, 255, 255, 0.9);
-				border: 2px solid #e2e8f0;
-				border-radius: 8px;
-				font-size: 1rem;
-				font-family: inherit;
-				color: #374151;
-				transition: all 0.3s ease;
-				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-			}
 
-			.form-input:focus {
-				outline: none;
-				border-color: #667eea;
-				background: rgba(255, 255, 255, 0.95);
-				box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
-				transform: translateY(-1px);
-			}
-
-			.form-input::placeholder {
-				color: #9ca3af;
-			}
-			.form-select {
-				width: 100%;
-				padding: 0.6rem 0.8rem;
-				background: rgba(255, 255, 255, 0.95);
-				border: 2px solid #e2e8f0;
-				border-radius: 12px;
-				font-size: 1rem;
-				font-family: inherit;
-				color: #2d3748;
-				transition: all 0.3s ease;
-				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-				appearance: none;
-				cursor: pointer;
-				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0aec0' d='M6 8.825L1.175 4 2.25 2.925 6 6.675 9.75 2.925 10.825 4z'/%3E%3C/svg%3E");
-				background-repeat: no-repeat;
-				background-position: right 1rem center;
-				background-size: 12px;
-				padding-right: 2.5rem; 
-			}
-			.form-select:focus {
-				outline: none;
-				border-color: #667eea;
-				background-color: rgba(255, 255, 255, 0.98);
-				box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
-				transform: translateY(-2px);
-				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 8.825L1.175 4 2.25 2.925 6 6.675 9.75 2.925 10.825 4z'/%3E%3C/svg%3E");
-			}
-			.form-select:hover {
-				border-color: #cbd5e0;
-				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 8.825L1.175 4 2.25 2.925 6 6.675 9.75 2.925 10.825 4z'/%3E%3C/svg%3E");
-			}
-			input[type="checkbox"]{
-				accent-color: #667eea;
-			}
         </style>
     </head>
     <body>
@@ -2460,6 +2390,12 @@
 			<h1>Hello Workers!</h1>
 			<div class="status">功能已启用</div>
 			<p class="description">您的服务正在正常运行,享受安全、快速的网络连接体验</p>
+			<div id="systemStatus" class="status">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>[ ${t.checking} ]
+                <div id="regionStatus">${t.workerRegion}${t.checking}</div>
+            </div>
             <div class="card">
                 <div class="client-grid">
                     <button class="btn" onclick="generateClientLink(atob('Y2xhc2g='), 'CLASH')">CLASH</button>
@@ -2469,13 +2405,10 @@
                 </div>
                 <div class="subscription-url" id="clientSubscriptionUrl"></div>
             </div>
-            <div class="card">
-                <h2>${t.systemStatus}</h2>
-                <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; position: relative; overflow: hidden;">
-                        <div style="color: #ffffff; margin-bottom: 15px; font-weight: bold; ">[ ${t.checking} ]</div>
-                        <div id="regionStatus" style="margin: 8px 0; color: #ffffff; ">${t.workerRegion}${t.checking}</div>
-                </div>
-            </div>
+
+
+
+			<div class="footer">Powered by Cloudflare</div>
         </div>
         <script>
             // 订阅转换地址（从服务器配置注入）
