@@ -2311,7 +2311,7 @@
 				fill: white;
 				flex-shrink: 0
 			}
-			.client.copied {
+			.client-btn.copied {
 				background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 			}
 			.btn-telegram {
@@ -2570,11 +2570,11 @@
 					// 更新按钮内容为对勾图标 + "链接已复制"
 					clickedButton.innerHTML = checkIcon + '链接已复制';
 					
-					// 2秒后恢复原状
+					// 4秒后恢复原状
 					setTimeout(function() {
 						clickedButton.classList.remove('copied');
 						clickedButton.innerHTML = originalHTML;
-					}, 2000);
+					}, 4000);
 				}
 				
                 if (clientType === atob('djJyYXk=')) {
