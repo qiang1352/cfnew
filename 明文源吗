@@ -2380,7 +2380,7 @@
 					grid-template-columns: repeat(2, 1fr);
 					}
 			}
-
+			
         </style>
     </head>
     <body>
@@ -2400,12 +2400,17 @@
                 <div class="subscription-url" id="clientSubscriptionUrl"></div>
             </div>
             <div class="card">
+                <h2>${t.systemStatus}</h2>
                 <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; position: relative; overflow: hidden;">
                         <div style="color: #ffffff; margin-bottom: 15px; font-weight: bold; ">[ ${t.checking} ]</div>
                         <div id="regionStatus" style="margin: 8px 0; color: #ffffff; ">${t.workerRegion}${t.checking}</div>
+                        <div id="geoInfo" style="margin: 8px 0; color: #ffffff; ">${t.detectionMethod}${t.checking}</div>
+                        <div id="backupStatus" style="margin: 8px 0; color: #ffffff; ">${t.proxyIPStatus}${t.checking}</div>
+                        <div id="currentIP" style="margin: 8px 0; color: #ffffff; ">${t.currentIP}${t.checking}</div>
+                        <div id="regionMatch" style="margin: 8px 0; color: #ffffff; ">${t.regionMatch}${t.checking}</div>
+                        <div id="selectionLogic" style="margin: 8px 0; color: #ffffff; ">${t.selectionLogic}${t.selectionLogicText}</div>
                 </div>
             </div>
-			<div class="footer">Powered by Cloudflare</div>
         </div>
         <script>
             // 订阅转换地址（从服务器配置注入）
