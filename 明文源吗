@@ -2337,17 +2337,12 @@
             <div class="card">
                 <h2 class="card-title">${t.systemStatus}</h2>
                 <div id="systemStatus" style="margin: 20px 0; padding: 15px; background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; position: relative; overflow: hidden;">
-
-                        <div id="geoInfo" style="margin: 8px 0; color: #2dc4b6;">${t.detectionMethod}${t.checking}</div>
-                        <div id="backupStatus" style="margin: 8px 0; color: #2dc4b6; ">${t.proxyIPStatus}${t.checking}</div>
-                        <div id="currentIP" style="margin: 8px 0; color: #2dc4b6; ">${t.currentIP}${t.checking}</div>
-                        <div id="regionMatch" style="margin: 8px 0; color: #2dc4b6; ">${t.regionMatch}${t.checking}</div>
-                        <div id="selectionLogic" style="margin: 8px 0; color: #2dc4b6;">${t.selectionLogic}${t.selectionLogicText}</div>
-						
-						<div id="regionStatus" class="status-item">
-							<span class="status-label">${t.workerRegion}</span>
-							<span class="status-value">${t.checking}</span>
-						</div>
+					<div id="regionStatus" style="margin: 8px 0; color: #2dc4b6;">${t.workerRegion}${t.checking}</div>
+					<div id="geoInfo" style="margin: 8px 0; color: #2dc4b6;">${t.detectionMethod}${t.checking}</div>
+					<div id="backupStatus" style="margin: 8px 0; color: #2dc4b6; ">${t.proxyIPStatus}${t.checking}</div>
+					<div id="currentIP" style="margin: 8px 0; color: #2dc4b6; ">${t.currentIP}${t.checking}</div>
+					<div id="regionMatch" style="margin: 8px 0; color: #2dc4b6; ">${t.regionMatch}${t.checking}</div>
+					<div id="selectionLogic" style="margin: 8px 0; color: #2dc4b6;">${t.selectionLogic}${t.selectionLogicText}</div>
                 </div>
             </div>
             <div class="card" id="configCard" style="display: none;">
@@ -2532,7 +2527,7 @@
                         </div>
                             <button type="submit" class="client-btn client-btn-sm">${t.saveAdvanced}</button>
                     </form>
-                    <div id="currentConfig" style="background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; padding: 15px; margin: 10px 0;">
+                    <div id="currentConfig" style="background: #1e2b3a; border: 1px solid #a8e6df; border-radius: 8px; padding: 15px; margin: 10px 0;">
                             ${t.loading}
                     </div>
                     <div id="pathTypeInfo" style="background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 8px; padding: 15px; margin: 10px 0;">
@@ -3260,7 +3255,7 @@
                     if (hasCustomIP) {
                         wkRegion.style.opacity = '0.5';
                         wkRegion.style.cursor = 'not-allowed';
-                        wkRegion.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                        //wkRegion.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
                         // 显示提示信息
                         if (wkRegionHint) {
                             wkRegionHint.style.display = 'block';
@@ -3269,7 +3264,7 @@
                     } else {
                         wkRegion.style.opacity = '1';
                         wkRegion.style.cursor = 'pointer';
-                        wkRegion.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                        //wkRegion.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
                         // 隐藏提示信息
                         if (wkRegionHint) {
                             wkRegionHint.style.display = 'none';
