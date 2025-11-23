@@ -2368,6 +2368,15 @@
 				font-size: 0.85rem;
 				text-align: center;
 			}
+			@media (max-width: 768px) {
+            	.links-container {
+                	grid-template-columns: 1fr;
+                	gap: 12px;
+            	}
+            	.link-card {
+                	padding: 12px 15px;
+            	}
+        	}
 		</style>
     </head>
     <body>
