@@ -20,7 +20,13 @@
     let et = false; 
     let ex = false;  
     let tp = '';  
-
+	
+	// <--- 插入开始 --->
+    // Workers 配额常量
+    const DAILY_QUOTA = 100000;
+    const QUOTA_RESET_TIME = '00:00 UTC'; 
+	// <--- 插入结束 --->
+	
     let scu = 'https://url.v1.mk/sub';  
     // 远程配置URL（硬编码）
     const remoteConfigUrl = 'https://raw.githubusercontent.com/byJoey/test/refs/heads/main/tist.ini';
@@ -300,12 +306,84 @@
         return { address: input, port: null };
     }
 
+	// <--- 插入开始：配额处理函数 --->
+	/**
+	 * 处理和更新每日请求配额计数
+	 * @param {KVNamespace} kvStore - Cloudflare KV 命名空间
+	 * @param {number} quota - 每日配额上限
+	 * @returns {Promise<{usage: number, remaining: number, resetTime: string, kvDisabled: boolean}>} 配额信息
+	 */
+	async function handleRequestQuota(kvStore, quota) {
+		if (!kvStore) {
+			// KV 未启用，无法跟踪配额
+			return { usage: 0, remaining: quota, resetTime: QUOTA_RESET_TIME, kvDisabled: true };
+		}
+
+		const now = new Date();
+		// 获取当前 UTC 日期 (YYYY-MM-DD)
+		const todayUTC = now.toISOString().split('T')[0];
+		const quotaKey = 'daily_quota_info';
+		
+		let quotaData = { count: 0, reset_day: todayUTC };
+
+		try {
+			const storedData = await kvStore.get(quotaKey);
+			if (storedData) {
+				quotaData = JSON.parse(storedData);
+			}
+		} catch (error) {
+			console.error("Error loading quota data:", error);
+		}
+		
+		// 检查是否为新的一天 (00:00 UTC 重置)
+		if (quotaData.reset_day !== todayUTC) {
+			quotaData.count = 1; // 新一天从 1 开始计数
+			quotaData.reset_day = todayUTC;
+		} else {
+			quotaData.count++;
+		}
+
+		const currentUsage = quotaData.count;
+		const currentRemaining = Math.max(0, quota - currentUsage);
+
+		try {
+			// 保存更新后的计数，设置过期时间略大于 24 小时，保证新的一天检查重置逻辑能生效
+			await kvStore.put(quotaKey, JSON.stringify(quotaData), { expirationTtl: 3600 * 24 + 60 });
+		} catch (error) {
+			console.error("Error saving quota data:", error);
+		}
+		
+		return { usage: currentUsage, remaining: currentRemaining, resetTime: QUOTA_RESET_TIME, kvDisabled: false };
+	}
+	// <--- 插入结束 --->
+
     export default {
         async fetch(request, env, ctx) {
             try {
                 
                 await initKVStore(env);
                 
+				// <--- 插入开始：配额和客户端信息提取 --->
+                // --- Workers 配额处理 ---
+                let quotaInfo = {};
+                if (kvStore) {
+                    quotaInfo = await handleRequestQuota(kvStore, DAILY_QUOTA);
+                } else {
+                    quotaInfo = { usage: 0, remaining: DAILY_QUOTA, resetTime: QUOTA_RESET_TIME, kvDisabled: true };
+                }
+                // --- 提取客户端信息 ---
+                let clientInfo = {
+                    // 获取真实客户端 IP (Cloudflare 代理后)
+                    clientIP: request.headers.get('CF-Connecting-IP') || 'N/A',
+                    // 获取客户端的用户代理 (浏览器/应用程序信息)
+                    userAgent: request.headers.get('User-Agent') || 'N/A',
+                    // Cloudflare 地理信息
+                    country: request.cf?.country || 'N/A',
+                    city: request.cf?.city || 'N/A',
+                    colo: request.cf?.colo || 'N/A' // Cloudflare 数据中心代码
+                };
+				// <--- 插入结束 --->
+				
                 at = (env.u || env.U || at).toLowerCase();
                 const subPath = (env.d || env.D || at).toLowerCase();
                 
@@ -579,7 +657,15 @@
                                         region: manualRegion.trim().toUpperCase(),
                                         detectionMethod: '手动指定地区',
                                         manualRegion: manualRegion.trim().toUpperCase(),
-                                        timestamp: new Date().toISOString()
+                                        timestamp: new Date().toISOString(),
+										// <--- 插入开始 --->
+										quota: DAILY_QUOTA,
+                                        usage: quotaInfo.usage,
+                                        remaining: quotaInfo.remaining,
+                                        resetTime: quotaInfo.resetTime,
+                                        kvDisabled: quotaInfo.kvDisabled || false,
+                                        clientInfo: clientInfo
+										// <--- 插入结束 --->
                                     }), {
                                         headers: { 'Content-Type': 'application/json' }
                                     });
@@ -587,7 +673,15 @@
                                     return new Response(JSON.stringify({
                                         region: 'CUSTOM',
                                         detectionMethod: '自定义ProxyIP模式', ci: ci,
-                                        timestamp: new Date().toISOString()
+                                        timestamp: new Date().toISOString(),
+										// <--- 插入开始 --->
+										quota: DAILY_QUOTA,
+                                        usage: quotaInfo.usage,
+                                        remaining: quotaInfo.remaining,
+                                        resetTime: quotaInfo.resetTime,
+                                        kvDisabled: quotaInfo.kvDisabled || false,
+                                        clientInfo: clientInfo
+										// <--- 插入结束 --->
                                     }), {
                                         headers: { 'Content-Type': 'application/json' }
                                     });
@@ -596,7 +690,15 @@
                                     return new Response(JSON.stringify({
                                         region: detectedRegion,
                                         detectionMethod: 'API检测',
-                                        timestamp: new Date().toISOString()
+                                        timestamp: new Date().toISOString(),
+										// <--- 插入开始 --->
+										quota: DAILY_QUOTA,
+                                        usage: quotaInfo.usage,
+                                        remaining: quotaInfo.remaining,
+                                        resetTime: quotaInfo.resetTime,
+                                        kvDisabled: quotaInfo.kvDisabled || false,
+                                        clientInfo: clientInfo
+										// <--- 插入结束 --->
                                     }), {
                                         headers: { 'Content-Type': 'application/json' }
                                     });
@@ -2481,6 +2583,21 @@
 					<div id="regionMatch" style="margin: 8px 0; color: #2dc4b6; ">${t.regionMatch}${t.checking}</div>
 					<div id="selectionLogic" style="margin: 8px 0; color: #2dc4b6;">${t.selectionLogic}${t.selectionLogicText}</div>
                 </div>
+				// --- 插入开始
+				<div style="margin-top: 20px; padding: 10px; border: 1px solid #3c4043; border-radius: 5px; background-color: #1e1e1e;">
+					<h3 style="color: #61afef; margin-top: 0;">📊 Workers 请求配额状态</h3>
+					<div id="quotaStatus" style="font-size: 0.9rem; line-height: 1.6;">
+						加载中...
+					</div>
+				</div>
+
+				<div style="margin-top: 20px; padding: 10px; border: 1px solid #3c4043; border-radius: 5px; background-color: #1e1e1e;">
+					<h3 style="color: #c678dd; margin-top: 0;">👤 客户端信息</h3>
+					<div id="clientStatus" style="font-size: 0.9rem; line-height: 1.6;">
+						加载中...
+					</div>
+				</div>
+				// --- 插入结束 ---
             </div>
             <div class="card" id="configCard" style="display: none;">
                     <h2 class="card-title">${t.configManagement}</h2>
@@ -2607,7 +2724,7 @@
                                         <button type="button" id="deselectAllResults" class="client-btn client-btn-sm">${t.deselectAll}</button>
                                     </div>
                                 </div>
-                                <div id="latencyResultsList" style="background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 4px; padding: 10px; max-height: 250px; overflow-y: auto; "></div>
+                                <div id="latencyResultsList" style="background: #1e2b3a; border: 1px solid #2dc4b6; border-radius: 4px; padding: 10px; max-height: 250px; overflow-y: auto; scrollbar-color: #2dc4b6 #1e2b3a "></div>
                                 <button type="button" id="addSelectedToYx" class="client-btn client-btn-sm" style="margin-top: 10px;">✓ ${t.addSelectedToYx}</button>
                             </div>
                         </div>
@@ -3025,7 +3142,22 @@
                                 sameRegionIP: '同地区IP可用 (1个)',
                                 cloudflareDetection: 'Cloudflare内置检测',
                                 detectionFailed: '检测失败',
-                                unknown: '未知'
+                                unknown: '未知',
+								// <--- 插入开始：配额和客户端信息翻译 --->
+								// --- 新增：配额翻译 ---
+								workerQuota: '每日请求配额',
+								quotaUsage: '今日已使用',
+								quotaRemaining: '今日剩余',
+								quotaResetTime: '配额重置时间',
+								quotaKVDisabled: '⚠️ KV存储未启用，无法跟踪请求配额',
+								// --- 新增：客户端信息翻译 ---
+								clientInfoTitle: '客户端信息',
+								clientIP: '您的 IP',
+								clientUserAgent: '用户代理 (User-Agent)',
+								clientCountry: 'CF 检测国家/地区',
+								clientCity: 'CF 检测城市',
+								clientColo: 'CF 节点 (Colo)'
+								// <--- 插入结束 --->
                             },
                             fa: {
                                 workerRegion: 'منطقه Worker: ',
@@ -3062,6 +3194,43 @@
                     try {
                         const response = await fetch(window.location.pathname + '/region');
                         const data = await response.json();
+						
+						// --- 插入开始：Workers 配额和客户端信息更新逻辑 ---
+
+						// 1. Workers 配额状态显示逻辑
+						const quotaStatusDiv = document.getElementById('quotaStatus');
+						if (quotaStatusDiv) {
+							let quotaHtml = '';
+							// data.kvDisabled 是后端返回的字段
+							if (data.kvDisabled) { 
+								quotaHtml = `<span style="color: #ffaa00;">${t.quotaKVDisabled}</span>`;
+							} else {
+								quotaHtml = 
+									`${t.workerQuota}: <span style="color: #61afef;">${data.quota.toLocaleString()}</span><br>` +
+									`${t.quotaUsage}: <span style="color: #e5c07b;">${data.usage.toLocaleString()}</span><br>` +
+									`${t.quotaRemaining}: <span style="color: #98c379;">${data.remaining.toLocaleString()}</span><br>` +
+									`${t.quotaResetTime}: <span style="color: #a8e6df;">${data.resetTime}</span>`;
+							}
+							quotaStatusDiv.innerHTML = quotaHtml;
+						}
+
+						// 2. 客户端信息显示逻辑
+						const clientStatusDiv = document.getElementById('clientStatus');
+						if (clientStatusDiv && data.clientInfo) {
+							const cInfo = data.clientInfo;
+							// 为较长的 User-Agent 截断显示，并使用 title 属性显示完整内容
+							const uaText = cInfo.userAgent.length > 50 ? cInfo.userAgent.substring(0, 50) + '...' : cInfo.userAgent;
+							
+							let clientHtml = 
+								`${t.clientIP}: <span style="color: #e5c07b;">${cInfo.clientIP}</span><br>` +
+								`${t.clientCountry}: <span style="color: #98c379;">${cInfo.country}</span><br>` +
+								`${t.clientCity}: <span style="color: #a8e6df;">${cInfo.city}</span><br>` +
+								`${t.clientColo}: <span style="color: #61afef;">${cInfo.colo}</span><br>` +
+								`${t.clientUserAgent}: <span style="display:inline-block; max-width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${cInfo.userAgent}">${uaText}</span>`;
+
+							clientStatusDiv.innerHTML = clientHtml;
+						}
+						// --- 插入结束：Workers 配额和客户端信息更新逻辑 ---
                         
                         if (data.region === 'CUSTOM') {
                             isCustomIPMode = true;
