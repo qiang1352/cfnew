@@ -3195,7 +3195,7 @@
                         const response = await fetch(window.location.pathname + '/region');
                         const data = await response.json();
 						
-						// --- 插入开始：Workers 配额和客户端信息更新逻辑 ---
+						// --- 替换开始：Workers 配额和客户端信息更新逻辑 (使用 + 拼接) ---
 
 						// 1. Workers 配额状态显示逻辑
 						const quotaStatusDiv = document.getElementById('quotaStatus');
@@ -3203,13 +3203,13 @@
 							let quotaHtml = '';
 							// data.kvDisabled 是后端返回的字段
 							if (data.kvDisabled) { 
-								quotaHtml = `<span style="color: #ffaa00;">${t.quotaKVDisabled}</span>`;
+								quotaHtml = '<span style="color: #ffaa00;">' + t.quotaKVDisabled + '</span>';
 							} else {
 								quotaHtml = 
-									`${t.workerQuota}: <span style="color: #61afef;">${data.quota.toLocaleString()}</span><br>` +
-									`${t.quotaUsage}: <span style="color: #e5c07b;">${data.usage.toLocaleString()}</span><br>` +
-									`${t.quotaRemaining}: <span style="color: #98c379;">${data.remaining.toLocaleString()}</span><br>` +
-									`${t.quotaResetTime}: <span style="color: #a8e6df;">${data.resetTime}</span>`;
+									t.workerQuota + ': <span style="color: #61afef;">' + data.quota.toLocaleString() + '</span><br>' +
+									t.quotaUsage + ': <span style="color: #e5c07b;">' + data.usage.toLocaleString() + '</span><br>' +
+									t.quotaRemaining + ': <span style="color: #98c379;">' + data.remaining.toLocaleString() + '</span><br>' +
+									t.quotaResetTime + ': <span style="color: #a8e6df;">' + data.resetTime + '</span>';
 							}
 							quotaStatusDiv.innerHTML = quotaHtml;
 						}
@@ -3222,15 +3222,15 @@
 							const uaText = cInfo.userAgent.length > 50 ? cInfo.userAgent.substring(0, 50) + '...' : cInfo.userAgent;
 							
 							let clientHtml = 
-								`${t.clientIP}: <span style="color: #e5c07b;">${cInfo.clientIP}</span><br>` +
-								`${t.clientCountry}: <span style="color: #98c379;">${cInfo.country}</span><br>` +
-								`${t.clientCity}: <span style="color: #a8e6df;">${cInfo.city}</span><br>` +
-								`${t.clientColo}: <span style="color: #61afef;">${cInfo.colo}</span><br>` +
-								`${t.clientUserAgent}: <span style="display:inline-block; max-width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${cInfo.userAgent}">${uaText}</span>`;
+								t.clientIP + ': <span style="color: #e5c07b;">' + cInfo.clientIP + '</span><br>' +
+								t.clientCountry + ': <span style="color: #98c379;">' + cInfo.country + '</span><br>' +
+								t.clientCity + ': <span style="color: #a8e6df;">' + cInfo.city + '</span><br>' +
+								t.clientColo + ': <span style="color: #61afef;">' + cInfo.colo + '</span><br>' +
+								t.clientUserAgent + ': <span style="display:inline-block; max-width: 80%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="' + cInfo.userAgent + '">' + uaText + '</span>';
 
 							clientStatusDiv.innerHTML = clientHtml;
 						}
-						// --- 插入结束：Workers 配额和客户端信息更新逻辑 ---
+						// --- 替换结束 ---
                         
                         if (data.region === 'CUSTOM') {
                             isCustomIPMode = true;
