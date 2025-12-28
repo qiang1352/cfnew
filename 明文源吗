@@ -1406,7 +1406,7 @@
             portsToGenerate.forEach(({ port, tls }) => {
                 if (tls) {
                     
-                    const wsNodeName = `${nodeNameBase}-${port}-WS-TLS`;
+                    const wsNodeName = `${nodeNameBase}`;
                     const wsParams = new URLSearchParams({ 
                         encryption: 'none', 
                         security: 'tls', 
@@ -1419,7 +1419,7 @@
                     links.push(`${proto}://${user}@${safeIP}:${port}?${wsParams.toString()}#${encodeURIComponent(wsNodeName)}`);
                 } else {
                     
-                    const wsNodeName = `${nodeNameBase}-${port}-WS`;
+                    const wsNodeName = `${nodeNameBase}`;
                     const wsParams = new URLSearchParams({
                         encryption: 'none',
                         security: 'none',
