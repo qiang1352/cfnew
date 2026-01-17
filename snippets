@@ -1,9 +1,8 @@
 import { connect } from 'cloudflare:sockets';
 
 // --- 硬编码配置 ---
-const authToken = '8a71560c-c7fb-4999-bb6a-071d730b1cad';
+const authToken = 'b0414684-4826-47eb-8967-397227786405';
 let fallbackAddress = '';
-let fallbackPort = '443';
 const socks5Config = '';
 // 手动指定地区（留空则自动检测，可选值：US、SG、JP、HK、KR、DE、SE、NL、FI、GB）
 const manualWorkerRegion = 'SG';
@@ -12,24 +11,29 @@ const customPath = 'yx';
 // GitHub订阅URL（硬编码）
 const githubPreferredURL = 'https://raw.githubusercontent.com/qwer-search/bestip/refs/heads/main/kejilandbestip.txt';
 // 启用GitHub优选IP（true启用，false禁用）
-const enableGitHubPreferred = true;
+const enableGitHubPreferred = false;
 // 启用其他优选（域名优选，true启用，false禁用）
 const enableOtherPreferred = true;
 // API地址配置（订阅转换服务）
 const apiBaseUrl = 'https://url.v1.mk/sub';
 
 const directDomains = [
-    { name: "Snippets首选节点", domain: "198.41.211.78" },
-    { name: "Snippets节点1", domain: "108.162.194.80" }, 
-    { name: "Snippets节点2", domain: "198.41.223.249" },
-    { name: "Snippets节点3", domain: "108.162.192.207" },
-    { name: "Snippets节点4", domain: "162.159.1.202" },
-    { name: "Snippets节点5", domain: "173.245.58.95" },
-    { name: "Snippets节点6", domain: "108.162.196.188" },
-    { name: "Snippets节点7", domain: "162.159.11.75" },
-    { name: "Snippets节点8", domain: "108.162.195.27" },
-    { name: "Snippets节点9", domain: "162.159.4.153" },
-    { name: "Snippets节点10", domain: "172.64.150.233" }
+	{ name: "Snippets首选节点", domain: "198.41.211.78" },
+	{ name: "Snippets节点1", domain: "108.162.194.80" }, 
+	{ name: "Snippets节点2", domain: "198.41.223.249" },
+	{ name: "Snippets节点3", domain: "108.162.192.207" },
+	{ name: "Snippets节点4", domain: "162.159.1.202" },
+	{ name: "Snippets节点5", domain: "173.245.58.95" },
+	{ name: "Snippets节点6", domain: "108.162.196.188" },
+	{ name: "Snippets节点7", domain: "162.159.11.75" },
+	{ name: "Snippets节点8", domain: "108.162.195.27" },
+	{ name: "Snippets节点9", domain: "162.159.4.153" },
+	{ name: "Snippets节点10", domain: "172.64.150.233" },
+	{ name: "Snippets节点11", domain: "108.162.198.73" },
+	{ name: "Snippets节点12", domain: "162.159.38.17" },
+	{ name: "Snippets节点13", domain: "162.159.44.123" },
+	{ name: "Snippets节点14", domain: "162.159.45.188" },
+	{ name: "Snippets节点15", domain: "162.159.39.201" }
 ];
 
 const parsedSocks5Config = {};
@@ -39,16 +43,16 @@ let enableRegionMatching = true;
 let currentWorkerRegion = '';
 
 const backupIPs = [
-    { domain: 'ProxyIP.US.CMLiussss.net', region: 'US', regionCode: 'US', port: 443 },
-    { domain: 'ProxyIP.SG.CMLiussss.net', region: 'SG', regionCode: 'SG', port: 443 },
-    { domain: 'ProxyIP.JP.CMLiussss.net', region: 'JP', regionCode: 'JP', port: 443 },
-    { domain: 'ProxyIP.HK.CMLiussss.net', region: 'HK', regionCode: 'HK', port: 443 },
-    { domain: 'ProxyIP.KR.CMLiussss.net', region: 'KR', regionCode: 'KR', port: 443 },
-    { domain: 'ProxyIP.DE.CMLiussss.net', region: 'DE', regionCode: 'DE', port: 443 },
-    { domain: 'ProxyIP.SE.CMLiussss.net', region: 'SE', regionCode: 'SE', port: 443 },
-    { domain: 'ProxyIP.NL.CMLiussss.net', region: 'NL', regionCode: 'NL', port: 443 },
-    { domain: 'ProxyIP.FI.CMLiussss.net', region: 'FI', regionCode: 'FI', port: 443 },
-    { domain: 'ProxyIP.GB.CMLiussss.net', region: 'GB', regionCode: 'GB', port: 443 }
+  { domain: 'ProxyIP.US.CMLiussss.net', region: 'US', regionCode: 'US', port: 443 },
+  { domain: 'ProxyIP.SG.CMLiussss.net', region: 'SG', regionCode: 'SG', port: 443 },
+  { domain: 'ProxyIP.JP.CMLiussss.net', region: 'JP', regionCode: 'JP', port: 443 },
+  { domain: 'ProxyIP.HK.CMLiussss.net', region: 'HK', regionCode: 'HK', port: 443 },
+  { domain: 'ProxyIP.KR.CMLiussss.net', region: 'KR', regionCode: 'KR', port: 443 },
+  { domain: 'ProxyIP.DE.CMLiussss.net', region: 'DE', regionCode: 'DE', port: 443 },
+  { domain: 'ProxyIP.SE.CMLiussss.net', region: 'SE', regionCode: 'SE', port: 443 },
+  { domain: 'ProxyIP.NL.CMLiussss.net', region: 'NL', regionCode: 'NL', port: 443 },
+  { domain: 'ProxyIP.FI.CMLiussss.net', region: 'FI', regionCode: 'FI', port: 443 },
+  { domain: 'ProxyIP.GB.CMLiussss.net', region: 'GB', regionCode: 'GB', port: 443 }
 ];
 
 const E_INVALID_DATA = atob('aW52YWxpZCBkYXRh');
@@ -70,222 +74,232 @@ const ADDRESS_TYPE_URL = 2;
 const ADDRESS_TYPE_IPV6 = 3;
 
 async function detectWorkerRegion(request) {
-    try {
-        const cfCountry = request.cf?.country;
-        if (cfCountry) {
-            const countryToRegion = {
-                'US': 'US', 'SG': 'SG', 'JP': 'JP', 'HK': 'HK', 'KR': 'KR',
-                'DE': 'DE', 'SE': 'SE', 'NL': 'NL', 'FI': 'FI', 'GB': 'GB',
-                'CN': 'HK', 'TW': 'HK', 'AU': 'SG', 'CA': 'US',
-                'FR': 'DE', 'IT': 'DE', 'ES': 'DE', 'CH': 'DE',
-                'AT': 'DE', 'BE': 'NL', 'DK': 'SE', 'NO': 'SE', 'IE': 'GB'
-            };
-            if (countryToRegion[cfCountry]) {
-                return countryToRegion[cfCountry];
-            }
-        }
-        return 'HK';
-    } catch (error) {
-        return 'HK';
+  try {
+    const cfCountry = request.cf?.country;
+    if (cfCountry) {
+      const countryToRegion = {
+        'US': 'US', 'SG': 'SG', 'JP': 'JP', 'HK': 'HK', 'KR': 'KR',
+        'DE': 'DE', 'SE': 'SE', 'NL': 'NL', 'FI': 'FI', 'GB': 'GB',
+        'CN': 'HK', 'TW': 'HK', 'AU': 'SG', 'CA': 'US',
+        'FR': 'DE', 'IT': 'DE', 'ES': 'DE', 'CH': 'DE',
+        'AT': 'DE', 'BE': 'NL', 'DK': 'SE', 'NO': 'SE', 'IE': 'GB'
+      };
+      if (countryToRegion[cfCountry]) return countryToRegion[cfCountry];
     }
+    return 'HK';
+  } catch (error) {
+    return 'HK';
+  }
 }
 
 function getNearbyRegions(region) {
-    const nearbyMap = {
-        'US': ['SG', 'JP', 'HK', 'KR'],
-        'SG': ['JP', 'HK', 'KR', 'US'],
-        'JP': ['SG', 'HK', 'KR', 'US'],
-        'HK': ['SG', 'JP', 'KR', 'US'],
-        'KR': ['JP', 'HK', 'SG', 'US'],
-        'DE': ['NL', 'GB', 'SE', 'FI'],
-        'SE': ['DE', 'NL', 'FI', 'GB'],
-        'NL': ['DE', 'GB', 'SE', 'FI'],
-        'FI': ['SE', 'DE', 'NL', 'GB'],
-        'GB': ['DE', 'NL', 'SE', 'FI']
-    };
-    return nearbyMap[region] || [];
+  const nearbyMap = {
+    'US': ['SG', 'JP', 'HK', 'KR'],
+    'SG': ['JP', 'HK', 'KR', 'US'],
+    'JP': ['SG', 'HK', 'KR', 'US'],
+    'HK': ['SG', 'JP', 'KR', 'US'],
+    'KR': ['JP', 'HK', 'SG', 'US'],
+    'DE': ['NL', 'GB', 'SE', 'FI'],
+    'SE': ['DE', 'NL', 'FI', 'GB'],
+    'NL': ['DE', 'GB', 'SE', 'FI'],
+    'FI': ['SE', 'DE', 'NL', 'GB'],
+    'GB': ['DE', 'NL', 'SE', 'FI']
+  };
+  return nearbyMap[region] || [];
 }
 
 function getAllRegionsByPriority(region) {
-    const nearbyRegions = getNearbyRegions(region);
-    const allRegions = ['US', 'SG', 'JP', 'HK', 'KR', 'DE', 'SE', 'NL', 'FI', 'GB'];
-    return [region, ...nearbyRegions, ...allRegions.filter(r => r !== region && !nearbyRegions.includes(r))];
+  const nearbyRegions = getNearbyRegions(region);
+  const allRegions = ['US', 'SG', 'JP', 'HK', 'KR', 'DE', 'SE', 'NL', 'FI', 'GB'];
+  return [region, ...nearbyRegions, ...allRegions.filter(r => r !== region && !nearbyRegions.includes(r))];
 }
 
 function getSmartRegionSelection(workerRegion, availableIPs) {
-    if (!enableRegionMatching || !workerRegion) {
-        return availableIPs;
-    }
-    const priorityRegions = getAllRegionsByPriority(workerRegion);
-    const sortedIPs = [];
-    for (const region of priorityRegions) {
-        const regionIPs = availableIPs.filter(ip => ip.regionCode === region);
-        sortedIPs.push(...regionIPs);
-    }
-    return sortedIPs;
+  if (!enableRegionMatching || !workerRegion) return availableIPs;
+  const priorityRegions = getAllRegionsByPriority(workerRegion);
+  const sortedIPs = [];
+  for (const region of priorityRegions) {
+    const regionIPs = availableIPs.filter(ip => ip.regionCode === region);
+    sortedIPs.push(...regionIPs);
+  }
+  return sortedIPs;
 }
 
 async function getBestBackupIP(workerRegion = '') {
-    if (backupIPs.length === 0) {
-        return null;
+  if (backupIPs.length === 0) return null;
+  const availableIPs = backupIPs.map(ip => ({ ...ip, available: true }));
+  if (enableRegionMatching && workerRegion) {
+    const sortedIPs = getSmartRegionSelection(workerRegion, availableIPs);
+    if (sortedIPs.length > 0) return sortedIPs[0];
+  }
+  return availableIPs[0];
+}
+
+function parseAddressAndPort(input) {
+  if (!input) return { address: '', port: null };
+  if (input.includes('[') && input.includes(']')) {
+    const match = input.match(/^\[([^\]]+)\](?::(\d+))?$/);
+    if (match) {
+      return { address: match[1], port: match[2] ? parseInt(match[2], 10) : null };
     }
-    const availableIPs = backupIPs.map(ip => ({ ...ip, available: true }));
-    if (enableRegionMatching && workerRegion) {
-        const sortedIPs = getSmartRegionSelection(workerRegion, availableIPs);
-        if (sortedIPs.length > 0) {
-            return sortedIPs[0];
-        }
-    }
-    return availableIPs[0];
+  }
+  const lastColonIndex = input.lastIndexOf(':');
+  if (lastColonIndex > 0) {
+    const address = input.substring(0, lastColonIndex);
+    const portStr = input.substring(lastColonIndex + 1);
+    const port = parseInt(portStr, 10);
+    if (!isNaN(port) && port > 0 && port <= 65535) return { address, port };
+  }
+  return { address: input, port: null };
 }
 
 export default {
-	async fetch(request, env, ctx) {
-		try {
-			const url = new URL(request.url);
-			
-			// 手动指定地区或自动检测（仅使用硬编码变量）
-			if (manualWorkerRegion && manualWorkerRegion.trim()) {
-				currentWorkerRegion = manualWorkerRegion.trim().toUpperCase();
-			} else {
-				currentWorkerRegion = await detectWorkerRegion(request);
-			}
-			
-			// 根据地区智能选择备用IP作为访问失败时的备用（每次请求都重新选择）
-			let currentFallbackAddress = fallbackAddress;
-			let currentFallbackPort = fallbackPort;
-			if (!currentFallbackAddress && currentWorkerRegion) {
-				const bestBackupIP = await getBestBackupIP(currentWorkerRegion);
-				if (bestBackupIP) {
-					currentFallbackAddress = bestBackupIP.domain;
-					currentFallbackPort = bestBackupIP.port.toString();
-				}
-			}
+  async fetch(request, env, ctx) {
+    try {
+      const url = new URL(request.url);
 
-			if (request.headers.get('Upgrade') === 'websocket') {
-				return await handleWsRequest(request, currentFallbackAddress, currentFallbackPort);
-			} else if (request.method === 'GET') {
-				// 首页提示服务正常
-				if (url.pathname === '/') {
-					const successHtml = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>部署成功</title><style>body{font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;background-color:#1e2b3a;color:#2dc4b6;text-align:center;}.container{width: 100%;max-width: 600px;background: #2a3a4d;border-radius: 12px;padding: 30px;margin-bottom: 20px;box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);transition: transform 0.3s ease, box-shadow 0.3s ease;border: 1px solid #3a4a5d;}h1{color:#2dc4b6;}</style></head><body><div class="container"><h1>Workers 运行成功！</h1><p>请继续后面的操作。</p></div></body></html>`;
-					return new Response(successHtml, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
-				}
-				
-				// D短地址（自定义路径）支持
-				if (customPath && customPath.trim()) {
-					const cleanCustomPath = customPath.trim().startsWith('/') ? customPath.trim() : '/' + customPath.trim();
-					const normalizedCustomPath = cleanCustomPath.endsWith('/') && cleanCustomPath.length > 1 ? cleanCustomPath.slice(0, -1) : cleanCustomPath;
-					const normalizedPath = url.pathname.endsWith('/') && url.pathname.length > 1 ? url.pathname.slice(0, -1) : url.pathname;
-					
-					// 自定义路径 - 显示图形化界面
-					if (normalizedPath === normalizedCustomPath) {
-						return await handleSubscriptionPage(request, authToken);
-					}
-					
-					// 自定义路径/sub - 返回订阅
-					if (normalizedPath === normalizedCustomPath + '/sub') {
-						return await handleSubscriptionRequest(request, authToken, url);
-					}
-					
-					// 如果设置了自定义路径，UUID路径被禁用
-					if (url.pathname.length > 1 && url.pathname !== '/') {
-						const user = url.pathname.replace(/\/$/, '').replace('/sub', '').substring(1);
-						if (isValidFormat(user)) {
-							return new Response(JSON.stringify({ 
-								error: '访问被拒绝',
-								message: '当前 Worker 已启用自定义路径模式，UUID 访问已禁用'
-							}), { 
-								status: 403,
-								headers: { 'Content-Type': 'application/json; charset=utf-8' }
-							});
-						}
-					}
-				} else {
-					// UUID路径模式
-					// 支持UUID路径：/uuid - 显示图形化界面
-					if (url.pathname.length > 1 && url.pathname !== '/' && !url.pathname.includes('/sub')) {
-						const uuid = url.pathname.replace(/\/$/, '').substring(1);
-						if (isValidFormat(uuid)) {
-							if (uuid === authToken) {
-								return await handleSubscriptionPage(request, uuid);
-							} else {
-								return new Response('UUID错误', { status: 403 });
-							}
-						}
-					}
-					// 支持UUID/sub路径：/uuid/sub - 返回订阅
-					if (url.pathname.includes('/sub')) {
-						const pathParts = url.pathname.split('/');
-						if (pathParts.length === 2 && pathParts[1] === 'sub') {
-							const uuid = pathParts[0].substring(1);
-							if (isValidFormat(uuid)) {
-								if (uuid === authToken) {
-									return await handleSubscriptionRequest(request, uuid, url);
-								} else {
-									return new Response('UUID错误', { status: 403 });
-								}
-							}
-						}
-					}
-					// 保持向后兼容
-					if (url.pathname.toLowerCase().includes(`/${authToken}`)) {
-						return await handleSubscriptionRequest(request, authToken);
-					}
-				}
-			}
-			return new Response('Not Found', { status: 404 });
-		} catch (err) {
-			return new Response(err.toString(), { status: 500 });
-		}
-	},
+      if (manualWorkerRegion && manualWorkerRegion.trim()) {
+        currentWorkerRegion = manualWorkerRegion.trim().toUpperCase();
+      } else {
+        currentWorkerRegion = await detectWorkerRegion(request);
+      }
+
+      let currentFallbackAddress = fallbackAddress;
+      if (!currentFallbackAddress && currentWorkerRegion) {
+        const bestBackupIP = await getBestBackupIP(currentWorkerRegion);
+        if (bestBackupIP) currentFallbackAddress = bestBackupIP.domain + ':' + bestBackupIP.port;
+      }
+
+      if (request.headers.get('Upgrade') === 'websocket') {
+        return await handleWsRequest(request, currentFallbackAddress);
+      } else if (request.method === 'GET') {
+        if (url.pathname === '/') {
+          const successHtml = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>服务正常</title><style>body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;background-color:#121212;color:#e0e0e0;text-align:center;}.container{padding:2rem;border-radius:8px;background-color:#1e1e1e;box-shadow:0 4px 6px rgba(0,0,0,0.1);}h1{color:#4caf50;}</style></head><body><div class="container"><h1>✅ 服务正常</h1><p>请继续后面的操作。</p></div></body></html>`;
+          return new Response(successHtml, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+        }
+
+        if (customPath && customPath.trim()) {
+          const cleanCustomPath = customPath.trim().startsWith('/') ? customPath.trim() : '/' + customPath.trim();
+          const normalizedCustomPath = cleanCustomPath.endsWith('/') && cleanCustomPath.length > 1 ? cleanCustomPath.slice(0, -1) : cleanCustomPath;
+          const normalizedPath = url.pathname.endsWith('/') && url.pathname.length > 1 ? url.pathname.slice(0, -1) : url.pathname;
+
+          if (normalizedPath === normalizedCustomPath) {
+            return await handleSubscriptionPage(request, authToken);
+          }
+
+          if (normalizedPath === normalizedCustomPath + '/sub') {
+            return await handleSubscriptionRequest(request, authToken, url);
+          }
+
+          if (url.pathname.length > 1 && url.pathname !== '/') {
+            const user = url.pathname.replace(/\/$/, '').replace('/sub', '').substring(1);
+            if (isValidFormat(user)) {
+              return new Response(JSON.stringify({
+                error: '访问被拒绝',
+                message: '当前 Worker 已启用自定义路径模式，UUID 访问已禁用'
+              }), {
+                status: 403,
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+              });
+            }
+          }
+        } else {
+          if (url.pathname.length > 1 && url.pathname !== '/' && !url.pathname.includes('/sub')) {
+            const uuid = url.pathname.replace(/\/$/, '').substring(1);
+            if (isValidFormat(uuid)) {
+              if (uuid === authToken) return await handleSubscriptionPage(request, uuid);
+              return new Response('UUID错误', { status: 403 });
+            }
+          }
+
+          if (url.pathname.includes('/sub')) {
+            const pathParts = url.pathname.split('/');
+            if (pathParts.length === 2 && pathParts[1] === 'sub') {
+              const uuid = pathParts[0].substring(1);
+              if (isValidFormat(uuid)) {
+                if (uuid === authToken) return await handleSubscriptionRequest(request, uuid, url);
+                return new Response('UUID错误', { status: 403 });
+              }
+            }
+          }
+
+          if (url.pathname.toLowerCase().includes(`/${authToken}`)) {
+            return await handleSubscriptionRequest(request, authToken);
+          }
+        }
+      }
+      return new Response('Not Found', { status: 404 });
+    } catch (err) {
+      return new Response(err.toString(), { status: 500 });
+    }
+  },
 };
 
 async function handleSubscriptionPage(request, uuid = null) {
-	if (!uuid) uuid = authToken;
-	
-	const pageHtml = `<!DOCTYPE html>
+  if (!uuid) uuid = authToken;
+
+  const pageHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 10V3L4 14h7v7l9-11h-7z' fill='%23667eea'/%3E%3C/svg%3E" type="image/svg+xml">
 <title>订阅中心</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231e2b3a'/><circle cx='50' cy='50' r='35' fill='%232dc4b6'/></svg>">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family: "Open Sans", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;background:#1e2b3a;color:#2dc4b6;min-height:100vh;display: flex;justify-content: center;align-items: center;}
-.container{max-width:900px;width: 100%;margin:0 auto;padding:20px;}
-.header{text-align:center;margin-bottom:40px}
-.title{font-size: 2.5rem;font-weight: 800;margin-bottom: 15px;background: linear-gradient(135deg, #2dc4b6 0%, #6dd0c7 50%, #a8e6df 100%);-webkit-background-clip: text;background-clip: text;color: transparent;text-shadow: 0 4px 15px rgba(45, 196, 182, 0.3);letter-spacing: 1px;position: relative;display: inline-block;}
-.title::after {content: '';position: absolute;bottom: -10px;left: 10%;width: 80%;height: 3px;background: linear-gradient(90deg, transparent, #2dc4b6, transparent);border-radius: 2px;}
-.subtitle{margin-bottom:30px;font-size:1.2rem}
-.card{background: #2a3a4d;border-radius: 12px;padding: 30px;margin-bottom: 20px;box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);transition: transform 0.3s ease, box-shadow 0.3s ease;border: 1px solid #3a4a5d;}
-.card-title{font-size:1.5rem;margin-bottom:20px;color:#2dc4b6;}
-.client-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:15px;margin:20px 0}
-.client-btn{background: linear-gradient(135deg, #2dc4b6 0%, #1fa89c 100%);color: #1e2b3a;border: none;padding: 12px 25px;border-radius: 8px;font-size: 1rem;font-weight: 600;cursor: pointer;transition: all 0.3s ease;width: 100%;box-shadow: 0 4px 12px rgba(45, 196, 182, 0.4);}
-.client-btn:hover{transform: translateY(-2px);box-shadow: 0 6px 15px rgba(45, 196, 182, 0.5);background: linear-gradient(135deg, #35d4c5 0%, #23b5a8 100%);}
-.generate-btn{background:rgba(0,255,0,0.1);border:2px solid #00ff00;padding:15px 30px;color:#00ff00;font-family:"Courier New",monospace;font-weight:bold;cursor:pointer;transition:all 0.3s ease;margin-right:15px}
-.generate-btn:hover{background:rgba(0,255,0,0.3);box-shadow:0 0 20px #00ff00;transform:translateY(-2px)}
-.subscription-url{background: #1e2b3a;border: 1px solid #3a4a5d;padding: 12px 15px;word-break: break-all; color: #a8e6df;margin-top: 20px; display: none;border-radius: 8px;}
+body{font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#667eea 0%,#764ba2);padding:20px;position:relative;overflow:hidden}
+body::before,body::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.1)}
+body::before{width:500px;height:500px;top:-250px;right:-250px;animation:float 6s infinite}
+body::after{width:300px;height:300px;bottom:-150px;left:-150px;animation:float 8s infinite reverse}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.container{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);padding:3rem 2.5rem;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:600px;width:100%;text-align:center;animation:slideUp .6s}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}}
+.icon-wrapper{width:80px;height:80px;margin:0 auto 1.5rem;background:linear-gradient(135deg,#667eea 0%,#764ba2);border-radius:20px;display:flex;align-items:center;justify-content:center}
+.icon-wrapper svg{width:45px;height:45px;fill:white}
+h1{font-size:2rem;background:linear-gradient(135deg,#667eea 0%,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.status{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#10b981 0%,#059669);color:white;padding:.6rem 1.5rem;border-radius:50px;margin:1.5rem 0 2rem}
+.status::before{content:'✓';background:rgba(255,255,255,.3);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+.description{color:#64748b;margin-bottom:2rem}
+.client-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:15px;margin:20px 0}
+.btn{display:flex;align-items:center;justify-content:center;gap:.75rem;padding:1rem 2rem;background:linear-gradient(135deg,#667eea 0%,#764ba2);color:white;border:none;border-radius:12px;font-weight:600;font-size: 1rem;transition:.3s;width:100%;margin-bottom:1rem;position:relative;overflow:hidden}
+.btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .5s}
+.btn:hover::before{left:100%}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,.4)}
+.btn-icon svg{width:30px;height:30px;fill: white;}
+.subscription-url{background:linear-gradient(135deg,#0088cc 0%,#006699);color:white;padding:12px 15px;border-radius:8px;margin-top:20px;display:none}
+.footer{margin-top:2rem;padding-top:1.5rem;border-top:1px solid #e2e8f0;color:#94a3b8}
+@media (min-width:768px){.client-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 <div class="container">
-	<div class="header">
-		<h1 class="title">代理订阅中心</h1>
-		<p class="subtitle">多客户端支持 • 智能优选 • 一键生成</p>
-	</div>
-	<div class="card">
-		<h2 class="card-title">[ 选择客户端 ]</h2>
-		<div class="client-grid">
-			<button class="client-btn" onclick="generateClientLink('clash','CLASH')">CLASH</button>
-			<button class="client-btn" onclick="generateClientLink('singbox','SING-BOX')">SING-BOX</button>
-			<button class="client-btn" onclick="generateClientLink('v2ray','V2RAY')">V2RAY</button>
-		</div>
-		<div class="subscription-url" id="clientSubscriptionUrl"></div>
-	</div>
+<div class="icon-wrapper"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+<h1>Hello Snippets!</h1>
+<div class="status">功能已启用</div>
+<p class="description">您的服务正在正常运行,享受安全、快速的网络连接体验</p>
+<div class="card">
+<div class="client-grid">
+<button class="btn" onclick="generateClientLink('clash','CLASH')"><div class="btn-icon">
+<svg viewBox="0 0 24 24"><path d="M5.57 4.66A4.5 4.5 0 0 1 6.75 4.5h10.5c.41 0 .81.06 1.18.16A3 3 0 0 0 15.75 3h-7.5a3 3 0 0 0-2.68 1.66zM2.25 12a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3v-6zm3-4.5c-.41 0-.81.06-1.18.16A3 3 0 0 1 6.75 6h10.5a3 3 0 0 1 2.68 1.66A4.5 4.5 0 0 0 18.75 7.5H5.25z"/></svg>
+</div>CLASH</button>
+<button class="btn" onclick="generateClientLink('singbox','SING-BOX')"><div class="btn-icon">
+<svg viewBox="0 0 24 24"><path d="M1.5 9.83v1.79c0 1.04.84 1.88 1.88 1.88h17.25c1.04 0 1.88-.84 1.88-1.88V9.83a3 3 0 0 0-.72-1.95l-3.29-3.83A3 3 0 0 0 16.21 3h-8.43a3 3 0 0 0-2.28 1.05L2.22 7.88A3 3 0 0 0 1.5 9.83zm6.29-5.33a1.5 1.5 0 0 0-1.14.52L3.88 8.25h3.17a3 3 0 0 1 2.5 1.34l.16.25a1.5 1.5 0 0 0 1.25.67h2.09a1.5 1.5 0 0 0 1.25-.67l.16-.25a3 3 0 0 1 2.5-1.34h3.17l-2.77-3.23a1.5 1.5 0 0 0-1.14-.52h-8.43z"/><path d="M2.81 15a1.31 1.31 0 0 0-1.31 1.31V18a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-1.69c0-.72-.59-1.31-1.31-1.31h-4.23a3 3 0 0 0-2.5 1.34l-.16.25a1.5 1.5 0 0 1-1.25.67h-2.09a1.5 1.5 0 0 1-1.25-.67l-.16-.25A3 3 0 0 0 7.05 15H2.81z"/></svg>
+</div>SING-BOX</button>
+<button class="btn" onclick="generateClientLink('v2ray','V2RAY')"><div class="btn-icon">
+<svg viewBox="0 0 24 24"><path d="M5.63 3.75a2.63 2.63 0 1 0 0 5.25h12.75a2.63 2.63 0 0 0 0-5.25H5.63zM3.75 11.25a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5H3.75zM3 15.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75zM3.75 18.75a.75.75 0 0 0 0 1.5h16.5a.75.75 0 0 0 0-1.5H3.75z"/></svg>
+</div>V2RAY</button>
+<button class="btn" onclick="generateClientLink('v2ray','Shadowrocket')"> <div class="btn-icon">
+<svg viewBox="0 0 24 24"><path d="M9.32 7.58C12.2 3.88 16.7 1.5 21.75 1.5a.75.75 0 0 1 .75.75c0 5.06-2.38 9.56-6.08 12.44A6.75 6.75 0 0 1 9.75 22.5a.75.75 0 0 1-.75-.75v-4.13a15.84 15.84 0 0 1-2.62-3.62H2.25a.75.75 0 0 1-.75-.75 6.75 6.75 0 0 1 7.82-6.67zM15 6.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5z"/><path d="M5.26 17.24a.75.75 0 1 0-.9-1.2 5.24 5.24 0 0 0-2.05 5.02.75.75 0 0 0 .63.63 5.24 5.24 0 0 0 5.02-2.05.75.75 0 1 0-1.2-.9 3.74 3.74 0 0 1-3.01 1.51c0-1.23.59-2.32 1.51-3.01z"/></svg>
+</div>Shadowrocket</button>
+</div>
+<div class="subscription-url" id="clientSubscriptionUrl"></div>
+</div>
+<div class="footer">
+Powered by Cloudflare
+</div>
 </div>
 <script>
-	var SUB_CONVERTER_URL="${apiBaseUrl}";
+var SUB_CONVERTER_URL="${apiBaseUrl}";
 function tryOpenApp(schemeUrl,fallbackCallback,timeout){
 timeout=timeout||2500;
 var appOpened=false;
@@ -380,296 +394,342 @@ navigator.clipboard.writeText(finalUrl).then(function(){alert(displayName+" 订�
 }
 }
 }
-function getBase64Subscription(){
-var currentUrl=window.location.href;
-var subscriptionUrl=currentUrl+"/sub";
-fetch(subscriptionUrl).then(function(response){return response.text();}).then(function(base64Content){
-document.getElementById("base64SubscriptionUrl").textContent=base64Content;
-document.getElementById("base64SubscriptionUrl").style.display="block";
-navigator.clipboard.writeText(base64Content).then(function(){alert("Base64订阅内容已复制");});
-}).catch(function(error){alert("获取订阅失败，请重试");});
-}
 </script>
 </body>
 </html>`;
-	
-	return new Response(pageHtml, { 
-		status: 200, 
-		headers: { 'Content-Type': 'text/html; charset=utf-8' } 
-	});
+
+  return new Response(pageHtml, {
+    status: 200,
+    headers: { 'Content-Type': 'text/html; charset=utf-8' }
+  });
 }
 
 async function handleSubscriptionRequest(request, uuid, url = null) {
-    if (!url) url = new URL(request.url);
-    
-    const finalLinks = [];
-    const workerDomain = url.hostname;
+  if (!url) url = new URL(request.url);
 
-    // 添加原生地址
-    const nativeList = [{ ip: workerDomain, isp: '原生地址' }];
-    finalLinks.push(...generateLinksFromSource(nativeList, uuid, workerDomain));
+  const finalLinks = [];
+  const workerDomain = url.hostname;
 
-    // 其他优选（域名优选，受开关控制）
-    if (enableOtherPreferred) {
-        const domainList = directDomains.map(d => ({ ip: d.domain, isp: d.name || d.domain }));
-        finalLinks.push(...generateLinksFromSource(domainList, uuid, workerDomain));
-    }
+  const nativeList = [{ ip: workerDomain, isp: '原生地址' }];
+  finalLinks.push(...generateLinksFromSource(nativeList, uuid, workerDomain));
 
-    // GitHub优选IP（受开关控制）
-    if (enableGitHubPreferred) {
-        const newIPList = await fetchAndParseNewIPs();
-        if (newIPList.length > 0) {
-            finalLinks.push(...generateLinksFromNewIPs(newIPList, uuid, workerDomain));
-        }
-    }
+  if (enableOtherPreferred) {
+    const domainList = directDomains.map(d => ({ ip: d.domain, isp: d.name || d.domain }));
+    finalLinks.push(...generateLinksFromSource(domainList, uuid, workerDomain));
+  }
 
-    if (finalLinks.length === 0) {
-        const errorRemark = "所有节点获取失败";
-        const errorLink = `vless://00000000-0000-0000-0000-000000000000@127.0.0.1:80?encryption=none&security=none&type=ws&host=error.com&path=%2F#${encodeURIComponent(errorRemark)}`;
-        finalLinks.push(errorLink);
-    }
+  if (enableGitHubPreferred) {
+    const newIPList = await fetchAndParseNewIPs();
+    if (newIPList.length > 0) finalLinks.push(...generateLinksFromNewIPs(newIPList, uuid, workerDomain));
+  }
 
-    const subscriptionContent = btoa(finalLinks.join('\n'));
-    
-    return new Response(subscriptionContent, {
-        headers: { 
-            'Content-Type': 'text/plain; charset=utf-8',
-            'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
-        },
-    });
+  if (finalLinks.length === 0) {
+    const errorRemark = "所有节点获取失败";
+    const errorLink = `vless://00000000-0000-0000-0000-000000000000@127.0.0.1:80?encryption=none&security=none&type=ws&host=error.com&path=%2F#${encodeURIComponent(errorRemark)}`;
+    finalLinks.push(errorLink);
+  }
+
+  const subscriptionContent = btoa(finalLinks.join('\n'));
+
+  return new Response(subscriptionContent, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    },
+  });
 }
 
 function generateLinksFromSource(list, uuid, workerDomain) {
-    const httpsPorts = [443];
-    const links = [];
-    const wsPath = '/?ed=2048';
-    const proto = 'vless';
+  const httpsPorts = [443];
+  const links = [];
+  const wsPath = '/?ed=2048';
+  const proto = 'vless';
 
-    list.forEach(item => {
-        const nodeNameBase = item.isp.replace(/\s/g, '_');
-        const safeIP = item.ip.includes(':') ? `[${item.ip}]` : item.ip;
+  list.forEach(item => {
+    const nodeNameBase = item.isp.replace(/\s/g, '_');
+    const safeIP = item.ip.includes(':') ? `[${item.ip}]` : item.ip;
 
-        httpsPorts.forEach(port => {
-            const wsNodeName = `${nodeNameBase}-${port}-WS-TLS`;
-            const wsParams = new URLSearchParams({ 
-                encryption: 'none', 
-                security: 'tls', 
-                sni: workerDomain, 
-                fp: 'randomized', 
-                type: 'ws', 
-                host: workerDomain, 
-                path: wsPath 
-            });
-            links.push(`${proto}://${uuid}@${safeIP}:${port}?${wsParams.toString()}#${encodeURIComponent(wsNodeName)}`);
-        });
+    httpsPorts.forEach(port => {
+      const wsNodeName = `${nodeNameBase}`;
+      const wsParams = new URLSearchParams({
+        encryption: 'none',
+        security: 'tls',
+        sni: workerDomain,
+        fp: 'randomized',
+        type: 'ws',
+        host: workerDomain,
+        path: wsPath
+      });
+      links.push(`${proto}://${uuid}@${safeIP}:${port}?${wsParams.toString()}#${encodeURIComponent(wsNodeName)}`);
     });
-    return links;
+  });
+
+  return links;
 }
 
 async function fetchAndParseNewIPs() {
-    const url = githubPreferredURL;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) return [];
-        const text = await response.text();
-        const results = [];
-        const lines = text.trim().replace(/\r/g, "").split('\n');
-        const regex = /^([^:]+):(\d+)#(.*)$/;
+  const url = githubPreferredURL;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return [];
+    const text = await response.text();
+    const results = [];
+    const lines = text.trim().replace(/\r/g, "").split('\n');
+    const regex = /^([^:]+):(\d+)#(.*)$/;
 
-        for (const line of lines) {
-            const trimmedLine = line.trim();
-            if (!trimmedLine) continue;
-            const match = trimmedLine.match(regex);
-            if (match) {
-                results.push({
-                    ip: match[1],
-                    port: parseInt(match[2], 10),
-                    name: match[3].trim() || match[1]
-                });
-            }
-        }
-        return results;
-    } catch (error) {
-        return [];
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      if (!trimmedLine) continue;
+      const match = trimmedLine.match(regex);
+      if (match) {
+        results.push({
+          ip: match[1],
+          port: parseInt(match[2], 10),
+          name: match[3].trim() || match[1]
+        });
+      }
     }
+    return results;
+  } catch (error) {
+    return [];
+  }
 }
 
 function generateLinksFromNewIPs(list, uuid, workerDomain) {
-    const links = [];
-    const wsPath = '/?ed=2048';
-    const proto = 'vless';
+  const links = [];
+  const wsPath = '/?ed=2048';
+  const proto = 'vless';
 
-    list.forEach(item => {
-        const nodeName = item.name;
-        const safeIP = item.ip.includes(':') ? `[${item.ip}]` : item.ip;
-        const params = {
-            encryption: 'none',
-            security: 'tls',
-            sni: workerDomain,
-            fp: 'randomized',
-            type: 'ws',
-            host: workerDomain,
-            path: wsPath
-        };
-        const wsParams = new URLSearchParams(params);
-        links.push(`${proto}://${uuid}@${safeIP}:${item.port}?${wsParams.toString()}#${encodeURIComponent(nodeName)}`);
-    });
-    return links;
+  list.forEach(item => {
+    const nodeName = item.name;
+    const safeIP = item.ip.includes(':') ? `[${item.ip}]` : item.ip;
+    const params = {
+      encryption: 'none',
+      security: 'tls',
+      sni: workerDomain,
+      fp: 'randomized',
+      type: 'ws',
+      host: workerDomain,
+      path: wsPath
+    };
+    const wsParams = new URLSearchParams(params);
+    links.push(`${proto}://${uuid}@${safeIP}:${item.port}?${wsParams.toString()}#${encodeURIComponent(nodeName)}`);
+  });
+
+  return links;
 }
 
-// WebSocket处理函数（简化版）
-async function handleWsRequest(request, currentFallbackAddress = null, currentFallbackPort = null) {
-    const wsPair = new WebSocketPair();
-    const [clientSock, serverSock] = Object.values(wsPair);
-    serverSock.accept();
+async function handleWsRequest(request, currentFallbackAddress = null) {
+  const wsPair = new WebSocketPair();
+  const [clientSock, serverSock] = Object.values(wsPair);
+  serverSock.accept();
 
-    let remoteConnWrapper = { socket: null };
-    let isDnsQuery = false;
-    
-    const fbAddr = currentFallbackAddress || fallbackAddress;
-    const fbPort = currentFallbackPort || fallbackPort;
+  let remoteConnWrapper = { socket: null };
+  let isDnsQuery = false;
 
-    const earlyData = request.headers.get('sec-websocket-protocol') || '';
-    const readable = makeReadableStream(serverSock, earlyData);
+  const fbAddr = currentFallbackAddress || fallbackAddress;
 
-    readable.pipeTo(new WritableStream({
-        async write(chunk) {
-            if (isDnsQuery) return await forwardUDP(chunk, serverSock, null);
-            if (remoteConnWrapper.socket) {
-                const writer = remoteConnWrapper.socket.writable.getWriter();
-                await writer.write(chunk);
-                writer.releaseLock();
-                return;
-            }
-            const { hasError, message, addressType, port, hostname, rawIndex, version, isUDP } = parseWsPacketHeader(chunk, authToken);
-            if (hasError) throw new Error(message);
+  const earlyData = request.headers.get('sec-websocket-protocol') || '';
+  const readable = makeReadableStream(serverSock, earlyData);
 
-            if (isUDP) {
-                if (port === 53) isDnsQuery = true;
-                else throw new Error(E_UDP_DNS_ONLY);
-            }
-            const respHeader = new Uint8Array([version[0], 0]);
-            const rawData = chunk.slice(rawIndex);
-
-            if (isDnsQuery) return forwardUDP(rawData, serverSock, respHeader);
-            await forwardTCP(addressType, hostname, port, rawData, serverSock, respHeader, remoteConnWrapper, fbAddr, fbPort);
-        },
-    })).catch((err) => { console.log('WS Stream Error:', err); });
-
-    return new Response(null, { status: 101, webSocket: clientSock });
-}
-
-async function forwardTCP(addrType, host, portNum, rawData, ws, respHeader, remoteConnWrapper, fbAddr = null, fbPort = null) {
-    const fallbackAddr = fbAddr || fallbackAddress;
-    const fallbackPortNum = fbPort || fallbackPort;
-    
-    async function connectAndSend(address, port) {
-        const remoteSock = connect({ hostname: address, port: port });
-        const writer = remoteSock.writable.getWriter();
-        await writer.write(rawData);
+  readable.pipeTo(new WritableStream({
+    async write(chunk) {
+      if (isDnsQuery) return await forwardUDP(chunk, serverSock, null);
+      if (remoteConnWrapper.socket) {
+        const writer = remoteConnWrapper.socket.writable.getWriter();
+        await writer.write(chunk);
         writer.releaseLock();
-        return remoteSock;
+        return;
+      }
+      const { hasError, message, addressType, port, hostname, rawIndex, version, isUDP } = parseWsPacketHeader(chunk, authToken);
+      if (hasError) throw new Error(message);
+
+      if (isUDP) {
+        if (port === 53) isDnsQuery = true;
+        else throw new Error(E_UDP_DNS_ONLY);
+      }
+      const respHeader = new Uint8Array([version[0], 0]);
+      const rawData = chunk.slice(rawIndex);
+
+      if (isDnsQuery) return forwardUDP(rawData, serverSock, respHeader);
+      await forwardTCP(addressType, hostname, port, rawData, serverSock, respHeader, remoteConnWrapper, fbAddr);
+    },
+  })).catch((err) => { console.log('WS Stream Error:', err); });
+
+  return new Response(null, { status: 101, webSocket: clientSock });
+}
+
+async function forwardTCP(addrType, host, portNum, rawData, ws, respHeader, remoteConnWrapper, fbAddr = null) {
+  async function connectAndSend(address, port) {
+    const remoteSock = connect({ hostname: address, port: port });
+    const writer = remoteSock.writable.getWriter();
+    await writer.write(rawData);
+    writer.releaseLock();
+    return remoteSock;
+  }
+
+  async function retryConnection() {
+    let fallbackHost, fallbackPort;
+    if (fbAddr && fbAddr.trim()) {
+      const parsed = parseAddressAndPort(fbAddr);
+      fallbackHost = parsed.address;
+      fallbackPort = parsed.port || portNum;
+    } else if (fallbackAddress && fallbackAddress.trim()) {
+      const parsed = parseAddressAndPort(fallbackAddress);
+      fallbackHost = parsed.address;
+      fallbackPort = parsed.port || portNum;
+    } else {
+      const bestBackupIP = await getBestBackupIP(currentWorkerRegion);
+      fallbackHost = bestBackupIP ? bestBackupIP.domain : host;
+      fallbackPort = bestBackupIP ? bestBackupIP.port : portNum;
     }
-    async function retryConnection() {
-        const newSocket = await connectAndSend(fallbackAddr || host, parseInt(fallbackPortNum, 10) || portNum);
-        remoteConnWrapper.socket = newSocket;
-        newSocket.closed.catch(() => {}).finally(() => closeSocketQuietly(ws));
-        connectStreams(newSocket, ws, respHeader, null);
-    }
-    try {
-        const initialSocket = await connectAndSend(host, portNum);
-        remoteConnWrapper.socket = initialSocket;
-        connectStreams(initialSocket, ws, respHeader, retryConnection);
-    } catch (err) {
-        console.log('Initial connection failed, trying fallback:', err);
-        retryConnection();
-    }
+    const newSocket = await connectAndSend(fallbackHost || host, fallbackPort);
+    remoteConnWrapper.socket = newSocket;
+    newSocket.closed.catch(() => { }).finally(() => closeSocketQuietly(ws));
+    connectStreams(newSocket, ws, respHeader, null);
+  }
+
+  try {
+    const initialSocket = await connectAndSend(host, portNum);
+    remoteConnWrapper.socket = initialSocket;
+    connectStreams(initialSocket, ws, respHeader, retryConnection);
+  } catch (err) {
+    console.log('Initial connection failed, trying fallback:', err);
+    retryConnection();
+  }
 }
 
 function parseWsPacketHeader(chunk, token) {
-	if (chunk.byteLength < 24) return { hasError: true, message: E_INVALID_DATA };
-	const version = new Uint8Array(chunk.slice(0, 1));
-	if (formatIdentifier(new Uint8Array(chunk.slice(1, 17))) !== token) return { hasError: true, message: E_INVALID_USER };
-	const optLen = new Uint8Array(chunk.slice(17, 18))[0];
-	const cmd = new Uint8Array(chunk.slice(18 + optLen, 19 + optLen))[0];
-	let isUDP = false;
-	if (cmd === 1) {} else if (cmd === 2) { isUDP = true; } else { return { hasError: true, message: E_UNSUPPORTED_CMD }; }
-	const portIdx = 19 + optLen;
-	const port = new DataView(chunk.slice(portIdx, portIdx + 2)).getUint16(0);
-	let addrIdx = portIdx + 2, addrLen = 0, addrValIdx = addrIdx + 1, hostname = '';
-	const addressType = new Uint8Array(chunk.slice(addrIdx, addrValIdx))[0];
-	switch (addressType) {
-		case ADDRESS_TYPE_IPV4: addrLen = 4; hostname = new Uint8Array(chunk.slice(addrValIdx, addrValIdx + addrLen)).join('.'); break;
-		case ADDRESS_TYPE_URL: addrLen = new Uint8Array(chunk.slice(addrValIdx, addrValIdx + 1))[0]; addrValIdx += 1; hostname = new TextDecoder().decode(chunk.slice(addrValIdx, addrValIdx + addrLen)); break;
-		case ADDRESS_TYPE_IPV6: addrLen = 16; const ipv6 = []; const ipv6View = new DataView(chunk.slice(addrValIdx, addrValIdx + addrLen)); for (let i = 0; i < 8; i++) ipv6.push(ipv6View.getUint16(i * 2).toString(16)); hostname = ipv6.join(':'); break;
-		default: return { hasError: true, message: `${E_INVALID_ADDR_TYPE}: ${addressType}` };
-	}
-	if (!hostname) return { hasError: true, message: `${E_EMPTY_ADDR}: ${addressType}` };
-	return { hasError: false, addressType, port, hostname, isUDP, rawIndex: addrValIdx + addrLen, version };
+  if (chunk.byteLength < 24) return { hasError: true, message: E_INVALID_DATA };
+  const version = new Uint8Array(chunk.slice(0, 1));
+  if (formatIdentifier(new Uint8Array(chunk.slice(1, 17))) !== token) return { hasError: true, message: E_INVALID_USER };
+  const optLen = new Uint8Array(chunk.slice(17, 18))[0];
+  const cmd = new Uint8Array(chunk.slice(18 + optLen, 19 + optLen))[0];
+  let isUDP = false;
+  if (cmd === 1) { }
+  else if (cmd === 2) { isUDP = true; }
+  else { return { hasError: true, message: E_UNSUPPORTED_CMD }; }
+
+  const portIdx = 19 + optLen;
+  const port = new DataView(chunk.slice(portIdx, portIdx + 2)).getUint16(0);
+  let addrIdx = portIdx + 2, addrLen = 0, addrValIdx = addrIdx + 1, hostname = '';
+  const addressType = new Uint8Array(chunk.slice(addrIdx, addrValIdx))[0];
+
+  switch (addressType) {
+    case ADDRESS_TYPE_IPV4:
+      addrLen = 4;
+      hostname = new Uint8Array(chunk.slice(addrValIdx, addrValIdx + addrLen)).join('.');
+      break;
+    case ADDRESS_TYPE_URL:
+      addrLen = new Uint8Array(chunk.slice(addrValIdx, addrValIdx + 1))[0];
+      addrValIdx += 1;
+      hostname = new TextDecoder().decode(chunk.slice(addrValIdx, addrValIdx + addrLen));
+      break;
+    case ADDRESS_TYPE_IPV6:
+      addrLen = 16;
+      const ipv6 = [];
+      const ipv6View = new DataView(chunk.slice(addrValIdx, addrValIdx + addrLen));
+      for (let i = 0; i < 8; i++) ipv6.push(ipv6View.getUint16(i * 2).toString(16));
+      hostname = ipv6.join(':');
+      break;
+    default:
+      return { hasError: true, message: `${E_INVALID_ADDR_TYPE}: ${addressType}` };
+  }
+
+  if (!hostname) return { hasError: true, message: `${E_EMPTY_ADDR}: ${addressType}` };
+  return { hasError: false, addressType, port, hostname, isUDP, rawIndex: addrValIdx + addrLen, version };
 }
 
 function makeReadableStream(socket, earlyDataHeader) {
-	let cancelled = false;
-	return new ReadableStream({
-		start(controller) {
-			socket.addEventListener('message', (event) => { if (!cancelled) controller.enqueue(event.data); });
-			socket.addEventListener('close', () => { if (!cancelled) { closeSocketQuietly(socket); controller.close(); } });
-			socket.addEventListener('error', (err) => controller.error(err));
-			const { earlyData, error } = base64ToArray(earlyDataHeader);
-			if (error) controller.error(error); else if (earlyData) controller.enqueue(earlyData);
-		},
-		cancel() { cancelled = true; closeSocketQuietly(socket); }
-	});
+  let cancelled = false;
+  return new ReadableStream({
+    start(controller) {
+      socket.addEventListener('message', (event) => { if (!cancelled) controller.enqueue(event.data); });
+      socket.addEventListener('close', () => { if (!cancelled) { closeSocketQuietly(socket); controller.close(); } });
+      socket.addEventListener('error', (err) => controller.error(err));
+      const { earlyData, error } = base64ToArray(earlyDataHeader);
+      if (error) controller.error(error);
+      else if (earlyData) controller.enqueue(earlyData);
+    },
+    cancel() { cancelled = true; closeSocketQuietly(socket); }
+  });
 }
 
 async function connectStreams(remoteSocket, webSocket, headerData, retryFunc) {
-	let header = headerData, hasData = false;
-	await remoteSocket.readable.pipeTo(
-		new WritableStream({
-			async write(chunk, controller) {
-				hasData = true;
-				if (webSocket.readyState !== 1) controller.error(E_WS_NOT_OPEN);
-				if (header) { webSocket.send(await new Blob([header, chunk]).arrayBuffer()); header = null; } 
-                else { webSocket.send(chunk); }
-			},
-			abort(reason) { console.error("Readable aborted:", reason); },
-		})
-	).catch((error) => { console.error("Stream connection error:", error); closeSocketQuietly(webSocket); });
-	if (!hasData && retryFunc) retryFunc();
+  let header = headerData, hasData = false;
+  await remoteSocket.readable.pipeTo(
+    new WritableStream({
+      async write(chunk, controller) {
+        hasData = true;
+        if (webSocket.readyState !== 1) controller.error(E_WS_NOT_OPEN);
+        if (header) {
+          webSocket.send(await new Blob([header, chunk]).arrayBuffer());
+          header = null;
+        } else {
+          webSocket.send(chunk);
+        }
+      },
+      abort(reason) { console.error("Readable aborted:", reason); },
+    })
+  ).catch((error) => { console.error("Stream connection error:", error); closeSocketQuietly(webSocket); });
+
+  if (!hasData && retryFunc) retryFunc();
 }
 
 async function forwardUDP(udpChunk, webSocket, respHeader) {
-	try {
-		const tcpSocket = connect({ hostname: '8.8.4.4', port: 53 });
-		let vlessHeader = respHeader;
-		const writer = tcpSocket.writable.getWriter();
-		await writer.write(udpChunk);
-		writer.releaseLock();
-		await tcpSocket.readable.pipeTo(new WritableStream({
-			async write(chunk) {
-				if (webSocket.readyState === 1) {
-					if (vlessHeader) { webSocket.send(await new Blob([vlessHeader, chunk]).arrayBuffer()); vlessHeader = null; } 
-                    else { webSocket.send(chunk); }
-				}
-			},
-		}));
-	} catch (error) { console.error(`DNS forward error: ${error.message}`); }
+  try {
+    const tcpSocket = connect({ hostname: '8.8.4.4', port: 53 });
+    let vlessHeader = respHeader;
+    const writer = tcpSocket.writable.getWriter();
+    await writer.write(udpChunk);
+    writer.releaseLock();
+    await tcpSocket.readable.pipeTo(new WritableStream({
+      async write(chunk) {
+        if (webSocket.readyState === 1) {
+          if (vlessHeader) {
+            webSocket.send(await new Blob([vlessHeader, chunk]).arrayBuffer());
+            vlessHeader = null;
+          } else {
+            webSocket.send(chunk);
+          }
+        }
+      },
+    }));
+  } catch (error) {
+    console.error(`DNS forward error: ${error.message}`);
+  }
 }
 
 function base64ToArray(b64Str) {
-    if (!b64Str) return { error: null };
-    try { b64Str = b64Str.replace(/-/g, '+').replace(/_/g, '/'); return { earlyData: Uint8Array.from(atob(b64Str), (c) => c.charCodeAt(0)).buffer, error: null }; } 
-    catch (error) { return { error }; }
+  if (!b64Str) return { error: null };
+  try {
+    b64Str = b64Str.replace(/-/g, '+').replace(/_/g, '/');
+    return { earlyData: Uint8Array.from(atob(b64Str), (c) => c.charCodeAt(0)).buffer, error: null };
+  } catch (error) {
+    return { error };
+  }
 }
 
-function isValidFormat(uuid) { return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(uuid); }
+function isValidFormat(uuid) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(uuid);
+}
 
-function closeSocketQuietly(socket) { try { if (socket.readyState === 1 || socket.readyState === 2) socket.close(); } catch (error) {} }
+function closeSocketQuietly(socket) {
+  try { if (socket.readyState === 1 || socket.readyState === 2) socket.close(); }
+  catch (error) { }
+}
 
 const hexTable = Array.from({ length: 256 }, (v, i) => (i + 256).toString(16).slice(1));
 
 function formatIdentifier(arr, offset = 0) {
-    const id = (hexTable[arr[offset]]+hexTable[arr[offset+1]]+hexTable[arr[offset+2]]+hexTable[arr[offset+3]]+"-"+hexTable[arr[offset+4]]+hexTable[arr[offset+5]]+"-"+hexTable[arr[offset+6]]+hexTable[arr[offset+7]]+"-"+hexTable[arr[offset+8]]+hexTable[arr[offset+9]]+"-"+hexTable[arr[offset+10]]+hexTable[arr[offset+11]]+hexTable[arr[offset+12]]+hexTable[arr[offset+13]]+hexTable[arr[offset+14]]+hexTable[arr[offset+15]]).toLowerCase();
-    if (!isValidFormat(id)) throw new TypeError(E_INVALID_ID_STR);
-    return id;
+  const id = (
+    hexTable[arr[offset]] + hexTable[arr[offset + 1]] + hexTable[arr[offset + 2]] + hexTable[arr[offset + 3]] + "-" +
+    hexTable[arr[offset + 4]] + hexTable[arr[offset + 5]] + "-" +
+    hexTable[arr[offset + 6]] + hexTable[arr[offset + 7]] + "-" +
+    hexTable[arr[offset + 8]] + hexTable[arr[offset + 9]] + "-" +
+    hexTable[arr[offset + 10]] + hexTable[arr[offset + 11]] + hexTable[arr[offset + 12]] + hexTable[arr[offset + 13]] +
+    hexTable[arr[offset + 14]] + hexTable[arr[offset + 15]]
+  ).toLowerCase();
+  if (!isValidFormat(id)) throw new TypeError(E_INVALID_ID_STR);
+  return id;
 }
