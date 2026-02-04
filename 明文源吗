@@ -916,7 +916,7 @@
                 color: #ff4444; margin: 5px 0;
             }
             .terminal-success {
-                color: #44ff44; margin: 5px 0;
+                color: #2dc4b6; margin: 5px 0;
             }
             .matrix-text {
                 position: fixed; top: 20px; right: 20px;
@@ -1440,7 +1440,7 @@
                             const dataStr = typeof answer.data === 'string' ? answer.data : JSON.stringify(answer.data);
                             const echMatch = dataStr.match(/ech=([^\s"']+)/);
                             if (echMatch && echMatch[1]) {
-                                echDebugInfo = debugSteps.join('\\n') + '\\n✅ 成功从 Google DNS 获取 ECH 配置';
+                                echDebugInfo = debugSteps.join('\\n') + '\\n 成功从 Google DNS 获取 ECH 配置';
                                 return echMatch[1];
                             }
                             // 如果没有找到，尝试直接使用 data（可能是 base64 编码的）
@@ -1450,7 +1450,7 @@
                                     debugSteps.push(`尝试 base64 解码，解码后长度: ${decoded.length}`);
                                     const decodedMatch = decoded.match(/ech=([^\s"']+)/);
                                     if (decodedMatch && decodedMatch[1]) {
-                                        echDebugInfo = debugSteps.join('\\n') + '\\n✅ 成功从 Google DNS (base64解码) 获取 ECH 配置';
+                                        echDebugInfo = debugSteps.join('\\n') + '\\n 成功从 Google DNS (base64解码) 获取 ECH 配置';
                                         return decodedMatch[1];
                                     }
                                 } catch (e) {
@@ -1488,7 +1488,7 @@
                             const dataStr = typeof answer.data === 'string' ? answer.data : JSON.stringify(answer.data);
                             const echMatch = dataStr.match(/ech=([^\s"']+)/);
                             if (echMatch && echMatch[1]) {
-                                echDebugInfo = debugSteps.join('\\n') + '\\n✅ 成功从 Google DNS (目标域名) 获取 ECH 配置';
+                                echDebugInfo = debugSteps.join('\\n') + '\\n 成功从 Google DNS (目标域名) 获取 ECH 配置';
                                 return echMatch[1];
                             }
                             // 尝试 base64 解码
@@ -1496,7 +1496,7 @@
                                 const decoded = atob(answer.data);
                                 const decodedMatch = decoded.match(/ech=([^\s"']+)/);
                                 if (decodedMatch && decodedMatch[1]) {
-                                    echDebugInfo = debugSteps.join('\\n') + '\\n✅ 成功从 Google DNS (目标域名, base64解码) 获取 ECH 配置';
+                                    echDebugInfo = debugSteps.join('\\n') + '\\n 成功从 Google DNS (目标域名, base64解码) 获取 ECH 配置';
                                     return decodedMatch[1];
                                 }
                             } catch (e) {
@@ -1532,7 +1532,7 @@
                         if (answer.data) {
                             const echMatch = answer.data.match(/ech=([^\s"']+)/);
                             if (echMatch && echMatch[1]) {
-                                echDebugInfo = debugSteps.join('\\n') + '\\n✅ 成功从 Cloudflare DNS 获取 ECH 配置';
+                                echDebugInfo = debugSteps.join('\\n') + '\\n 成功从 Cloudflare DNS 获取 ECH 配置';
                                 return echMatch[1];
                             }
                         }
@@ -2289,7 +2289,7 @@
                     regionMatch: '地区匹配: ',
                     selectionLogic: '选择逻辑: ',
                     kvStatusChecking: '检测KV状态中...',
-                    kvEnabled: '✅ KV存储已启用，可以使用配置管理功能',
+                    kvEnabled: ' KV存储已启用，可以使用配置管理功能',
                     kvDisabled: '⚠️ KV存储未启用或未配置',
                     specifyRegion: '指定地区 (wk):',
                     autoDetect: '自动检测',
@@ -2428,7 +2428,7 @@
                     regionMatch: 'تطبیق منطقه: ',
                     selectionLogic: 'منطق انتخاب: ',
                     kvStatusChecking: 'در حال بررسی وضعیت KV...',
-                    kvEnabled: '✅ ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
+                    kvEnabled: ' ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
                     kvDisabled: '⚠️ ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
                     specifyRegion: 'تعیین منطقه (wk):',
                     autoDetect: 'تشخیص خودکار',
@@ -3537,7 +3537,7 @@
                             
                             // 显示自定义IP配置状态，包含具体IP
                                 if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #ffaa00;">🔧 ' + t.usingCustomProxyIP + customIPInfo + '</span>';
-                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #ffaa00;">✅ ' + customIPInfo + t.customIPConfig + '</span>';
+                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #ffaa00;"> ' + customIPInfo + t.customIPConfig + '</span>';
                                 if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #ffaa00;">⚠️ ' + t.customIPModeDisabled + '</span>';
                             
                             return; // 提前返回，不执行后续的地区匹配逻辑
@@ -3545,38 +3545,38 @@
                             isManualRegionMode = true;
                             detectedRegion = data.region;
                             
-                                geoInfo.innerHTML = t.detectionMethod + '<span style="color: #44aa44;">' + t.manualRegion + '</span>';
-                                regionStatus.innerHTML = t.workerRegion + '<span style="color: #44ff44;">🎯 ' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
+                                geoInfo.innerHTML = t.detectionMethod + '<span style="color: #2dc4b6;">' + t.manualRegion + '</span>';
+                                regionStatus.innerHTML = t.workerRegion + '<span style="color: #2dc4b6;"> ' + t.regionNames[detectedRegion] + t.manualRegionDesc + '</span>';
                             
                             // 显示配置状态而不是检测状态
-                                if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #44ff44;">✅ ' + t.proxyIPAvailable + '</span>';
-                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #44ff44;">✅ ' + t.smartSelection + '</span>';
-                                if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #44ff44;">✅ ' + t.sameRegionIP + '</span>';
+                                if (backupStatus) backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #2dc4b6;"> ' + t.proxyIPAvailable + '</span>';
+                                if (currentIP) currentIP.innerHTML = t.currentIP + '<span style="color: #2dc4b6;"> ' + t.smartSelection + '</span>';
+                                if (regionMatch) regionMatch.innerHTML = t.regionMatch + '<span style="color: #2dc4b6;"> ' + t.sameRegionIP + '</span>';
                             
                             return; // 提前返回，不执行后续的地区匹配逻辑
                             } else if (data.region && t.regionNames[data.region]) {
                             detectedRegion = data.region;
                         }
                         
-                            geoInfo.innerHTML = t.detectionMethod + '<span style="color: #44ff44;">' + t.cloudflareDetection + '</span>';
+                            geoInfo.innerHTML = t.detectionMethod + '<span style="color: #2dc4b6;">' + t.cloudflareDetection + '</span>';
                         
                     } catch (e) {
                             geoInfo.innerHTML = t.detectionMethod + '<span style="color: #ff4444;">' + t.detectionFailed + '</span>';
                     }
                     
-                        regionStatus.innerHTML = t.workerRegion + '<span style="color: #44ff44;">✅ ' + t.regionNames[detectedRegion] + '</span>';
+                        regionStatus.innerHTML = t.workerRegion + '<span style="color: #2dc4b6;"> ' + t.regionNames[detectedRegion] + '</span>';
                     
                     // 直接显示配置状态，不再进行检测
                     if (backupStatus) {
-                            backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #44ff44;">✅ ' + t.proxyIPAvailable + '</span>';
+                            backupStatus.innerHTML = t.proxyIPStatus + '<span style="color: #2dc4b6;"> ' + t.proxyIPAvailable + '</span>';
                     }
                     
                     if (currentIP) {
-                            currentIP.innerHTML = t.currentIP + '<span style="color: #44ff44;">✅ ' + t.smartSelection + '</span>';
+                            currentIP.innerHTML = t.currentIP + '<span style="color: #2dc4b6;"> ' + t.smartSelection + '</span>';
                     }
                     
                     if (regionMatch) {
-                            regionMatch.innerHTML = t.regionMatch + '<span style="color: #44ff44;">✅ ' + t.sameRegionIP + '</span>';
+                            regionMatch.innerHTML = t.regionMatch + '<span style="color: #2dc4b6;"> ' + t.sameRegionIP + '</span>';
                     }
                     
                 } catch (error) {
@@ -3729,7 +3729,7 @@
                                 kvDisabled: '⚠️ KV存储未启用或未配置',
                                 kvNotConfigured: 'KV存储未配置，无法使用配置管理功能。\\n\\n请在Cloudflare Workers中:\\n1. 创建KV命名空间\\n2. 绑定环境变量 C\\n3. 重新部署代码',
                                 kvNotEnabled: 'KV存储未配置',
-                                kvEnabled: '✅ KV存储已启用，可以使用配置管理功能',
+                                kvEnabled: ' KV存储已启用，可以使用配置管理功能',
                                 kvCheckFailed: '⚠️ KV存储检测失败',
                                 kvCheckFailedFormat: 'KV存储检测失败: 响应格式错误',
                                 kvCheckFailedStatus: 'KV存储检测失败 - 状态码: ',
@@ -3739,7 +3739,7 @@
                                 kvDisabled: '⚠️ ذخیره‌سازی KV فعال نیست یا پیکربندی نشده است',
                                 kvNotConfigured: 'ذخیره‌سازی KV پیکربندی نشده است، نمی‌توانید از عملکرد مدیریت تنظیمات استفاده کنید.\\n\\nلطفا در Cloudflare Workers:\\n1. فضای نام KV ایجاد کنید\\n2. متغیر محیطی C را پیوند دهید\\n3. کد را دوباره مستقر کنید',
                                 kvNotEnabled: 'ذخیره‌سازی KV پیکربندی نشده است',
-                                kvEnabled: '✅ ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
+                                kvEnabled: ' ذخیره‌سازی KV فعال است، می‌توانید از مدیریت تنظیمات استفاده کنید',
                                 kvCheckFailed: '⚠️ بررسی ذخیره‌سازی KV ناموفق',
                                 kvCheckFailedFormat: 'بررسی ذخیره‌سازی KV ناموفق: خطای فرمت پاسخ',
                                 kvCheckFailedStatus: 'بررسی ذخیره‌سازی KV ناموفق - کد وضعیت: ',
@@ -4092,7 +4092,7 @@
                     const echConfigLength = response.headers.get('X-ECH-Config-Length');
                     
                     if (echStatusHeader === 'ENABLED') {
-                        echStatusEl.innerHTML = 'ECH状态: <span style="color: #44ff44;">✅ 已启用' + (echConfigLength ? ' (配置长度: ' + echConfigLength + ')' : '') + '</span>';
+                        echStatusEl.innerHTML = 'ECH状态: <span style="color: #2dc4b6;"> 已启用' + (echConfigLength ? ' (配置长度: ' + echConfigLength + ')' : '') + '</span>';
                     } else {
                         echStatusEl.innerHTML = 'ECH状态: <span style="color: #ffaa00;">⚠️ 未启用</span>';
                     }
