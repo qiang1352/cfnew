@@ -3034,7 +3034,7 @@
                         
 						<label style="display: block; margin-bottom: 8px; color: #2dc4b6; font-weight: bold; ">${t.latencyTest}</label>
                         <div style="margin-bottom: 20px; background: #1e2b3a; padding: 15px; border: 1px solid #2dc4b6; border-radius: 8px;">
-                            <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: center;">
+                            <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: flex-end;">
                                 <div style="min-width: 160px;">
                                     <label style="display: block; margin-bottom: 5px; color: #2dc4b6; font-size: 1rem;">${t.ipSource}</label>
                                     <select id="ipSourceSelect" class="text-input">
@@ -3055,7 +3055,7 @@
                                     <label style="display: block; margin-bottom: 5px; color: #2dc4b6; font-size: 1rem;">${isFarsi ? 'رشته‌ها' : '线程'}</label>
                                     <input type="number" id="testThreads" value="5" min="1" max="50" class="text-input">
                                 </div>
-								<div id="cfRandomDiv" style="margin-bottom: 10px; display: none;">
+								<div id="cfRandomDiv" style="margin-bottom: 15px; display: flex; align-items: flex-end; min-width: 100px;">
 									<button type="button" id="generateCFIPBtn" class="client-btn client-btn-sm">🎲 ${t.generateIP}</button>
 								</div>
                             </div>
@@ -3075,7 +3075,7 @@
                                 <button type="button" id="startLatencyTest" class="client-btn client-btn-sm">▶ ${t.startTest}</button>
                                 <button type="button" id="stopLatencyTest" class="client-btn client-btn-sm">⏹ ${t.stopTest}</button>
                             </div>
-                            <div id="latencyTestStatus" style="color: #00aa00; font-size: 1rem; margin-bottom: 10px; display: none;"></div>
+                            <div id="latencyTestStatus" style="color: #2dc4b6; font-size: 1rem; margin-bottom: 10px; display: none;"></div>
                             <div id="latencyTestResults" style="display: none;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                                     <span style="color: #2dc4b6; font-weight: bold;">${t.testResult}</span>
@@ -3254,7 +3254,7 @@
 						<div class="link-title">YouTube 频道</div>
 					</a>
 				</div>
-				<div class="footer">Powered by Cloudflare</div>
+				<div class="footer">Powered by Cloudflare V2.9.6</div>
 			</div>
         </div>
         <script>
@@ -3976,14 +3976,14 @@
 
                 if (cp && cp.trim()) {
                     // 使用自定义路径 (d)
-                    pathTypeStatus.innerHTML = '<div style="color: #2dc4b6;">使用类型: <strong>自定义路径 (d)</strong></div>' +
-                        '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + cp + '</span></div>' +
-                        '<div style="margin-top: 5px; font-size: 1rem; color: #00aa00;">访问地址: ' + 
+                    pathTypeStatus.innerHTML = '<div style="font-size: 1rem; color: #2dc4b6;">使用类型: 自定义路径 (d)</div>' +
+                        '<div style="margin-top: 5px; font-size: 1rem; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + cp + '</span></div>' +
+                        '<div style="margin-top: 5px; font-size: 1rem; color: #2dc4b6;">访问地址: ' + 
                         (currentUrl.split('/')[0] + '//' + currentUrl.split('/')[2]) + cp + '/sub</div>';
                 } else {
                     // 使用 UUID (u)
-                    pathTypeStatus.innerHTML = '<div style="color: #2dc4b6;">使用类型: <strong>UUID 路径 (u)</strong></div>' +
-                        '<div style="margin-top: 5px; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + (currentPath || '(UUID)') + '</span></div>' +
+                    pathTypeStatus.innerHTML = '<div style="font-size: 1rem; color: #2dc4b6;">使用类型: UUID 路径 (u)</div>' +
+                        '<div style="margin-top: 5px; font-size: 1rem; color: #2dc4b6;">当前路径: <span style="color: #ffaa00;">' + (currentPath || '(UUID)') + '</span></div>' +
                         '<div style="margin-top: 5px; font-size: 1rem; color: #2dc4b6;">访问地址: ' + currentUrl.split('/sub')[0] + '/sub</div>';
                 }
             }
